@@ -1,0 +1,33 @@
+{
+  "id": "./",
+  "name": "La Selva Matemática de Coco",
+  "short_name": "Selva de Coco",
+  "description": "Videojuego educativo de matemáticas con animales salvajes para niños de 7 años, optimizado para Samsung Galaxy Tab S6 Lite.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#B8EFE8",
+  "theme_color": "#1B6B4A",
+  "lang": "es",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

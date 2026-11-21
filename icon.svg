@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#38D27F"/>
+      <stop offset="100%" stop-color="#14532D"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="112" fill="url(#bg)"/>
+  <ellipse cx="256" cy="405" rx="175" ry="30" fill="rgba(255,255,255,0.22)"/>
+  <path d="M 120 278 C 110 170, 225 130, 295 172 C 350 192, 430 214, 420 276 C 410 330, 305 356, 200 346 C 142 340, 126 312, 120 278 Z" fill="#4ADE80" stroke="#14532D" stroke-width="12" stroke-linejoin="round"/>
+  <circle cx="220" cy="186" r="36" fill="#FFFFFF" stroke="#14532D" stroke-width="10"/>
+  <circle cx="294" cy="188" r="34" fill="#FFFFFF" stroke="#14532D" stroke-width="10"/>
+  <circle cx="230" cy="186" r="17" fill="#111827"/>
+  <circle cx="304" cy="188" r="16" fill="#111827"/>
+  <circle cx="236" cy="178" r="6" fill="#FFFFFF"/>
+  <circle cx="310" cy="180" r="6" fill="#FFFFFF"/>
+  <path d="M 218 296 Q 292 346 376 288" fill="none" stroke="#14532D" stroke-width="12" stroke-linecap="round"/>
+  <polygon points="248,308 260,332 274,312" fill="#FFFFFF"/>
+  <polygon points="318,312 330,332 344,304" fill="#FFFFFF"/>
+  <circle cx="372" cy="242" r="8" fill="#14532D"/>
+  <circle cx="394" cy="248" r="7" fill="#14532D"/>
+</svg>

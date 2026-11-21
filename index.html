@@ -1,0 +1,4443 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="theme-color" content="#1B6B4A" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" type="image/png" href="icon-192.png" />
+  <link rel="apple-touch-icon" href="icon-192.png" />
+  <title>La Selva Matemática de Coco — Juego Educativo</title>
+  <meta name="description" content="Videojuego educativo de matemáticas con animales salvajes y Coco el Cocodrilo para niños de 7 años. Optimizado para tablet Samsung Galaxy Tab S6 Lite y S-Pen." />
+  <style>
+    /* =========================================================
+       DESIGN SYSTEM — SUNLIT JUNGLE ADVENTURE (TABLET-FIRST)
+       Optimized for Samsung Galaxy Tab S6 Lite (Snapdragon)
+       ========================================================= */
+    :root {
+      --jungle-deep: #134E36;
+      --jungle-main: #1E7A53;
+      --jungle-bright: #2EAD6E;
+      --jungle-leaf: #52C47F;
+      --river-dark: #158094;
+      --river-main: #2BB3C7;
+      --river-light: #AEEAF4;
+      --cream-bg: #FFFDF5;
+      --cream-card: #FFF8E7;
+      --wood-dark: #6B3F1D;
+      --wood-main: #9C6130;
+      --wood-light: #D9A066;
+      --amber-dark: #B45309;
+      --amber-main: #F59E0B;
+      --amber-light: #FEF3C7;
+      --coral-dark: #C2410C;
+      --coral-main: #F97316;
+      --sky-light: #E0F7FA;
+      --text-dark: #1A2E22;
+      --text-mid: #3E5948;
+      --text-muted: #647D6D;
+
+      /* Pedagogical Place-Value Colors */
+      --pv-c-bg: #DBEAFE;
+      --pv-c-fg: #1D4ED8;
+      --pv-d-bg: #CCFBF1;
+      --pv-d-fg: #0F766E;
+      --pv-u-bg: #FEF3C7;
+      --pv-u-fg: #B45309;
+
+      --radius-sm: 14px;
+      --radius-md: 20px;
+      --radius-lg: 28px;
+      --font-main: ui-rounded, 'SF Pro Rounded', 'Nunito', 'Quicksand', 'Segoe UI', system-ui, -apple-system, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      min-height: 100vh;
+      font-family: var(--font-main);
+      color: var(--text-dark);
+      background: linear-gradient(180deg, #B8EFE8 0%, #D9F7DA 48%, #9CE09D 100%);
+      overflow-x: hidden;
+      touch-action: manipulation;
+    }
+
+    /* Ambient Jungle Decorative Background */
+    .jungle-backdrop {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .sun-glow {
+      position: absolute;
+      top: -60px;
+      right: 8%;
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 232, 133, 0.85) 0%, rgba(255, 232, 133, 0.2) 55%, transparent 72%);
+    }
+
+    .bg-hills {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 210px;
+      opacity: 0.45;
+    }
+
+    /* App Container */
+    .app-shell {
+      position: relative;
+      z-index: 1;
+      max-width: 1220px;
+      margin: 0 auto;
+      padding: 12px 16px 24px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    /* =========================================================
+       TOP NAVIGATION BAR (KID-FRIENDLY & CHUNKY)
+       ========================================================= */
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      background: rgba(255, 253, 245, 0.94);
+      border: 3px solid #D6EAD8;
+      border-bottom: 6px solid #B6D7BA;
+      border-radius: var(--radius-lg);
+      padding: 8px 14px;
+      box-shadow: 0 8px 20px rgba(19, 78, 54, 0.12);
+      flex-wrap: wrap;
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand-logo {
+      width: 46px;
+      height: 46px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, #2EAD6E, #166534);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      box-shadow: inset 0 -3px 0 rgba(0, 0, 0, 0.2);
+      flex-shrink: 0;
+    }
+
+    .brand-title {
+      margin: 0;
+      font-size: 1.25rem;
+      font-weight: 900;
+      color: var(--jungle-deep);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+    }
+
+    .brand-sub {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+
+    .nav-tabs {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .nav-btn {
+      border: none;
+      font-family: inherit;
+      font-weight: 800;
+      font-size: 0.95rem;
+      padding: 10px 16px;
+      border-radius: 16px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: #EEF7F0;
+      color: var(--jungle-deep);
+      border-bottom: 4px solid #C8E2CE;
+      transition: transform 0.12s ease, background 0.15s ease;
+    }
+
+    .nav-btn:active {
+      transform: translateY(3px);
+      border-bottom-width: 1px;
+    }
+
+    .nav-btn.active {
+      background: linear-gradient(180deg, #34C77B 0%, #229A5B 100%);
+      color: #FFFFFF;
+      border-bottom-color: #16683D;
+      box-shadow: 0 4px 12px rgba(34, 154, 91, 0.3);
+    }
+
+    .status-pills {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .stat-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 13px;
+      border-radius: 999px;
+      font-weight: 900;
+      font-size: 1rem;
+      font-variant-numeric: tabular-nums;
+      border: 2px solid transparent;
+    }
+
+    .pill-gems {
+      background: #FEF3C7;
+      border-color: #FCD34D;
+      color: #92400E;
+    }
+
+    .pill-stars {
+      background: #E0F2FE;
+      border-color: #7DD3FC;
+      color: #0369A1;
+    }
+
+    .icon-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      border: 2px solid #D6EAD8;
+      border-bottom: 4px solid #B6D7BA;
+      background: #FFFFFF;
+      font-size: 1.25rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: transform 0.1s ease;
+    }
+
+    .icon-btn:active {
+      transform: translateY(3px);
+      border-bottom-width: 2px;
+    }
+
+    /* =========================================================
+       3D TACTILE BUTTONS
+       ========================================================= */
+    .btn-3d {
+      border: none;
+      font-family: inherit;
+      font-weight: 900;
+      border-radius: 20px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: transform 0.1s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.15s ease;
+      text-align: center;
+    }
+
+    .btn-3d:active {
+      transform: translateY(4px);
+    }
+
+    .btn-green {
+      background: linear-gradient(180deg, #38D27F 0%, #1F9D5A 100%);
+      color: #FFFFFF;
+      border-bottom: 6px solid #146B3C;
+      box-shadow: 0 6px 16px rgba(31, 157, 90, 0.32);
+    }
+
+    .btn-green:active { border-bottom-width: 2px; }
+
+    .btn-amber {
+      background: linear-gradient(180deg, #FBBF24 0%, #EA8A0C 100%);
+      color: #451A03;
+      border-bottom: 6px solid #B45309;
+      box-shadow: 0 6px 14px rgba(234, 138, 12, 0.3);
+    }
+
+    .btn-amber:active { border-bottom-width: 2px; }
+
+    .btn-blue {
+      background: linear-gradient(180deg, #38BDF8 0%, #0284C7 100%);
+      color: #FFFFFF;
+      border-bottom: 6px solid #0369A1;
+      box-shadow: 0 6px 14px rgba(2, 132, 199, 0.28);
+    }
+
+    .btn-blue:active { border-bottom-width: 2px; }
+
+    .btn-coral {
+      background: linear-gradient(180deg, #FB923C 0%, #EA580C 100%);
+      color: #FFFFFF;
+      border-bottom: 6px solid #9A3412;
+      box-shadow: 0 6px 14px rgba(234, 88, 12, 0.28);
+    }
+
+    .btn-coral:active { border-bottom-width: 2px; }
+
+    .btn-cream {
+      background: #FFFFFF;
+      color: var(--jungle-deep);
+      border: 2px solid #CDE5D2;
+      border-bottom: 5px solid #A8CEB0;
+    }
+
+    .btn-cream:active { border-bottom-width: 2px; }
+
+    /* =========================================================
+       VIEW MANAGEMENT
+       ========================================================= */
+    .view-section {
+      display: none;
+      flex: 1;
+      flex-direction: column;
+      gap: 14px;
+      animation: fadeSlideIn 0.26s ease-out;
+    }
+
+    .view-section.active {
+      display: flex;
+    }
+
+    @keyframes fadeSlideIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* =========================================================
+       VIEW 1: JUNGLE ADVENTURE MAP
+       ========================================================= */
+    .hero-banner {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 16px;
+      background: linear-gradient(135deg, #166534 0%, #1E7A53 55%, #0F766E 100%);
+      border-radius: var(--radius-lg);
+      padding: 20px 24px;
+      color: #FFFFFF;
+      border-bottom: 7px solid #0D4426;
+      box-shadow: 0 12px 28px rgba(19, 78, 54, 0.24);
+      position: relative;
+      overflow: hidden;
+      align-items: center;
+    }
+
+    .hero-banner::before {
+      content: '';
+      position: absolute;
+      right: -40px;
+      bottom: -40px;
+      width: 260px;
+      height: 260px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.08);
+      pointer-events: none;
+    }
+
+    .hero-copy h2 {
+      margin: 0 0 6px;
+      font-size: 1.75rem;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+    }
+
+    .hero-copy p {
+      margin: 0 0 16px;
+      font-size: 1rem;
+      line-height: 1.45;
+      color: #DCFCE7;
+      font-weight: 600;
+      max-width: 520px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .hero-actions .btn-3d {
+      padding: 14px 24px;
+      font-size: 1.12rem;
+    }
+
+    .hero-coco-stage {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .coco-mini-bubble {
+      background: #FFFDF5;
+      color: var(--jungle-deep);
+      font-weight: 800;
+      font-size: 0.92rem;
+      padding: 8px 14px;
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.16);
+      margin-bottom: 6px;
+      text-align: center;
+      position: relative;
+    }
+
+    .coco-mini-bubble::after {
+      content: '';
+      position: absolute;
+      bottom: -7px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-left: 8px solid transparent;
+      border-right: 8px solid transparent;
+      border-top: 8px solid #FFFDF5;
+    }
+
+    .section-header-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 0 4px;
+    }
+
+    .section-title {
+      margin: 0;
+      font-size: 1.25rem;
+      font-weight: 900;
+      color: var(--jungle-deep);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .worlds-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .world-card {
+      background: var(--cream-bg);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      border: 3px solid #D7ECD9;
+      border-bottom: 7px solid #B5D8B9;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      cursor: pointer;
+      transition: transform 0.14s ease, box-shadow 0.14s ease;
+      position: relative;
+      text-align: left;
+      font-family: inherit;
+    }
+
+    .world-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 22px rgba(19, 78, 54, 0.15);
+    }
+
+    .world-card:active {
+      transform: translateY(3px);
+      border-bottom-width: 3px;
+    }
+
+    .world-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .world-badge-num {
+      font-size: 0.78rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: #E8F5E9;
+      color: #166534;
+    }
+
+    .world-stars {
+      font-size: 1.05rem;
+      letter-spacing: 2px;
+    }
+
+    .world-body {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .world-avatar {
+      width: 64px;
+      height: 64px;
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.4rem;
+      flex-shrink: 0;
+      box-shadow: inset 0 -4px 0 rgba(0, 0, 0, 0.12);
+    }
+
+    .world-info h3 {
+      margin: 0 0 3px;
+      font-size: 1.12rem;
+      font-weight: 900;
+      color: var(--text-dark);
+    }
+
+    .world-info p {
+      margin: 0;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-mid);
+      line-height: 1.3;
+    }
+
+    .world-example {
+      font-family: ui-monospace, 'SFMono-Regular', monospace;
+      font-weight: 800;
+      font-size: 0.9rem;
+      background: #F4FAF5;
+      border: 2px dashed #BCE0C2;
+      border-radius: 12px;
+      padding: 6px 10px;
+      color: var(--jungle-deep);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .world-play-tag {
+      font-family: var(--font-main);
+      font-size: 0.8rem;
+      font-weight: 900;
+      color: #FFFFFF;
+      background: var(--jungle-bright);
+      padding: 3px 10px;
+      border-radius: 999px;
+    }
+
+    /* Quick Custom Practice Bar */
+    .custom-bar {
+      background: rgba(255, 253, 245, 0.92);
+      border: 3px solid #FDE68A;
+      border-bottom: 6px solid #F59E0B;
+      border-radius: var(--radius-md);
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .custom-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .chip-btn {
+      border: 2px solid #FCD34D;
+      border-bottom: 4px solid #D97706;
+      background: #FFFBEB;
+      color: #92400E;
+      font-family: inherit;
+      font-weight: 800;
+      font-size: 0.88rem;
+      padding: 8px 14px;
+      border-radius: 14px;
+      cursor: pointer;
+      transition: transform 0.1s ease;
+    }
+
+    .chip-btn:active {
+      transform: translateY(2px);
+      border-bottom-width: 2px;
+    }
+
+    /* =========================================================
+       VIEW 2: GAMEPLAY ARENA (OPTIMIZED FOR TABLET LANDSCAPE)
+       ========================================================= */
+    .game-hud {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      background: rgba(255, 253, 245, 0.95);
+      border: 3px solid #D6EAD8;
+      border-bottom: 5px solid #B5D8B9;
+      border-radius: var(--radius-md);
+      padding: 8px 14px;
+      flex-wrap: wrap;
+    }
+
+    .hud-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .hud-mission-title {
+      font-weight: 900;
+      font-size: 1rem;
+      color: var(--jungle-deep);
+    }
+
+    .stepping-stones {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #E0F7FA;
+      padding: 6px 14px;
+      border-radius: 999px;
+      border: 2px solid #80DEEA;
+    }
+
+    .stone {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: #FFFFFF;
+      border: 3px solid #80CBC4;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      font-weight: 900;
+      color: #00695C;
+      transition: transform 0.25s ease, background 0.25s ease;
+    }
+
+    .stone.done {
+      background: #2EAD6E;
+      border-color: #166534;
+      color: #FFFFFF;
+      transform: scale(1.06);
+    }
+
+    .stone.current {
+      background: #FBBF24;
+      border-color: #B45309;
+      color: #451A03;
+      transform: scale(1.16);
+      box-shadow: 0 0 0 4px rgba(251, 191, 36, 0.35);
+    }
+
+    .stone-chest {
+      font-size: 1.45rem;
+      margin-left: 2px;
+      transition: transform 0.25s ease;
+    }
+
+    .hud-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .hud-toggle-btn {
+      border: 2px solid #CDE5D2;
+      border-bottom: 4px solid #A4CCA9;
+      background: #FFFFFF;
+      color: var(--jungle-deep);
+      font-family: inherit;
+      font-weight: 800;
+      font-size: 0.85rem;
+      padding: 8px 12px;
+      border-radius: 14px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .hud-toggle-btn.active {
+      background: #FEF3C7;
+      border-color: #F59E0B;
+      border-bottom-color: #B45309;
+      color: #92400E;
+    }
+
+    .streak-badge {
+      background: linear-gradient(135deg, #FB923C, #EA580C);
+      color: #FFFFFF;
+      font-weight: 900;
+      font-size: 0.92rem;
+      padding: 6px 12px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      box-shadow: 0 3px 10px rgba(234, 88, 12, 0.3);
+    }
+
+    /* Main Split Gameplay Grid */
+    .arena-grid {
+      display: grid;
+      grid-template-columns: 330px 1fr;
+      gap: 14px;
+      flex: 1;
+      align-items: stretch;
+    }
+
+    /* Left Panel: Coco River Companion */
+    .coco-panel {
+      background: linear-gradient(180deg, #AEEAF4 0%, #63D1E0 52%, #2093A8 53%, #17788C 100%);
+      border-radius: var(--radius-lg);
+      border: 4px solid #FFFFFF;
+      border-bottom: 7px solid #0E5868;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 24px rgba(14, 88, 104, 0.22);
+      min-height: 410px;
+    }
+
+    .speech-bubble {
+      background: #FFFDF5;
+      color: var(--text-dark);
+      border: 3px solid #D7ECD9;
+      border-radius: 20px;
+      padding: 12px 15px;
+      font-size: 1rem;
+      font-weight: 800;
+      line-height: 1.32;
+      text-align: center;
+      width: 100%;
+      min-height: 66px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
+      z-index: 2;
+    }
+
+    .speech-bubble::after {
+      content: '';
+      position: absolute;
+      bottom: -11px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-left: 11px solid transparent;
+      border-right: 11px solid transparent;
+      border-top: 11px solid #FFFDF5;
+    }
+
+    .coco-stage-wrap {
+      width: 240px;
+      height: 205px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      z-index: 2;
+      cursor: pointer;
+    }
+
+    .coco-svg {
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+      transition: transform 0.25s cubic-bezier(0.2, 0.9, 0.3, 1.3);
+      animation: cocoFloat 3.2s ease-in-out infinite;
+    }
+
+    .coco-svg.happy {
+      animation: cocoJump 0.65s ease-in-out 2;
+    }
+
+    .coco-svg.wiggle {
+      animation: cocoWiggle 0.45s ease-in-out;
+    }
+
+    @keyframes cocoFloat {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-6px); }
+    }
+
+    @keyframes cocoJump {
+      0%, 100% { transform: translateY(0) scale(1); }
+      40% { transform: translateY(-24px) scale(1.07) rotate(-3deg); }
+      70% { transform: translateY(-8px) scale(1.02) rotate(3deg); }
+    }
+
+    @keyframes cocoWiggle {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-8px) rotate(-3deg); }
+      75% { transform: translateX(8px) rotate(3deg); }
+    }
+
+    .coco-panel-footer {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      z-index: 2;
+    }
+
+    .hint-btn {
+      width: 100%;
+      padding: 13px 16px;
+      font-size: 1.05rem;
+    }
+
+    /* Right Panel: Math Board + Answers */
+    .math-panel {
+      background: var(--cream-bg);
+      border-radius: var(--radius-lg);
+      border: 4px solid #E5F2E7;
+      border-bottom: 7px solid #BDD9C2;
+      padding: 18px 22px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 14px;
+      box-shadow: 0 10px 24px rgba(19, 78, 54, 0.12);
+      position: relative;
+    }
+
+    .problem-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .problem-type-pill {
+      font-size: 0.88rem;
+      font-weight: 900;
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: #E8F5E9;
+      color: var(--jungle-deep);
+    }
+
+    .format-switch {
+      display: inline-flex;
+      background: #EEF7F0;
+      border-radius: 12px;
+      padding: 3px;
+      gap: 3px;
+    }
+
+    .format-opt {
+      border: none;
+      background: transparent;
+      font-family: inherit;
+      font-weight: 800;
+      font-size: 0.8rem;
+      padding: 5px 10px;
+      border-radius: 9px;
+      color: var(--text-muted);
+      cursor: pointer;
+    }
+
+    .format-opt.active {
+      background: #FFFFFF;
+      color: var(--jungle-deep);
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+    }
+
+    /* Math Display Area */
+    .problem-stage {
+      background: #FFFFFF;
+      border: 3px solid #E2EFE4;
+      border-radius: 22px;
+      padding: 16px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 170px;
+      position: relative;
+    }
+
+    /* Vertical Column Math Layout */
+    .vertical-math {
+      display: inline-grid;
+      gap: 4px 10px;
+      align-items: center;
+      justify-items: center;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .vertical-math.cols-3 {
+      grid-template-columns: 44px 58px 58px;
+    }
+
+    .vertical-math.cols-4 {
+      grid-template-columns: 44px 58px 58px 58px;
+    }
+
+    .pv-header {
+      font-size: 0.82rem;
+      font-weight: 900;
+      padding: 3px 10px;
+      border-radius: 8px;
+      letter-spacing: 0.04em;
+    }
+
+    .pv-c { background: var(--pv-c-bg); color: var(--pv-c-fg); }
+    .pv-d { background: var(--pv-d-bg); color: var(--pv-d-fg); }
+    .pv-u { background: var(--pv-u-bg); color: var(--pv-u-fg); }
+
+    .v-digit {
+      font-size: 2.75rem;
+      font-weight: 900;
+      line-height: 1.05;
+      width: 56px;
+      height: 54px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+    }
+
+    .v-digit.col-c { color: var(--pv-c-fg); background: rgba(219, 234, 254, 0.35); }
+    .v-digit.col-d { color: var(--pv-d-fg); background: rgba(204, 251, 241, 0.42); }
+    .v-digit.col-u { color: var(--pv-u-fg); background: rgba(254, 243, 199, 0.52); }
+
+    .v-op {
+      font-size: 2.2rem;
+      font-weight: 900;
+      color: var(--coral-main);
+    }
+
+    .v-line {
+      grid-column: 1 / -1;
+      width: 100%;
+      height: 5px;
+      background: var(--jungle-deep);
+      border-radius: 99px;
+      margin: 4px 0;
+    }
+
+    .v-answer-slot {
+      grid-column: 2 / -1;
+      width: 100%;
+      min-height: 54px;
+      border: 3px dashed #9CA3AF;
+      border-radius: 14px;
+      background: #F9FAFB;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+      font-weight: 900;
+      color: var(--jungle-deep);
+      letter-spacing: 0.14em;
+      transition: all 0.2s ease;
+    }
+
+    .v-answer-slot.filled {
+      border-style: solid;
+      border-color: var(--jungle-bright);
+      background: #ECFDF5;
+    }
+
+    .v-answer-slot.correct {
+      border-color: #16A34A;
+      background: #DCFCE7;
+      color: #15803D;
+      transform: scale(1.05);
+    }
+
+    .v-answer-slot.wrong {
+      border-color: #F97316;
+      background: #FFF7ED;
+      animation: shake 0.35s ease;
+    }
+
+    /* Horizontal Math Layout */
+    .horizontal-math {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-size: 2.85rem;
+      font-weight: 900;
+      font-variant-numeric: tabular-nums;
+      color: var(--text-dark);
+    }
+
+    .h-op {
+      color: var(--coral-main);
+    }
+
+    .h-answer-box {
+      min-width: 100px;
+      height: 66px;
+      padding: 0 18px;
+      border: 4px dashed #9CA3AF;
+      border-radius: 16px;
+      background: #F9FAFB;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--jungle-deep);
+    }
+
+    .h-answer-box.filled {
+      border-style: solid;
+      border-color: var(--jungle-bright);
+      background: #ECFDF5;
+    }
+
+    .h-answer-box.correct {
+      border-color: #16A34A;
+      background: #DCFCE7;
+      color: #15803D;
+    }
+
+    .h-answer-box.wrong {
+      border-color: #F97316;
+      background: #FFF7ED;
+      animation: shake 0.35s ease;
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20% { transform: translateX(-8px); }
+      40% { transform: translateX(8px); }
+      60% { transform: translateX(-6px); }
+      80% { transform: translateX(6px); }
+    }
+
+    /* Visual Scaffolding Hint Box (Base-10 Blocks & Step-by-Step) */
+    .visual-hint-box {
+      display: none;
+      width: 100%;
+      margin-top: 12px;
+      background: #FFFBEB;
+      border: 3px solid #FDE68A;
+      border-radius: 18px;
+      padding: 12px 14px;
+      animation: fadeSlideIn 0.22s ease;
+    }
+
+    .visual-hint-box.open {
+      display: block;
+    }
+
+    .hint-title {
+      font-size: 0.92rem;
+      font-weight: 900;
+      color: #92400E;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .hint-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: var(--text-dark);
+    }
+
+    .blocks-row {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 6px;
+      padding: 6px 10px;
+      background: #FFFFFF;
+      border-radius: 12px;
+      border: 2px solid #FEF3C7;
+    }
+
+    .blocks-label {
+      font-weight: 900;
+      min-width: 58px;
+      color: var(--jungle-deep);
+    }
+
+    .ten-rod {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(180deg, #14B8A6, #0F766E);
+      color: #FFFFFF;
+      font-size: 0.78rem;
+      font-weight: 900;
+      padding: 4px 8px;
+      border-radius: 8px;
+      box-shadow: 0 2px 0 #115E59;
+    }
+
+    .ten-rod.crossed {
+      opacity: 0.38;
+      text-decoration: line-through;
+      background: #94A3B8;
+      box-shadow: none;
+    }
+
+    .one-dot {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: linear-gradient(180deg, #FBBF24, #D97706);
+      color: #451A03;
+      font-size: 0.75rem;
+      font-weight: 900;
+      box-shadow: 0 2px 0 #92400E;
+    }
+
+    .one-dot.crossed {
+      opacity: 0.35;
+      background: #CBD5E1;
+      box-shadow: none;
+      text-decoration: line-through;
+    }
+
+    .groups-visual {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+    }
+
+    .group-plate {
+      background: #ECFDF5;
+      border: 2px solid #6EE7B7;
+      border-radius: 14px;
+      padding: 6px 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      min-width: 72px;
+    }
+
+    .group-plate-title {
+      font-size: 0.72rem;
+      font-weight: 900;
+      color: #065F46;
+    }
+
+    .group-items {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 3px;
+      justify-content: center;
+      max-width: 110px;
+      font-size: 1.05rem;
+    }
+
+    /* Choice Buttons Grid (4 Giant Tactile Lilypads) */
+    .choices-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .choice-btn {
+      min-height: 76px;
+      font-size: 2.1rem;
+      font-weight: 900;
+      font-variant-numeric: tabular-nums;
+      border-radius: 22px;
+      border: 3px solid #BCE0C2;
+      border-bottom: 7px solid #8CC396;
+      background: linear-gradient(180deg, #FFFFFF 0%, #F0FAF2 100%);
+      color: var(--jungle-deep);
+      cursor: pointer;
+      transition: transform 0.1s ease, background 0.15s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-family: inherit;
+    }
+
+    .choice-btn:active {
+      transform: translateY(4px);
+      border-bottom-width: 3px;
+    }
+
+    .choice-btn.correct {
+      background: linear-gradient(180deg, #4ADE80 0%, #22C55E 100%);
+      border-color: #16A34A;
+      border-bottom-color: #15803D;
+      color: #FFFFFF;
+      transform: scale(1.03);
+    }
+
+    .choice-btn.wrong {
+      background: #FFF7ED;
+      border-color: #FDBA74;
+      border-bottom-color: #EA580C;
+      color: #9A3412;
+      opacity: 0.65;
+    }
+
+    /* Numeric Keypad Mode (Big Chunky Tablet Keys) */
+    .keypad-wrap {
+      display: none;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .keypad-wrap.active {
+      display: flex;
+    }
+
+    .keypad-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 8px;
+    }
+
+    .key-btn {
+      min-height: 60px;
+      border-radius: 16px;
+      border: 2px solid #CDE5D2;
+      border-bottom: 5px solid #9FC9A7;
+      background: #FFFFFF;
+      color: var(--jungle-deep);
+      font-family: inherit;
+      font-size: 1.65rem;
+      font-weight: 900;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .key-btn:active {
+      transform: translateY(3px);
+      border-bottom-width: 2px;
+    }
+
+    .key-btn.key-del {
+      background: #FEF2F2;
+      border-color: #FECACA;
+      border-bottom-color: #EF4444;
+      color: #B91C1C;
+      font-size: 1.25rem;
+    }
+
+    .key-btn.key-ok {
+      grid-column: span 2;
+      background: linear-gradient(180deg, #38D27F 0%, #1F9D5A 100%);
+      border-color: #16A34A;
+      border-bottom-color: #146B3C;
+      color: #FFFFFF;
+      font-size: 1.2rem;
+    }
+
+    /* =========================================================
+       S-PEN / TOUCH SCRATCHPAD DRAWER (SAMSUNG TAB S6 LITE!)
+       ========================================================= */
+    .scratchpad-drawer {
+      display: none;
+      background: #FFFFFF;
+      border: 3px solid #93C5FD;
+      border-bottom: 6px solid #3B82F6;
+      border-radius: var(--radius-md);
+      padding: 10px 12px;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .scratchpad-drawer.open {
+      display: flex;
+    }
+
+    .scratch-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .scratch-title {
+      font-size: 0.88rem;
+      font-weight: 900;
+      color: #1D4ED8;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .pen-colors {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .color-dot {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      border: 3px solid #E5E7EB;
+      cursor: pointer;
+      transition: transform 0.12s ease;
+    }
+
+    .color-dot.active {
+      transform: scale(1.18);
+      border-color: #1E293B;
+    }
+
+    .scratch-canvas-wrap {
+      width: 100%;
+      height: 300px;
+      border-radius: 14px;
+      border: 2px dashed #BFDBFE;
+      background: #F8FAFC;
+      overflow: hidden;
+      position: relative;
+      touch-action: none;
+      transition: height 0.2s ease;
+    }
+
+    .scratch-canvas-wrap.expanded {
+      height: 440px;
+    }
+
+    #scratchCanvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+      cursor: crosshair;
+      touch-action: none;
+    }
+
+    /* =========================================================
+       VIEW 3: WILDLIFE SANCTUARY & COCO'S WARDROBE
+       ========================================================= */
+    .sanctuary-tabs {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .sanctuary-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+
+    .animal-card {
+      background: var(--cream-bg);
+      border: 3px solid #D7ECD9;
+      border-bottom: 6px solid #B5D8B9;
+      border-radius: var(--radius-md);
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 8px;
+      position: relative;
+      transition: transform 0.14s ease;
+    }
+
+    .animal-card.unlocked {
+      cursor: pointer;
+    }
+
+    .animal-card.unlocked:active {
+      transform: scale(0.97);
+    }
+
+    .animal-card.locked {
+      background: #F1F5F2;
+      border-color: #D1DDD5;
+      border-bottom-color: #B4C4BA;
+    }
+
+    .animal-emoji-stage {
+      width: 82px;
+      height: 82px;
+      border-radius: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3.1rem;
+      background: #E8F5E9;
+      transition: transform 0.25s cubic-bezier(0.2, 1.4, 0.4, 1);
+    }
+
+    .animal-card.locked .animal-emoji-stage {
+      filter: grayscale(1) brightness(0.45);
+      background: #E2E8F0;
+    }
+
+    .animal-card.bounce .animal-emoji-stage {
+      transform: scale(1.22) rotate(-6deg);
+    }
+
+    .animal-name {
+      margin: 0;
+      font-size: 1.05rem;
+      font-weight: 900;
+      color: var(--text-dark);
+    }
+
+    .animal-fact {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--text-mid);
+      line-height: 1.3;
+      min-height: 42px;
+    }
+
+    .hearts-row {
+      font-size: 0.9rem;
+      letter-spacing: 2px;
+    }
+
+    .wardrobe-layout {
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      gap: 16px;
+      align-items: start;
+    }
+
+    .wardrobe-preview {
+      background: linear-gradient(180deg, #AEEAF4 0%, #4DC2D4 60%, #1C8599 61%, #146A7A 100%);
+      border-radius: var(--radius-lg);
+      border: 4px solid #FFFFFF;
+      border-bottom: 7px solid #0E5868;
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      color: #FFFFFF;
+      text-align: center;
+    }
+
+    .wardrobe-items-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .wardrobe-animal-strip {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-bottom: 6px;
+    }
+
+    .wardrobe-animal-chip {
+      border: 2px solid rgba(255, 255, 255, 0.55);
+      background: rgba(255, 255, 255, 0.22);
+      color: #FFFFFF;
+      border-radius: 14px;
+      padding: 6px 10px;
+      font-size: 1.35rem;
+      cursor: pointer;
+      transition: transform 0.12s ease, background 0.15s ease;
+    }
+
+    .wardrobe-animal-chip.active {
+      background: #FEF3C7;
+      border-color: #F59E0B;
+      transform: scale(1.12);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .animal-card.active-companion {
+      border-color: #22C55E;
+      border-bottom-color: #15803D;
+      background: #F0FDF4;
+      box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.22);
+    }
+
+    .animal-card.legendary {
+      border-color: #F59E0B;
+      border-bottom-color: #B45309;
+      background: linear-gradient(180deg, #FFFBEB 0%, #FEF3C7 100%);
+    }
+
+    .power-tag {
+      background: #EEF7F0;
+      border: 2px solid #BCE0C2;
+      color: var(--jungle-deep);
+      border-radius: 12px;
+      padding: 6px 8px;
+      font-size: 0.78rem;
+      font-weight: 800;
+      line-height: 1.25;
+      width: 100%;
+    }
+
+    .companion-power-pill {
+      background: rgba(255, 253, 245, 0.94);
+      border: 2px solid #FCD34D;
+      color: #92400E;
+      border-radius: 14px;
+      padding: 7px 10px;
+      font-size: 0.82rem;
+      font-weight: 900;
+      text-align: center;
+      width: 100%;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);
+    }
+
+    .star-road-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .rank-banner {
+      background: linear-gradient(135deg, #0369A1 0%, #0284C7 60%, #0EA5E9 100%);
+      color: #FFFFFF;
+      border-radius: var(--radius-md);
+      border-bottom: 6px solid #075985;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .star-milestones-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .milestone-card {
+      background: var(--cream-bg);
+      border: 3px solid #BAE6FD;
+      border-bottom: 6px solid #38BDF8;
+      border-radius: var(--radius-md);
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 8px;
+    }
+
+    .milestone-card.ready {
+      border-color: #F59E0B;
+      border-bottom-color: #B45309;
+      background: #FFFBEB;
+      box-shadow: 0 0 0 4px rgba(251, 191, 36, 0.28);
+    }
+
+    .milestone-card.claimed {
+      border-color: #86EFAC;
+      border-bottom-color: #22C55E;
+      background: #F0FDF4;
+    }
+
+    .pill-stars.clickable {
+      cursor: pointer;
+      transition: transform 0.12s ease;
+    }
+
+    .pill-stars.clickable:active {
+      transform: scale(0.95);
+    }
+
+    .pill-stars.has-reward {
+      animation: chestPulse 1.4s ease-in-out infinite;
+      background: #FEF3C7;
+      border-color: #F59E0B;
+      color: #92400E;
+    }
+
+    @media (max-width: 980px) {
+      .star-milestones-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 780px) {
+      .star-milestones-grid { grid-template-columns: 1fr; }
+    }
+
+    /* =========================================================
+       VIEW 4: PARENTS CORNER
+       ========================================================= */
+    .parents-panel {
+      background: var(--cream-bg);
+      border: 3px solid #D7ECD9;
+      border-bottom: 6px solid #B5D8B9;
+      border-radius: var(--radius-lg);
+      padding: 20px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .stats-summary-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+
+    .summary-box {
+      background: #FFFFFF;
+      border: 2px solid #E2EFE4;
+      border-radius: 18px;
+      padding: 14px;
+      text-align: center;
+    }
+
+    .summary-num {
+      font-size: 1.9rem;
+      font-weight: 900;
+      color: var(--jungle-deep);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .summary-label {
+      font-size: 0.82rem;
+      font-weight: 800;
+      color: var(--text-muted);
+    }
+
+    .skill-bars {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .skill-row {
+      background: #FFFFFF;
+      border: 2px solid #E2EFE4;
+      border-radius: 16px;
+      padding: 12px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .skill-row-head {
+      display: flex;
+      justify-content: space-between;
+      font-weight: 800;
+      font-size: 0.92rem;
+    }
+
+    .bar-track {
+      width: 100%;
+      height: 12px;
+      border-radius: 999px;
+      background: #E8F5E9;
+      overflow: hidden;
+    }
+
+    .bar-fill {
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #34C77B, #16A34A);
+      transition: width 0.35s ease;
+    }
+
+    .settings-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .setting-card {
+      background: #FFFFFF;
+      border: 2px solid #E2EFE4;
+      border-radius: 16px;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .setting-card label {
+      font-weight: 800;
+      font-size: 0.92rem;
+      color: var(--text-dark);
+      display: block;
+    }
+
+    .setting-card small {
+      font-weight: 600;
+      color: var(--text-muted);
+      font-size: 0.78rem;
+    }
+
+    .toggle-switch {
+      width: 54px;
+      height: 30px;
+      border-radius: 999px;
+      border: none;
+      background: #CBD5E1;
+      position: relative;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: background 0.2s ease;
+    }
+
+    .toggle-switch::after {
+      content: '';
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: #FFFFFF;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      transition: transform 0.2s ease;
+    }
+
+    .toggle-switch.on {
+      background: #22C55E;
+    }
+
+    .toggle-switch.on::after {
+      transform: translateX(24px);
+    }
+
+    /* =========================================================
+       TREASURE CHEST CELEBRATION MODAL
+       ========================================================= */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 45, 31, 0.72);
+      backdrop-filter: blur(4px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+      padding: 16px;
+    }
+
+    .modal-overlay.open {
+      display: flex;
+    }
+
+    .modal-card {
+      background: var(--cream-bg);
+      border: 5px solid #FCD34D;
+      border-bottom: 10px solid #D97706;
+      border-radius: 30px;
+      padding: 26px 28px;
+      max-width: 480px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 22px 50px rgba(0, 0, 0, 0.35);
+      animation: popIn 0.3s cubic-bezier(0.2, 1.3, 0.4, 1);
+    }
+
+    @keyframes popIn {
+      from { transform: scale(0.75); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .chest-visual {
+      font-size: 5.5rem;
+      line-height: 1;
+      margin: 8px 0 12px;
+      cursor: pointer;
+      display: inline-block;
+      transition: transform 0.15s ease;
+      animation: chestPulse 1.4s ease-in-out infinite;
+    }
+
+    .chest-visual:active {
+      transform: scale(0.9) rotate(-6deg);
+    }
+
+    @keyframes chestPulse {
+      0%, 100% { transform: scale(1) rotate(0deg); }
+      50% { transform: scale(1.08) rotate(3deg); }
+    }
+
+    .reward-reveal {
+      background: #FFFFFF;
+      border: 3px solid #D7ECD9;
+      border-radius: 22px;
+      padding: 16px;
+      margin: 12px 0 18px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Confetti Canvas */
+    #confettiCanvas {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 150;
+    }
+
+    /* Toast Notification */
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%) translateY(90px);
+      background: var(--jungle-deep);
+      color: #FFFFFF;
+      font-weight: 800;
+      font-size: 0.98rem;
+      padding: 12px 22px;
+      border-radius: 999px;
+      box-shadow: 0 10px 26px rgba(0, 0, 0, 0.25);
+      z-index: 200;
+      transition: transform 0.25s cubic-bezier(0.2, 1.2, 0.4, 1);
+      pointer-events: none;
+    }
+
+    .toast.show {
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* =========================================================
+       RESPONSIVE BREAKPOINTS (TABLET PORTRAIT & COMPACT VIEW)
+       ========================================================= */
+    @media (max-width: 980px) {
+      .worlds-grid { grid-template-columns: repeat(2, 1fr); }
+      .sanctuary-grid { grid-template-columns: repeat(3, 1fr); }
+      .arena-grid { grid-template-columns: 270px 1fr; }
+      .wardrobe-layout { grid-template-columns: 260px 1fr; }
+      .wardrobe-items-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 780px) {
+      .hero-banner { grid-template-columns: 1fr; text-align: center; }
+      .hero-actions { justify-content: center; }
+      .arena-grid { grid-template-columns: 1fr; }
+      .coco-panel { min-height: 220px; flex-direction: row; flex-wrap: wrap; justify-content: center; gap: 10px; }
+      .coco-stage-wrap { width: 160px; height: 140px; }
+      .coco-panel-footer { width: auto; flex: 1; min-width: 180px; }
+      .worlds-grid { grid-template-columns: 1fr; }
+      .sanctuary-grid { grid-template-columns: repeat(2, 1fr); }
+      .stats-summary-grid { grid-template-columns: repeat(2, 1fr); }
+      .skill-bars, .settings-list { grid-template-columns: 1fr; }
+      .wardrobe-layout { grid-template-columns: 1fr; }
+      .keypad-grid { grid-template-columns: repeat(4, 1fr); }
+      .key-btn.key-ok { grid-column: span 4; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Decorative Jungle Backdrop -->
+  <div class="jungle-backdrop" aria-hidden="true">
+    <div class="sun-glow"></div>
+    <svg class="bg-hills" viewBox="0 0 1440 220" preserveAspectRatio="none">
+      <path d="M0,120 C240,30 480,190 740,105 C1010,20 1230,165 1440,85 L1440,220 L0,220 Z" fill="#52B788" />
+      <path d="M0,160 C320,90 620,210 960,135 C1180,88 1320,175 1440,140 L1440,220 L0,220 Z" fill="#2D8A5E" />
+    </svg>
+  </div>
+
+  <canvas id="confettiCanvas"></canvas>
+
+  <div class="app-shell">
+    <!-- TOP BAR -->
+    <header class="top-bar">
+      <div class="brand-group">
+        <div class="brand-logo" aria-hidden="true">🐊</div>
+        <div>
+          <h1 class="brand-title">La Selva de Coco</h1>
+          <div class="brand-sub">Aventura Matemática Salvaje</div>
+        </div>
+      </div>
+
+      <nav class="nav-tabs" aria-label="Navegación principal">
+        <button id="navResumeGame" class="nav-btn" style="display:none;background:#FEF3C7;color:#92400E;border-bottom-color:#F59E0B;" onclick="resumeActiveMission()">🎮 Volver al Reto (<span id="navResumeStep">1/5</span>)</button>
+        <button id="navMap" class="nav-btn active" onclick="switchView('map')">🗺️ Aventura</button>
+        <button id="navSanctuary" class="nav-btn" onclick="switchView('sanctuary')">🏕️ Mi Santuario</button>
+        <button id="navParents" class="nav-btn" onclick="openParentsGate()">👨‍👩‍👦 Padres</button>
+      </nav>
+
+      <div class="status-pills">
+        <button id="installPwaBtn" class="nav-btn" style="display:none;background:#DCFCE7;color:#166534;border-bottom-color:#22C55E;padding:8px 12px;font-size:0.86rem;" onclick="promptInstallPWA()">📲 Instalar</button>
+        <div class="stat-pill pill-gems" title="Gemas de la selva">💎 <span id="topGems">0</span></div>
+        <button id="starsPillBtn" class="stat-pill pill-stars clickable" onclick="openStarRoad()" title="Ver Camino de Estrellas y premios">⭐ <span id="topStars">0</span></button>
+        <button id="soundToggleBtn" class="icon-btn" onclick="toggleSound()" title="Activar o silenciar sonido">🔊</button>
+      </div>
+    </header>
+
+    <!-- =========================================================
+         VIEW 1: MAPA DE LA SELVA
+         ========================================================= -->
+    <main id="viewMap" class="view-section active">
+      <section class="hero-banner">
+        <div class="hero-copy">
+          <h2>¡Hola, Explorador! 🌿</h2>
+          <p>Elige tu animal favorito, sube su nivel para potenciar sus poderes y junta ⭐ estrellas para desbloquear premios exclusivos.</p>
+          <div class="hero-actions">
+            <button id="quickPlayBtn" class="btn-3d btn-amber" onclick="startRecommendedMission()">
+              ▶️ ¡Aventura con Coco!
+            </button>
+            <button class="btn-3d btn-cream" onclick="switchView('sanctuary')">
+              🦁 Mis Animales (<span id="heroAnimalCount">1</span>/13)
+            </button>
+            <button class="btn-3d btn-blue" onclick="openStarRoad()">
+              ⭐ Premios (<span id="heroRankBadge">Novato</span>)
+            </button>
+          </div>
+        </div>
+        <div class="hero-coco-stage">
+          <div class="coco-mini-bubble" id="heroBubble">¡Ñam ñam! ¡Hoy seremos campeones!</div>
+          <div id="heroCocoContainer" style="width:170px;height:135px;"></div>
+        </div>
+      </section>
+
+      <div class="section-header-row">
+        <h2 class="section-title">🧭 Elige tu Hábitat Salvaje</h2>
+        <span style="font-weight:800;font-size:0.86rem;color:var(--text-mid);">Sin tiempo límite · Con ayudas visuales 💡</span>
+      </div>
+
+      <section id="worldsGrid" class="worlds-grid" aria-label="Mundos matemáticos"></section>
+
+      <section class="custom-bar">
+        <div>
+          <strong style="color:#92400E;font-size:1rem;">🎯 Práctica Rápida por Reto:</strong>
+          <div style="font-size:0.82rem;font-weight:700;color:#B45309;">Elige exactamente qué quieres entrenar hoy</div>
+        </div>
+        <div class="custom-chips">
+          <button class="chip-btn" onclick="startCustomMission('add2_easy')">➕ Sumas 2 dígitos</button>
+          <button class="chip-btn" onclick="startCustomMission('add3')">➕ Sumas 3 cantidades</button>
+          <button class="chip-btn" onclick="startCustomMission('sub2_easy')">➖ Restas 2 dígitos</button>
+          <button class="chip-btn" onclick="startCustomMission('sub3')">➖ Restas 3 cantidades</button>
+          <button id="chipMul" class="chip-btn" onclick="startCustomMission('mul')">✖️ Multiplicar</button>
+          <button id="chipDiv" class="chip-btn" onclick="startCustomMission('div')">➗ Dividir</button>
+        </div>
+      </section>
+    </main>
+
+    <!-- =========================================================
+         VIEW 2: GAMEPLAY ARENA
+         ========================================================= -->
+    <section id="viewGame" class="view-section">
+      <div class="game-hud">
+        <div class="hud-left">
+          <button class="btn-3d btn-cream" style="padding:8px 14px;font-size:0.9rem;" onclick="switchView('map')">⬅️ Mapa</button>
+          <span id="hudWorldName" class="hud-mission-title">🐊 Río de Coco</span>
+        </div>
+
+        <div id="steppingStones" class="stepping-stones" aria-label="Progreso de la misión"></div>
+
+        <div class="hud-controls">
+          <span id="streakBadge" class="streak-badge" style="display:none;">🔥 <span id="streakNum">0</span></span>
+          <button id="inputModeBtn" class="hud-toggle-btn" onclick="toggleInputMode()">🎯 Opciones</button>
+          <button id="scratchToggleBtn" class="hud-toggle-btn" onclick="toggleScratchpad()">✏️ Pizarra</button>
+        </div>
+      </div>
+
+      <div class="arena-grid">
+        <!-- LEFT: COCO THE CROCODILE -->
+        <aside class="coco-panel">
+          <div id="cocoSpeech" class="speech-bubble">¡Vamos juntos! Puedes usar los bloques de ayuda cuando quieras.</div>
+
+          <div class="coco-stage-wrap" onclick="petCoco()" title="¡Toca a Coco!">
+            <div id="gameCocoContainer" style="width:100%;height:100%;"></div>
+          </div>
+
+          <div class="coco-panel-footer">
+            <div id="companionPowerPill" class="companion-power-pill">⚡ Poder: +2 💎 en sumas</div>
+            <button id="usePowerBtn" class="btn-3d btn-blue hint-btn" style="display:none;" onclick="useActiveCompanionPower()">
+              ⚡ Usar Poder
+            </button>
+            <button id="hintBtn" class="btn-3d btn-amber hint-btn" onclick="toggleVisualHint()">
+              💡 Pista (Bloques)
+            </button>
+          </div>
+        </aside>
+
+        <!-- RIGHT: MATH PROBLEM & INTERACTION -->
+        <div class="math-panel">
+          <div class="problem-header">
+            <span id="problemTypeLabel" class="problem-type-pill">➕ Suma de 2 dígitos</span>
+            <div id="formatSwitch" class="format-switch">
+              <button id="fmtVertBtn" class="format-opt active" onclick="setMathFormat('vertical')">Vertical</button>
+              <button id="fmtHorizBtn" class="format-opt" onclick="setMathFormat('horizontal')">Horizontal</button>
+            </div>
+          </div>
+
+          <div class="problem-stage">
+            <div id="problemDisplay"></div>
+            <div id="visualHintBox" class="visual-hint-box"></div>
+          </div>
+
+          <!-- S-PEN / FINGER SCRATCHPAD -->
+          <div id="scratchpadDrawer" class="scratchpad-drawer">
+            <div class="scratch-toolbar">
+              <span class="scratch-title">✏️ Pizarra (Dedo o S-Pen)</span>
+              <div class="pen-colors">
+                <button class="color-dot active" style="background:#1E293B;" onclick="setPenColor('#1E293B', this)" title="Negro"></button>
+                <button class="color-dot" style="background:#0F766E;" onclick="setPenColor('#0F766E', this)" title="Verde Decenas"></button>
+                <button class="color-dot" style="background:#D97706;" onclick="setPenColor('#D97706', this)" title="Naranja Unidades"></button>
+                <button class="color-dot" style="background:#DC2626;" onclick="setPenColor('#DC2626', this)" title="Rojo"></button>
+                <button id="scratchSizeBtn" class="hud-toggle-btn" style="padding:5px 10px;" onclick="toggleScratchpadSize()" title="Hacer más grande">⛶ Grande</button>
+                <button class="hud-toggle-btn" style="padding:5px 10px;" onclick="undoScratchpad()" title="Deshacer último trazo">↩️ Deshacer</button>
+                <button class="hud-toggle-btn" style="padding:5px 10px;" onclick="clearScratchpad(true)" title="Limpiar pizarra">🧹 Borrar</button>
+              </div>
+            </div>
+            <div class="scratch-canvas-wrap">
+              <canvas id="scratchCanvas"></canvas>
+            </div>
+          </div>
+
+          <!-- ANSWER AREA: CHOICES -->
+          <div id="choicesGrid" class="choices-grid"></div>
+
+          <!-- ANSWER AREA: KEYPAD -->
+          <div id="keypadWrap" class="keypad-wrap">
+            <div class="keypad-grid">
+              <button class="key-btn" onclick="pressKey('1')">1</button>
+              <button class="key-btn" onclick="pressKey('2')">2</button>
+              <button class="key-btn" onclick="pressKey('3')">3</button>
+              <button class="key-btn" onclick="pressKey('4')">4</button>
+              <button class="key-btn" onclick="pressKey('5')">5</button>
+              <button class="key-btn key-del" onclick="pressBackspace()">⌫</button>
+              <button class="key-btn" onclick="pressKey('6')">6</button>
+              <button class="key-btn" onclick="pressKey('7')">7</button>
+              <button class="key-btn" onclick="pressKey('8')">8</button>
+              <button class="key-btn" onclick="pressKey('9')">9</button>
+              <button class="key-btn" onclick="pressKey('0')">0</button>
+              <button class="key-btn key-ok" onclick="submitKeypadAnswer()">✅ ¡Listo!</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         VIEW 3: MI SANTUARIO, VESTUARIO Y CAMINO DE ESTRELLAS
+         ========================================================= -->
+    <section id="viewSanctuary" class="view-section">
+      <div class="section-header-row">
+        <div class="sanctuary-tabs">
+          <button id="tabAnimalsBtn" class="btn-3d btn-green" style="padding:11px 18px;" onclick="switchSanctuaryTab('animals')">🦁 Mis Animales (<span id="sancAnimalCount">1</span>/13)</button>
+          <button id="tabWardrobeBtn" class="btn-3d btn-cream" style="padding:11px 18px;" onclick="switchSanctuaryTab('wardrobe')">🎩 Vestir Animales</button>
+          <button id="tabStarsBtn" class="btn-3d btn-cream" style="padding:11px 18px;" onclick="switchSanctuaryTab('stars')">⭐ Premios Estrellas</button>
+        </div>
+        <span id="sanctuarySubtitle" style="font-weight:800;font-size:0.9rem;color:var(--jungle-deep);">¡Elige tu compañero, súbelo de nivel para potenciar su poder y vístelo!</span>
+      </div>
+
+      <div id="sanctuaryAnimalsPane" class="sanctuary-grid"></div>
+
+      <div id="sanctuaryWardrobePane" class="wardrobe-layout" style="display:none;">
+        <div class="wardrobe-preview">
+          <div style="font-size:0.82rem;font-weight:800;opacity:0.95;">Elige qué animal vestir:</div>
+          <div id="wardrobeAnimalStrip" class="wardrobe-animal-strip"></div>
+          <strong id="wardrobeAnimalName" style="font-size:1.15rem;">🐊 Coco el Cocodrilo</strong>
+          <div id="wardrobeCocoContainer" style="width:220px;height:185px;"></div>
+          <div id="wardrobeEquippedLabel" style="font-weight:800;font-size:0.92rem;background:rgba(0,0,0,0.22);padding:6px 14px;border-radius:999px;">Sin accesorio</div>
+        </div>
+        <div id="wardrobeItemsGrid" class="wardrobe-items-grid"></div>
+      </div>
+
+      <div id="sanctuaryStarsPane" class="star-road-wrap" style="display:none;">
+        <div id="starRankBanner" class="rank-banner"></div>
+        <div id="starMilestonesGrid" class="star-milestones-grid"></div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         VIEW 4: ZONA DE PADRES
+         ========================================================= -->
+    <section id="viewParents" class="view-section">
+      <div class="parents-panel">
+        <div class="section-header-row">
+          <div>
+            <h2 class="section-title">📊 Progreso de Aprendizaje (Zona Padres)</h2>
+            <p style="margin:4px 0 0;font-size:0.88rem;font-weight:700;color:var(--text-muted);">Seguimiento del niño y configuración pedagógica</p>
+          </div>
+          <button class="btn-3d btn-green" style="padding:10px 18px;" onclick="switchView('map')">⬅️ Volver al Juego</button>
+        </div>
+
+        <div class="stats-summary-grid">
+          <div class="summary-box">
+            <div class="summary-num" id="statSolved">0</div>
+            <div class="summary-label">Retos resueltos</div>
+          </div>
+          <div class="summary-box">
+            <div class="summary-num" id="statAccuracy">0%</div>
+            <div class="summary-label">Aciertos al 1er intento</div>
+          </div>
+          <div class="summary-box">
+            <div class="summary-num" id="statBestStreak">0</div>
+            <div class="summary-label">Mejor racha 🔥</div>
+          </div>
+          <div class="summary-box">
+            <div class="summary-num" id="statChests">0</div>
+            <div class="summary-label">Cofres abiertos 🎁</div>
+          </div>
+        </div>
+
+        <div>
+          <h3 style="margin:0 0 10px;font-size:1.05rem;color:var(--jungle-deep);">Dominio por tipo de operación</h3>
+          <div id="skillBarsContainer" class="skill-bars"></div>
+        </div>
+
+        <div>
+          <h3 style="margin:0 0 10px;font-size:1.05rem;color:var(--jungle-deep);">Ajustes recomendados para 7 años</h3>
+          <div class="settings-list">
+            <div class="setting-card">
+              <div>
+                <label>Ayuda visual automática al fallar</label>
+                <small>Abre los bloques Base 10 si se equivoca una vez</small>
+              </div>
+              <button id="setAutoHint" class="toggle-switch on" onclick="toggleSetting('autoHint')"></button>
+            </div>
+            <div class="setting-card">
+              <div>
+                <label>Incluir Multiplicación y División</label>
+                <small>Mundos 5 y 6 (tablas 2, 3, 4, 5 y 10 con grupos visuales)</small>
+              </div>
+              <button id="setIncludeMulDiv" class="toggle-switch on" onclick="toggleSetting('includeMulDiv')"></button>
+            </div>
+            <div class="setting-card">
+              <div>
+                <label>Modo Teclado Numérico por defecto</label>
+                <small>En lugar de 4 opciones, escribe la respuesta (+50% gemas)</small>
+              </div>
+              <button id="setDefaultKeypad" class="toggle-switch" onclick="toggleSetting('defaultKeypad')"></button>
+            </div>
+            <div class="setting-card">
+              <div>
+                <label>Reiniciar todo el progreso</label>
+                <small>Borra estadísticas, gemas y animales desbloqueados</small>
+              </div>
+              <button class="btn-3d btn-coral" style="padding:8px 14px;font-size:0.85rem;" onclick="confirmResetProgress()">🗑️ Reiniciar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- =========================================================
+       TREASURE CHEST REWARD MODAL
+       ========================================================= -->
+  <div id="chestModal" class="modal-overlay" role="dialog" aria-modal="true">
+    <div class="modal-card">
+      <h2 id="chestTitle" style="margin:0;font-size:1.65rem;font-weight:900;color:var(--jungle-deep);">🎉 ¡Misión Completada!</h2>
+      <p id="chestSubtitle" style="margin:6px 0 8px;font-weight:800;color:var(--text-mid);">¡Toca el Cofre del Tesoro 3 veces para abrirlo!</p>
+
+      <div id="chestInteractiveArea">
+        <div id="chestEmoji" class="chest-visual" onclick="tapTreasureChest()">🎁</div>
+        <div id="chestTapsLeft" style="font-weight:900;color:#B45309;font-size:1.05rem;">¡Toca el cofre! (3)</div>
+      </div>
+
+      <div id="chestRewardArea" style="display:none;">
+        <div id="chestRewardContent" class="reward-reveal"></div>
+        <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+          <button class="btn-3d btn-green" style="padding:13px 22px;font-size:1.05rem;" onclick="continueSameMission()">🔄 ¡Otra Misión!</button>
+          <button class="btn-3d btn-amber" style="padding:13px 20px;font-size:1.05rem;" onclick="closeChestAndGo('sanctuary')">🦁 Ir al Santuario</button>
+          <button class="btn-3d btn-cream" style="padding:13px 18px;font-size:1rem;" onclick="closeChestAndGo('map')">🗺️ Mapa</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PARENTS GATE MODAL -->
+  <div id="parentsGateModal" class="modal-overlay" role="dialog" aria-modal="true">
+    <div class="modal-card" style="max-width:390px;">
+      <h2 style="margin:0 0 8px;color:var(--jungle-deep);">🔒 Acceso para Padres</h2>
+      <p id="gateQuestionText" style="font-weight:800;color:var(--text-mid);margin:0 0 14px;">Para entrar, resuelve esta multiplicación rápida:</p>
+      <div id="gateMathExpr" style="font-size:2rem;font-weight:900;color:var(--jungle-deep);margin-bottom:14px;">7 × 8 = ?</div>
+      <div id="gateChoices" style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px;"></div>
+      <button class="btn-3d btn-cream" style="padding:10px 20px;" onclick="closeParentsGate()">Cancelar</button>
+    </div>
+  </div>
+
+  <div id="toast" class="toast"></div>
+
+  <script>
+    /* =========================================================
+       DATA DEFINITIONS: WORLDS, WILD ANIMALS, COCO ACCESSORIES
+       ========================================================= */
+    const WORLDS = [
+      {
+        id: 'rio_coco',
+        num: 1,
+        name: 'Río de Coco',
+        icon: '🐊',
+        bg: '#CCFBF1',
+        desc: 'Sumas de 2 dígitos sin llevar',
+        example: '24 + 13',
+        skillKey: 'add2_easy',
+        isMulDiv: false
+      },
+      {
+        id: 'sabana_leon',
+        num: 2,
+        name: 'Sabana del León',
+        icon: '🦁',
+        bg: '#FEF3C7',
+        desc: 'Restas de 2 dígitos sin prestar',
+        example: '47 − 23',
+        skillKey: 'sub2_easy',
+        isMulDiv: false
+      },
+      {
+        id: 'copas_mono',
+        num: 3,
+        name: 'Copas del Mono',
+        icon: '🐒',
+        bg: '#DCFCE7',
+        desc: 'Sumas llevando y de 3 cantidades',
+        example: '15 + 24 + 13',
+        skillKey: 'add3',
+        isMulDiv: false
+      },
+      {
+        id: 'laguna_elefante',
+        num: 4,
+        name: 'Laguna del Elefante',
+        icon: '🐘',
+        bg: '#DBEAFE',
+        desc: 'Restas prestando y de 3 cantidades',
+        example: '56 − 14 − 12',
+        skillKey: 'sub3',
+        isMulDiv: false
+      },
+      {
+        id: 'selva_jaguar',
+        num: 5,
+        name: 'Selva del Jaguar',
+        icon: '🐆',
+        bg: '#FFEDD5',
+        desc: 'Multiplicar por grupos (2, 3, 4, 5, 10)',
+        example: '3 × 4',
+        skillKey: 'mul',
+        isMulDiv: true
+      },
+      {
+        id: 'cima_aguila',
+        num: 6,
+        name: 'Cima del Águila',
+        icon: '🦅',
+        bg: '#E0E7FF',
+        desc: 'Dividir repartiendo en partes iguales',
+        example: '12 ÷ 3',
+        skillKey: 'div',
+        isMulDiv: true
+      }
+    ];
+
+    const MAX_ANIMAL_LEVEL = 5;
+
+    const ANIMALS = [
+      { id: 'cocodrilo', name: 'Coco el Cocodrilo', emoji: '🐊', cost: 0, soundFreq: 180, powerType: 'add_bonus', powerName: 'Mordisco de Gemas', fact: '¡Los cocodrilos pueden aguantar la respiración bajo el agua hasta 1 hora!' },
+      { id: 'leon', name: 'León Dorado', emoji: '🦁', cost: 25, soundFreq: 140, powerType: 'streak_shield', powerName: 'Rugido Protector', fact: 'El rugido de un león puede escucharse hasta a 8 kilómetros de distancia.' },
+      { id: 'mono', name: 'Mono Saltarín', emoji: '🐒', cost: 30, soundFreq: 520, powerType: 'eliminate', powerName: 'Ojo de Mono', fact: 'Algunos monos usan su cola larga como si fuera una quinta mano para trepar.' },
+      { id: 'elefante', name: 'Elefante Sabio', emoji: '🐘', cost: 35, soundFreq: 210, powerType: 'hint_bonus', powerName: 'Memoria Sabia', fact: '¡Los elefantes tienen una memoria increíble y saludan tocando sus trompas!' },
+      { id: 'jaguar', name: 'Jaguar Veloz', emoji: '🐆', cost: 40, soundFreq: 260, powerType: 'streak_gems', powerName: 'Salto de Racha', fact: 'A diferencia de otros gatos, ¡al jaguar le encanta nadar en los ríos!' },
+      { id: 'aguila', name: 'Águila Real', emoji: '🦅', cost: 45, soundFreq: 680, powerType: 'eliminate_mul', powerName: 'Vista de Águila', fact: 'Un águila puede ver un conejo pequeño desde más de 2 kilómetros de altura.' },
+      { id: 'hipo', name: 'Hipopótamo Feliz', emoji: '🦛', cost: 50, soundFreq: 130, powerType: 'chest_bonus', powerName: 'Tesoro del Río', fact: 'Los hipopótamos corren por el fondo del río y producen su propio protector solar.' },
+      { id: 'tigre', name: 'Tigre de Bengala', emoji: '🐯', cost: 55, soundFreq: 195, powerType: 'first_try_bonus', powerName: 'Garra Precisa', fact: 'Ningún tigre tiene las mismas rayas: ¡son únicas como nuestras huellas!' },
+      { id: 'gorila', name: 'Gorila Fuerte', emoji: '🦍', cost: 60, soundFreq: 160, powerType: 'three_qty_bonus', powerName: 'Fuerza de 3', fact: 'Los gorilas construyen cada noche una cama nueva con hojas suaves.' },
+      { id: 'rino', name: 'Rinoceronte Guardián', emoji: '🦏', cost: 65, soundFreq: 150, powerType: 'streak_shield_plus', powerName: 'Armadura Rino', fact: 'Su cuerno no es de hueso, está hecho del mismo material que nuestras uñas.' },
+      { id: 'tucan', name: 'Tucán Tropical', emoji: '🦜', cost: 70, soundFreq: 610, powerType: 'lucky_gems', powerName: 'Lluvia de Gemas', fact: 'El pico gigante del tucán es muy liviano y le sirve para mantenerse fresco.' },
+      { id: 'panda', name: 'Oso Panda', emoji: '🐼', cost: 80, soundFreq: 340, powerType: 'star_bonus', powerName: 'Bambú Estelar', fact: '¡Un panda puede pasar hasta 12 horas al día comiendo brotes de bambú!' },
+      { id: 'trex', name: 'T-Rex Explorador', emoji: '🦖', cost: 0, starExclusive: 12, soundFreq: 115, powerType: 'legend_trex', powerName: 'Rey Prehistórico', fact: '¡Exclusivo del Camino de Estrellas! El T-Rex tenía dientes del tamaño de plátanos.' }
+    ];
+
+    const ACCESSORIES = [
+      { id: 'none', name: 'Natural', icon: '🌿', cost: 0, desc: 'El look clásico salvaje' },
+      { id: 'hat', name: 'Sombrero Safari', icon: '👒', cost: 20, desc: 'Listo para explorar la selva' },
+      { id: 'glasses', name: 'Gafas Geniales', icon: '🕶️', cost: 30, desc: '¡Estilo Súper Explorador!' },
+      { id: 'scarf', name: 'Pañuelo Valiente', icon: '🧣', cost: 25, desc: 'Estilo aventurero valiente' },
+      { id: 'crown', name: 'Corona de Rey', icon: '👑', cost: 45, desc: 'El rey de las matemáticas' },
+      { id: 'cape', name: 'Capa de Héroe', icon: '🦸', cost: 55, desc: 'Súper poderes de cálculo' },
+      { id: 'star_glasses', name: 'Gafas Estelares', icon: '🌟', cost: 0, starExclusive: 6, desc: 'Exclusivo al llegar a 6 ⭐' },
+      { id: 'magic_hat', name: 'Sombrero Mágico', icon: '🎩', cost: 0, starExclusive: 16, desc: 'Exclusivo al llegar a 16 ⭐' }
+    ];
+
+    const STAR_MILESTONES = [
+      { id: 'star_3', stars: 3, rank: 'Rastreador del Río', icon: '🥉', title: '+25 💎 de Regalo', desc: 'Tesoro especial por tus primeras 3 estrellas', rewardType: 'gems', amount: 25 },
+      { id: 'star_6', stars: 6, rank: 'Amigo de la Sabana', icon: '🌟', title: 'Gafas Estelares Gratis', desc: 'Accesorio exclusivo para vestir a cualquier animal', rewardType: 'accessory', accessoryId: 'star_glasses' },
+      { id: 'star_9', stars: 9, rank: 'Guardián de la Selva', icon: '🎁', title: '+5 💎 en cada Cofre', desc: 'Bono permanente cada vez que abras un cofre', rewardType: 'chest_boost', amount: 5 },
+      { id: 'star_12', stars: 12, rank: 'Maestro Explorador', icon: '🦖', title: 'T-Rex Explorador', desc: '¡Desbloquea al compañero legendario T-Rex!', rewardType: 'animal', animalId: 'trex' },
+      { id: 'star_16', stars: 16, rank: 'Héroe Matemático', icon: '🎩', title: 'Sombrero Mágico + 35 💎', desc: 'Accesorio exclusivo de mago + gemas de regalo', rewardType: 'acc_gems', accessoryId: 'magic_hat', amount: 35 },
+      { id: 'star_20', stars: 20, rank: 'Leyenda Salvaje', icon: '🏆', title: '+10 💎 en cada Cofre', desc: '¡Rango máximo! Bono gigante en todos los cofres', rewardType: 'chest_boost', amount: 10 }
+    ];
+
+    const PRAISE_PHRASES = [
+      '¡INCREÍBLE! ¡Choca esas garras! 🐾',
+      '¡GENIAL! ¡Eres un súper explorador! 🌟',
+      '¡FANTÁSTICO! ¡Qué mente tan veloz! ⚡',
+      '¡BRAVO! ¡Lo hiciste espectacular! 🏆',
+      '¡LO LOGRASTE! ¡Sigue así campeón! 🎉',
+      '¡SÚPER! ¡Cruzamos la selva juntos! 🌊'
+    ];
+
+    const ENCOURAGE_PHRASES = [
+      '¡Casi! No pasa nada, miremos los bloques 💡',
+      '¡Buen intento! Vamos a contarlo pasito a pasito 🌿',
+      '¡Tranquilo campeón! Usa la pista de bloques y verás qué fácil es 🌟',
+      '¡Cerca! Puedes dibujar puntitos en la pizarra ✏️'
+    ];
+
+    /* =========================================================
+       PERSISTENT STATE (localStorage)
+       ========================================================= */
+    const STORAGE_KEY = 'selva_matematica_coco_v1';
+
+    function defaultState() {
+      return {
+        gems: 15,
+        stars: 0,
+        chestsOpened: 0,
+        bestStreak: 0,
+        soundOn: true,
+        unlockedAnimals: ['cocodrilo'],
+        animalLevels: { cocodrilo: 1 },
+        activeAnimal: 'cocodrilo',
+        unlockedAccessories: ['none'],
+        equippedAccessory: 'none',
+        animalAccessories: { cocodrilo: 'none' },
+        claimedStarRewards: [],
+        worldStars: {},
+        activeMission: null,
+        settings: {
+          autoHint: true,
+          includeMulDiv: true,
+          defaultKeypad: false
+        },
+        stats: {
+          totalSolved: 0,
+          firstTryCorrect: 0,
+          bySkill: {
+            add2_easy: { solved: 0, firstTry: 0 },
+            sub2_easy: { solved: 0, firstTry: 0 },
+            add3: { solved: 0, firstTry: 0 },
+            sub3: { solved: 0, firstTry: 0 },
+            mul: { solved: 0, firstTry: 0 },
+            div: { solved: 0, firstTry: 0 }
+          }
+        }
+      };
+    }
+
+    let state = loadState();
+
+    function loadState() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return defaultState();
+        const parsed = JSON.parse(raw);
+        const def = defaultState();
+        const mergedAcc = {
+          cocodrilo: parsed.equippedAccessory || 'none',
+          ...(parsed.animalAccessories || {})
+        };
+        const activeId = (parsed.activeAnimal && (parsed.unlockedAnimals || ['cocodrilo']).includes(parsed.activeAnimal))
+          ? parsed.activeAnimal
+          : 'cocodrilo';
+        return {
+          ...def,
+          ...parsed,
+          activeAnimal: activeId,
+          animalAccessories: mergedAcc,
+          claimedStarRewards: Array.isArray(parsed.claimedStarRewards) ? parsed.claimedStarRewards : [],
+          settings: { ...def.settings, ...(parsed.settings || {}) },
+          stats: {
+            ...def.stats,
+            ...(parsed.stats || {}),
+            bySkill: { ...def.stats.bySkill, ...((parsed.stats && parsed.stats.bySkill) || {}) }
+          }
+        };
+      } catch (e) {
+        return defaultState();
+      }
+    }
+
+    function saveState() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      } catch (e) { /* Ignore storage quota errors */ }
+      updateTopBar();
+    }
+
+    function getAnimalById(id) {
+      return ANIMALS.find(a => a.id === id) || ANIMALS[0];
+    }
+
+    function getAnimalLevel(id) {
+      return Math.min(MAX_ANIMAL_LEVEL, Math.max(1, state.animalLevels[id] || 1));
+    }
+
+    function getAnimalAccessory(id) {
+      if (state.animalAccessories && state.animalAccessories[id]) {
+        return state.animalAccessories[id];
+      }
+      if (id === 'cocodrilo') return state.equippedAccessory || 'none';
+      return 'none';
+    }
+
+    function getAnimalPowerSummary(animal, lvl) {
+      const l = Math.min(MAX_ANIMAL_LEVEL, Math.max(1, lvl || 1));
+      switch (animal.powerType) {
+        case 'add_bonus': return `+${l + 1} 💎 en sumas (+${l} en otros)`;
+        case 'streak_shield': return `Protege tu racha 🔥 ${l} ${l === 1 ? 'vez' : 'veces'} por misión`;
+        case 'eliminate': return `Elimina 1 opción falsa (${l} ${l === 1 ? 'uso' : 'usos'} por misión)`;
+        case 'hint_bonus': return `+${l + 2} 💎 extra al acertar usando pista 💡`;
+        case 'streak_gems': return `+${l * 2} 💎 extra en cada acierto con racha 🔥`;
+        case 'eliminate_mul': return `Elimina 1 falsa (${l} ${l === 1 ? 'uso' : 'usos'}) y +${l} 💎 en ×/÷`;
+        case 'chest_bonus': return `+${4 + l * 2} 💎 extra al abrir cada Cofre 🎁`;
+        case 'first_try_bonus': return `+${l + 1} 💎 extra al acertar al 1er intento`;
+        case 'three_qty_bonus': return `+${l + 2} 💎 en retos de 3 cantidades (+1 en otros)`;
+        case 'streak_shield_plus': return `Protege tu racha 🔥 ${l + 1} veces por misión`;
+        case 'lucky_gems': return `Premio sorpresa de +1 a +${l + 2} 💎 por reto`;
+        case 'star_bonus': return `+1 ⭐ estrella extra y +${l * 2} 💎 en Cofres`;
+        case 'legend_trex': return `Elimina 1 falsa (${l} ${l === 1 ? 'uso' : 'usos'}) y +${l + 2} 💎 siempre`;
+        default: return `+${l} 💎 extra`;
+      }
+    }
+
+    function getExplorerRank(starsCount) {
+      let current = { rank: 'Explorador Novato', icon: '🌿', next: STAR_MILESTONES[0] };
+      for (let i = 0; i < STAR_MILESTONES.length; i++) {
+        if (starsCount >= STAR_MILESTONES[i].stars) {
+          current = {
+            rank: STAR_MILESTONES[i].rank,
+            icon: STAR_MILESTONES[i].icon,
+            next: STAR_MILESTONES[i + 1] || null
+          };
+        }
+      }
+      return current;
+    }
+
+    function getUnclaimedStarRewardsCount() {
+      return STAR_MILESTONES.filter(m => state.stars >= m.stars && !state.claimedStarRewards.includes(m.id)).length;
+    }
+
+    function getPermanentChestBonus() {
+      let bonus = 0;
+      if (state.claimedStarRewards.includes('star_9')) bonus += 5;
+      if (state.claimedStarRewards.includes('star_20')) bonus += 10;
+      return bonus;
+    }
+
+    /* =========================================================
+       WEB AUDIO SYNTHESIZER (100% OFFLINE SOUND EFFECTS)
+       ========================================================= */
+    let audioCtx = null;
+    function getAudioCtx() {
+      if (!audioCtx) {
+        const Ctx = window.AudioContext || window.webkitAudioContext;
+        if (Ctx) audioCtx = new Ctx();
+      }
+      if (audioCtx && audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+      return audioCtx;
+    }
+
+    function playTone(freq, duration, type = 'sine', vol = 0.16, delay = 0) {
+      if (!state.soundOn) return;
+      const ctx = getAudioCtx();
+      if (!ctx) return;
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = type;
+      osc.frequency.setValueAtTime(freq, ctx.currentTime + delay);
+      gain.gain.setValueAtTime(0.001, ctx.currentTime + delay);
+      gain.gain.exponentialRampToValueAtTime(vol, ctx.currentTime + delay + 0.02);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + delay + duration);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start(ctx.currentTime + delay);
+      osc.stop(ctx.currentTime + delay + duration + 0.02);
+    }
+
+    function playTapSound() {
+      playTone(440, 0.08, 'triangle', 0.12);
+    }
+
+    function playSuccessSound() {
+      playTone(523.25, 0.12, 'triangle', 0.18, 0);
+      playTone(659.25, 0.12, 'triangle', 0.18, 0.09);
+      playTone(783.99, 0.16, 'triangle', 0.2, 0.18);
+      playTone(1046.5, 0.28, 'sine', 0.18, 0.28);
+    }
+
+    function playGentleRetrySound() {
+      playTone(300, 0.14, 'sine', 0.14, 0);
+      playTone(250, 0.18, 'sine', 0.12, 0.12);
+    }
+
+    function playChestFanfare() {
+      const notes = [523.25, 659.25, 783.99, 659.25, 1046.5];
+      const times = [0, 0.1, 0.2, 0.32, 0.44];
+      notes.forEach((n, i) => playTone(n, 0.22, 'triangle', 0.2, times[i]));
+    }
+
+    function playAnimalVoice(baseFreq) {
+      playTone(baseFreq, 0.14, 'sawtooth', 0.09, 0);
+      playTone(baseFreq * 1.25, 0.16, 'triangle', 0.12, 0.1);
+      playTone(baseFreq * 1.05, 0.18, 'sine', 0.1, 0.22);
+    }
+
+    /* =========================================================
+       CUSTOM ILLUSTRATED SVG: COCO THE CROCODILE (WITH OUTFITS!)
+       ========================================================= */
+    function renderCocoSVG(accessoryId = state.equippedAccessory, mood = 'normal', idPrefix = 'c') {
+      const acc = accessoryId || 'none';
+
+      let mouthPath = 'M 118 118 Q 146 132 174 116';
+      let teethMarkup = `
+        <polygon points="130,122 135,131 140,124" fill="#FFFFFF"/>
+        <polygon points="154,124 159,132 164,121" fill="#FFFFFF"/>
+      `;
+      if (mood === 'happy') {
+        mouthPath = 'M 114 114 Q 146 144 178 112';
+        teethMarkup = `
+          <path d="M 118 115 Q 146 142 174 114 Z" fill="#E11D48"/>
+          <polygon points="126,118 131,128 137,120" fill="#FFFFFF"/>
+          <polygon points="155,120 161,128 166,117" fill="#FFFFFF"/>
+        `;
+      } else if (mood === 'encourage') {
+        mouthPath = 'M 128 122 Q 146 126 164 120';
+        teethMarkup = `<polygon points="142,124 146,130 150,124" fill="#FFFFFF"/>`;
+      }
+
+      const capeSVG = acc === 'cape' ? `
+        <path d="M 48 110 Q 16 126 12 165 Q 52 158 84 148 Z" fill="#EF4444" stroke="#991B1B" stroke-width="3"/>
+        <path d="M 52 118 Q 28 134 24 158" stroke="#FCA5A5" stroke-width="3" fill="none" stroke-linecap="round"/>
+      ` : '';
+
+      const scarfSVG = acc === 'scarf' ? `
+        <path d="M 74 126 Q 98 136 120 124 L 116 140 Q 95 148 72 138 Z" fill="#F97316" stroke="#9A3412" stroke-width="2.5"/>
+        <path d="M 78 136 L 64 156 L 80 158 L 88 140 Z" fill="#EA580C" stroke="#9A3412" stroke-width="2"/>
+      ` : '';
+
+      const hatSVG = acc === 'hat' ? `
+        <g transform="translate(86, 20) rotate(-6)">
+          <ellipse cx="38" cy="36" rx="44" ry="11" fill="#D97706" stroke="#78350F" stroke-width="3"/>
+          <path d="M 12 34 C 14 8, 62 8, 64 34 Z" fill="#F59E0B" stroke="#78350F" stroke-width="3"/>
+          <rect x="13" y="26" width="50" height="7" rx="3" fill="#166534"/>
+        </g>
+      ` : '';
+
+      const crownSVG = acc === 'crown' ? `
+        <g transform="translate(96, 18) rotate(-4)">
+          <polygon points="6,36 12,10 26,24 36,4 46,24 60,10 66,36" fill="#FBBF24" stroke="#B45309" stroke-width="3" stroke-linejoin="round"/>
+          <circle cx="36" cy="24" r="4.5" fill="#EF4444"/>
+          <circle cx="20" cy="28" r="3.5" fill="#3B82F6"/>
+          <circle cx="52" cy="28" r="3.5" fill="#10B981"/>
+        </g>
+      ` : '';
+
+      const magicHatSVG = acc === 'magic_hat' ? `
+        <g transform="translate(88, 6) rotate(-6)">
+          <ellipse cx="38" cy="46" rx="44" ry="10" fill="#1E293B" stroke="#0F172A" stroke-width="3"/>
+          <rect x="16" y="10" width="44" height="36" rx="6" fill="#312E81" stroke="#0F172A" stroke-width="3"/>
+          <rect x="16" y="34" width="44" height="8" fill="#F59E0B"/>
+          <text x="38" y="29" text-anchor="middle" font-size="16">✨</text>
+        </g>
+      ` : '';
+
+      const glassesSVG = acc === 'glasses' ? `
+        <g>
+          <rect x="103" y="64" width="26" height="19" rx="6" fill="#111827" stroke="#FBBF24" stroke-width="3"/>
+          <rect x="135" y="64" width="26" height="19" rx="6" fill="#111827" stroke="#FBBF24" stroke-width="3"/>
+          <line x1="129" y1="72" x2="135" y2="72" stroke="#FBBF24" stroke-width="3.5"/>
+          <line x1="108" y1="70" x2="115" y2="77" stroke="#FFFFFF" stroke-width="2" opacity="0.7" stroke-linecap="round"/>
+          <line x1="140" y1="70" x2="147" y2="77" stroke="#FFFFFF" stroke-width="2" opacity="0.7" stroke-linecap="round"/>
+        </g>
+      ` : acc === 'star_glasses' ? `
+        <g>
+          <polygon points="116,58 120,68 131,68 122,74 125,84 116,78 107,84 110,74 101,68 112,68" fill="#FACC15" stroke="#B45309" stroke-width="2.5"/>
+          <polygon points="146,59 150,69 161,69 152,75 155,85 146,79 137,85 140,75 131,69 142,69" fill="#FACC15" stroke="#B45309" stroke-width="2.5"/>
+          <line x1="128" y1="71" x2="134" y2="71" stroke="#B45309" stroke-width="3"/>
+        </g>
+      ` : '';
+
+      const isLegend = getAnimalLevel('cocodrilo') >= MAX_ANIMAL_LEVEL;
+      const legendAura = isLegend ? `<circle cx="115" cy="105" r="76" fill="rgba(251,191,36,0.22)" stroke="#FBBF24" stroke-width="3" stroke-dasharray="8 6"/>` : '';
+
+      return `
+        <svg class="coco-svg ${mood === 'happy' ? 'happy' : mood === 'encourage' ? 'wiggle' : ''}" viewBox="0 0 220 185" xmlns="http://www.w3.org/2000/svg" aria-label="Coco el Cocodrilo">
+          ${legendAura}
+          <!-- Water Ripples -->
+          <ellipse cx="110" cy="162" rx="92" ry="15" fill="rgba(255,255,255,0.28)"/>
+          <ellipse cx="110" cy="164" rx="72" ry="9" fill="rgba(255,255,255,0.22)"/>
+
+          ${capeSVG}
+
+          <!-- Tail -->
+          <path d="M 60 132 Q 20 134 14 106 Q 26 112 42 114 Q 55 112 68 118 Z" fill="#229A5B" stroke="#14532D" stroke-width="3.5" stroke-linejoin="round"/>
+          <!-- Back Ridges -->
+          <polygon points="36,112 42,102 48,113" fill="#15803D"/>
+          <polygon points="52,112 60,100 68,112" fill="#15803D"/>
+          <polygon points="70,108 78,96 86,108" fill="#15803D"/>
+
+          <!-- Body -->
+          <ellipse cx="104" cy="134" rx="52" ry="30" fill="#2EAD6E" stroke="#14532D" stroke-width="3.5"/>
+          <!-- Belly Stripes -->
+          <path d="M 74 145 Q 104 162 136 146 Q 106 134 74 145 Z" fill="#D9F99D"/>
+          <line x1="90" y1="142" x2="94" y2="154" stroke="#84CC16" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="108" y1="142" x2="110" y2="155" stroke="#84CC16" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="124" y1="143" x2="122" y2="152" stroke="#84CC16" stroke-width="2.5" stroke-linecap="round"/>
+
+          <!-- Little Paws -->
+          <ellipse cx="82" cy="154" rx="14" ry="9" fill="#229A5B" stroke="#14532D" stroke-width="3"/>
+          <ellipse cx="132" cy="154" rx="14" ry="9" fill="#229A5B" stroke="#14532D" stroke-width="3"/>
+
+          ${scarfSVG}
+
+          <!-- Head & Snout -->
+          <path d="M 78 106 C 74 66, 118 52, 144 68 C 166 76, 198 84, 194 108 C 190 128, 148 138, 108 134 C 86 132, 80 120, 78 106 Z" fill="#34C77B" stroke="#14532D" stroke-width="3.5" stroke-linejoin="round"/>
+
+          <!-- Rosy Cheek -->
+          <ellipse cx="114" cy="108" rx="9" ry="5.5" fill="#FB7185" opacity="0.45"/>
+
+          <!-- Nostrils -->
+          <circle cx="176" cy="92" r="3" fill="#14532D"/>
+          <circle cx="185" cy="95" r="2.6" fill="#14532D"/>
+
+          <!-- Eyes -->
+          <circle cx="116" cy="72" r="14" fill="#FFFFFF" stroke="#14532D" stroke-width="3"/>
+          <circle cx="144" cy="73" r="13" fill="#FFFFFF" stroke="#14532D" stroke-width="3"/>
+          <circle cx="120" cy="72" r="6.5" fill="#111827"/>
+          <circle cx="148" cy="73" r="6" fill="#111827"/>
+          <circle cx="122" cy="69" r="2.3" fill="#FFFFFF"/>
+          <circle cx="150" cy="70" r="2.2" fill="#FFFFFF"/>
+
+          <!-- Mouth & Friendly Teeth -->
+          ${teethMarkup}
+          <path d="${mouthPath}" fill="none" stroke="#14532D" stroke-width="3.5" stroke-linecap="round"/>
+
+          <!-- Accessories -->
+          ${glassesSVG}
+          ${hatSVG}
+          ${crownSVG}
+          ${magicHatSVG}
+        </svg>
+      `;
+    }
+
+    function renderCompanionSVG(animalId = state.activeAnimal, accessoryId = null, mood = 'normal') {
+      const acc = accessoryId !== null ? accessoryId : getAnimalAccessory(animalId);
+      if (animalId === 'cocodrilo') {
+        return renderCocoSVG(acc, mood);
+      }
+
+      const animal = getAnimalById(animalId);
+      const lvl = getAnimalLevel(animalId);
+      const isLegend = lvl >= MAX_ANIMAL_LEVEL;
+
+      const capeOverlay = acc === 'cape' ? `
+        <path d="M 60 112 Q 26 135 28 166 Q 74 156 110 156 Q 146 156 192 166 Q 194 135 160 112 Z" fill="#EF4444" stroke="#991B1B" stroke-width="3.5"/>
+      ` : '';
+
+      const scarfOverlay = acc === 'scarf' ? `
+        <g transform="translate(66, 130)">
+          <rect x="0" y="0" width="88" height="16" rx="8" fill="#F97316" stroke="#9A3412" stroke-width="2.5"/>
+          <path d="M 60 12 L 74 36 L 86 32 L 76 10 Z" fill="#EA580C" stroke="#9A3412" stroke-width="2.5"/>
+        </g>
+      ` : '';
+
+      const topAccessory = acc === 'hat' ? `
+        <g transform="translate(72, 16)">
+          <ellipse cx="38" cy="34" rx="44" ry="11" fill="#D97706" stroke="#78350F" stroke-width="3"/>
+          <path d="M 12 32 C 14 6, 62 6, 64 32 Z" fill="#F59E0B" stroke="#78350F" stroke-width="3"/>
+          <rect x="13" y="24" width="50" height="7" rx="3" fill="#166534"/>
+        </g>
+      ` : acc === 'crown' ? `
+        <g transform="translate(74, 14)">
+          <polygon points="6,36 12,10 26,24 36,4 46,24 60,10 66,36" fill="#FBBF24" stroke="#B45309" stroke-width="3" stroke-linejoin="round"/>
+          <circle cx="36" cy="24" r="4.5" fill="#EF4444"/>
+          <circle cx="20" cy="28" r="3.5" fill="#3B82F6"/>
+          <circle cx="52" cy="28" r="3.5" fill="#10B981"/>
+        </g>
+      ` : acc === 'magic_hat' ? `
+        <g transform="translate(72, 6)">
+          <ellipse cx="38" cy="44" rx="44" ry="10" fill="#1E293B" stroke="#0F172A" stroke-width="3"/>
+          <rect x="16" y="8" width="44" height="36" rx="6" fill="#312E81" stroke="#0F172A" stroke-width="3"/>
+          <rect x="16" y="32" width="44" height="8" fill="#F59E0B"/>
+          <text x="38" y="27" text-anchor="middle" font-size="16">✨</text>
+        </g>
+      ` : '';
+
+      const faceAccessory = acc === 'glasses' ? `
+        <g transform="translate(68, 78)">
+          <rect x="4" y="4" width="34" height="22" rx="7" fill="#111827" stroke="#FBBF24" stroke-width="3"/>
+          <rect x="46" y="4" width="34" height="22" rx="7" fill="#111827" stroke="#FBBF24" stroke-width="3"/>
+          <line x1="38" y1="14" x2="46" y2="14" stroke="#FBBF24" stroke-width="3.5"/>
+          <line x1="11" y1="10" x2="20" y2="19" stroke="#FFFFFF" stroke-width="2.5" opacity="0.7" stroke-linecap="round"/>
+          <line x1="53" y1="10" x2="62" y2="19" stroke="#FFFFFF" stroke-width="2.5" opacity="0.7" stroke-linecap="round"/>
+        </g>
+      ` : acc === 'star_glasses' ? `
+        <g transform="translate(66, 74)">
+          <polygon points="22,2 27,14 40,14 30,21 34,34 22,26 10,34 14,21 4,14 17,14" fill="#FACC15" stroke="#B45309" stroke-width="2.5"/>
+          <polygon points="66,2 71,14 84,14 74,21 78,34 66,26 54,34 58,21 48,14 61,14" fill="#FACC15" stroke="#B45309" stroke-width="2.5"/>
+          <line x1="38" y1="18" x2="50" y2="18" stroke="#B45309" stroke-width="3.5"/>
+        </g>
+      ` : '';
+
+      const bgCircle = isLegend
+        ? `<circle cx="110" cy="102" r="64" fill="#FEF3C7" stroke="#F59E0B" stroke-width="5"/><circle cx="110" cy="102" r="74" fill="none" stroke="#FBBF24" stroke-width="3" stroke-dasharray="8 6"/>`
+        : `<circle cx="110" cy="102" r="62" fill="rgba(255,253,245,0.88)" stroke="#FFFFFF" stroke-width="4"/>`;
+
+      return `
+        <svg class="coco-svg ${mood === 'happy' ? 'happy' : mood === 'encourage' ? 'wiggle' : ''}" viewBox="0 0 220 185" xmlns="http://www.w3.org/2000/svg" aria-label="${animal.name}">
+          <ellipse cx="110" cy="166" rx="84" ry="13" fill="rgba(255,255,255,0.28)"/>
+          ${capeOverlay}
+          ${bgCircle}
+          <text x="110" y="132" text-anchor="middle" font-size="94">${animal.emoji}</text>
+          ${scarfOverlay}
+          ${faceAccessory}
+          ${topAccessory}
+          ${isLegend ? `<text x="166" y="54" font-size="24">✨</text><text x="40" y="64" font-size="20">⭐</text>` : ''}
+        </svg>
+      `;
+    }
+
+    let wardrobeSelectedAnimal = null;
+
+    function updateAllCocoAvatars(mood = 'normal') {
+      const activeId = state.activeAnimal || 'cocodrilo';
+      const activeAnimal = getAnimalById(activeId);
+      const heroEl = document.getElementById('heroCocoContainer');
+      if (heroEl) heroEl.innerHTML = renderCompanionSVG(activeId, getAnimalAccessory(activeId), 'normal');
+      const heroBubble = document.getElementById('heroBubble');
+      if (heroBubble) heroBubble.textContent = `¡Hola! Soy ${activeAnimal.name} (Nv.${getAnimalLevel(activeId)})`;
+
+      const gameEl = document.getElementById('gameCocoContainer');
+      if (gameEl) gameEl.innerHTML = renderCompanionSVG(activeId, getAnimalAccessory(activeId), mood);
+
+      const wardId = wardrobeSelectedAnimal || activeId;
+      const wardEl = document.getElementById('wardrobeCocoContainer');
+      if (wardEl) wardEl.innerHTML = renderCompanionSVG(wardId, getAnimalAccessory(wardId), 'happy');
+    }
+
+    /* =========================================================
+       PEDAGOGICAL MATH PROBLEM GENERATOR (AGE 7 CURRICULUM)
+       ========================================================= */
+    function randInt(min, max) {
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    function generateProblem(skillKey, stepIndex = 0) {
+      let problem = null;
+
+      if (skillKey === 'add2_easy') {
+        // 2-digit + 2-digit without carrying (sum <= 99)
+        const d1 = randInt(1, 6);
+        const d2 = randInt(1, 8 - d1);
+        const u1 = randInt(1, 7);
+        const u2 = randInt(1, 9 - u1);
+        const a = d1 * 10 + u1;
+        const b = d2 * 10 + u2;
+        problem = {
+          skillKey,
+          kind: 'add2',
+          label: '➕ Suma de 2 dígitos',
+          nums: [a, b],
+          ops: ['+'],
+          answer: a + b,
+          hasCarry: false
+        };
+      } else if (skillKey === 'sub2_easy') {
+        // 2-digit - 2-digit without borrowing
+        const d1 = randInt(3, 8);
+        const d2 = randInt(1, d1 - 1);
+        const u1 = randInt(2, 9);
+        const u2 = randInt(1, u1);
+        const a = d1 * 10 + u1;
+        const b = d2 * 10 + u2;
+        problem = {
+          skillKey,
+          kind: 'sub2',
+          label: '➖ Resta de 2 dígitos',
+          nums: [a, b],
+          ops: ['-'],
+          answer: a - b,
+          hasBorrow: false
+        };
+      } else if (skillKey === 'add3') {
+        // Steps 0-1: 2-digit addition WITH carrying; Steps 2-4: 3 quantities of 2-digit numbers!
+        if (stepIndex < 2) {
+          const d1 = randInt(1, 5);
+          const d2 = randInt(1, 7 - d1);
+          const u1 = randInt(4, 9);
+          const u2 = randInt(10 - u1, 9);
+          const a = d1 * 10 + u1;
+          const b = d2 * 10 + u2;
+          problem = {
+            skillKey,
+            kind: 'add2',
+            label: '➕ Suma de 2 dígitos (llevando)',
+            nums: [a, b],
+            ops: ['+'],
+            answer: a + b,
+            hasCarry: true
+          };
+        } else {
+          // 3 quantities of 2-digit numbers! Keep total <= 99 for gentle 7yo readability (or up to 115)
+          const a = randInt(11, 32);
+          const b = randInt(11, 29);
+          const maxC = Math.min(35, 99 - a - b);
+          const c = randInt(10, Math.max(12, maxC));
+          problem = {
+            skillKey,
+            kind: 'add3',
+            label: '➕ Suma de 3 cantidades (2 dígitos)',
+            nums: [a, b, c],
+            ops: ['+', '+'],
+            answer: a + b + c,
+            hasCarry: ((a % 10) + (b % 10) + (c % 10)) >= 10
+          };
+        }
+      } else if (skillKey === 'sub3') {
+        // Steps 0-1: 2-digit subtraction WITH borrowing; Steps 2-4: 3-quantity subtraction or add+sub!
+        if (stepIndex < 2) {
+          const d1 = randInt(3, 8);
+          const d2 = randInt(1, d1 - 2);
+          const u1 = randInt(0, 7);
+          const u2 = randInt(u1 + 1, 9);
+          const a = d1 * 10 + u1;
+          const b = d2 * 10 + u2;
+          problem = {
+            skillKey,
+            kind: 'sub2',
+            label: '➖ Resta de 2 dígitos (prestando)',
+            nums: [a, b],
+            ops: ['-'],
+            answer: a - b,
+            hasBorrow: true
+          };
+        } else if (stepIndex % 2 === 0) {
+          // 3-quantity chained subtraction: a - b - c (all 2-digit, result >= 5)
+          const b = randInt(10, 24);
+          const c = randInt(10, 22);
+          const a = b + c + randInt(8, 32);
+          problem = {
+            skillKey,
+            kind: 'sub3',
+            label: '➖ Resta de 3 cantidades',
+            nums: [a, b, c],
+            ops: ['-', '-'],
+            answer: a - b - c,
+            hasBorrow: true
+          };
+        } else {
+          // 3-quantity mixed: a + b - c (all 2-digit, friendly)
+          const a = randInt(15, 38);
+          const b = randInt(12, 28);
+          const c = randInt(10, Math.min(30, a + b - 10));
+          problem = {
+            skillKey,
+            kind: 'mix3',
+            label: '➕➖ Reto de 3 cantidades',
+            nums: [a, b, c],
+            ops: ['+', '-'],
+            answer: a + b - c
+          };
+        }
+      } else if (skillKey === 'mul') {
+        // Age-7 friendly multiplication: tables 2, 3, 4, 5, 10
+        const tables = [2, 3, 4, 5, 10];
+        const a = tables[randInt(0, tables.length - 1)];
+        const b = a === 10 ? randInt(2, 9) : randInt(2, 7);
+        problem = {
+          skillKey,
+          kind: 'mul',
+          label: '✖️ Multiplicación en grupos',
+          nums: [a, b],
+          ops: ['×'],
+          answer: a * b
+        };
+      } else if (skillKey === 'div') {
+        // Age-7 friendly exact fair-sharing division
+        const divisors = [2, 3, 4, 5, 10];
+        const d = divisors[randInt(0, divisors.length - 1)];
+        const q = d === 10 ? randInt(2, 8) : randInt(2, 7);
+        const dividend = d * q;
+        problem = {
+          skillKey,
+          kind: 'div',
+          label: '➗ Repartir en partes iguales',
+          nums: [dividend, d],
+          ops: ['÷'],
+          answer: q
+        };
+      }
+
+      problem.choices = generateChoices(problem.answer, skillKey);
+      return problem;
+    }
+
+    function generateChoices(correct, skillKey) {
+      const set = new Set([correct]);
+      const offsets = (skillKey === 'mul' || skillKey === 'div')
+        ? [-4, -3, -2, -1, 1, 2, 3, 4, 5, 6]
+        : [-10, -2, -1, 1, 2, 10, -11, 11, -3, 3];
+
+      let guard = 0;
+      while (set.size < 4 && guard < 60) {
+        guard++;
+        const delta = offsets[randInt(0, offsets.length - 1)];
+        const candidate = correct + delta;
+        if (candidate > 0 && candidate !== correct) {
+          set.add(candidate);
+        }
+      }
+      while (set.size < 4) {
+        set.add(correct + set.size + 1);
+      }
+      return Array.from(set).sort(() => Math.random() - 0.5);
+    }
+
+    /* =========================================================
+       GAMEPLAY SESSION STATE & RENDERING
+       ========================================================= */
+    const MISSION_LENGTH = 5;
+    let session = {
+      worldId: 'rio_coco',
+      worldName: '🐊 Río de Coco',
+      skillKey: 'add2_easy',
+      step: 0,
+      streak: 0,
+      problem: null,
+      attemptsOnCurrent: 0,
+      hintUsed: false,
+      format: 'vertical',
+      inputMode: 'choices', // 'choices' or 'keypad'
+      keypadValue: '',
+      locked: false,
+      missionPerfects: 0,
+      powerUsesLeft: 1
+    };
+
+    function getMissionPowerUses(animalId) {
+      const animal = getAnimalById(animalId);
+      const lvl = getAnimalLevel(animalId);
+      if (animal.powerType === 'streak_shield_plus') return lvl + 1;
+      if (['streak_shield', 'eliminate', 'eliminate_mul', 'legend_trex'].includes(animal.powerType)) return lvl;
+      return 0;
+    }
+
+    function persistActiveMission() {
+      if (!session.problem || session.step >= MISSION_LENGTH) {
+        state.activeMission = null;
+      } else {
+        state.activeMission = {
+          worldId: session.worldId,
+          worldName: session.worldName,
+          skillKey: session.skillKey,
+          step: session.step,
+          streak: session.streak,
+          problem: session.problem,
+          attemptsOnCurrent: session.attemptsOnCurrent,
+          hintUsed: session.hintUsed,
+          format: session.format,
+          inputMode: session.inputMode,
+          keypadValue: session.keypadValue,
+          missionPerfects: session.missionPerfects,
+          powerUsesLeft: session.powerUsesLeft
+        };
+      }
+      saveState();
+    }
+
+    function resumeActiveMission() {
+      playTapSound();
+      if (!state.activeMission || !state.activeMission.problem) {
+        startRecommendedMission();
+        return;
+      }
+      Object.assign(session, state.activeMission, { locked: false });
+      if (typeof session.powerUsesLeft !== 'number') {
+        session.powerUsesLeft = getMissionPowerUses(state.activeAnimal);
+      }
+      switchView('game');
+      renderCurrentProblemUI();
+    }
+
+    function renderWorldsMap() {
+      const grid = document.getElementById('worldsGrid');
+      const visibleWorlds = WORLDS.filter(w => !w.isMulDiv || state.settings.includeMulDiv);
+      const activeId = state.activeMission ? state.activeMission.worldId : null;
+      const activeStep = state.activeMission ? (state.activeMission.step + 1) : 1;
+
+      grid.innerHTML = visibleWorlds.map(w => {
+        const earned = Math.min(3, state.worldStars[w.id] || 0);
+        const starsHtml = '⭐'.repeat(earned) + '☆'.repeat(3 - earned);
+        const isInProgress = activeId === w.id;
+        return `
+          <button class="world-card" onclick="startWorldMission('${w.id}')">
+            <div class="world-top">
+              <span class="world-badge-num">${isInProgress ? `⏳ En curso (${activeStep}/${MISSION_LENGTH})` : `Mundo ${w.num}`}</span>
+              <span class="world-stars" aria-label="${earned} de 3 estrellas">${starsHtml}</span>
+            </div>
+            <div class="world-body">
+              <div class="world-avatar" style="background:${w.bg};">${w.icon}</div>
+              <div class="world-info">
+                <h3>${w.name}</h3>
+                <p>${w.desc}</p>
+              </div>
+            </div>
+            <div class="world-example">
+              <span>Ej: ${w.example}</span>
+              <span class="world-play-tag">${isInProgress ? 'Continuar ▶' : 'Jugar ▶'}</span>
+            </div>
+          </button>
+        `;
+      }).join('');
+
+      const quickBtn = document.getElementById('quickPlayBtn');
+      const comp = getAnimalById(state.activeAnimal);
+      if (quickBtn) {
+        quickBtn.innerHTML = state.activeMission
+          ? `▶️ ¡Continuar Aventura! (${activeStep}/${MISSION_LENGTH})`
+          : `▶️ ¡Jugar con ${comp.emoji} ${comp.name.split(' ')[0]}!`;
+      }
+
+      document.getElementById('chipMul').style.display = state.settings.includeMulDiv ? '' : 'none';
+      document.getElementById('chipDiv').style.display = state.settings.includeMulDiv ? '' : 'none';
+    }
+
+    function startRecommendedMission() {
+      playTapSound();
+      if (state.activeMission && state.activeMission.problem) {
+        resumeActiveMission();
+        return;
+      }
+      const visible = WORLDS.filter(w => !w.isMulDiv || state.settings.includeMulDiv);
+      const nextWorld = visible.find(w => (state.worldStars[w.id] || 0) < 3) || visible[0];
+      startWorldMission(nextWorld.id, true);
+    }
+
+    function startWorldMission(worldId, forceNew = false) {
+      playTapSound();
+      if (!forceNew && state.activeMission && state.activeMission.worldId === worldId && state.activeMission.problem) {
+        resumeActiveMission();
+        return;
+      }
+      const world = WORLDS.find(w => w.id === worldId) || WORLDS[0];
+      session.worldId = world.id;
+      session.worldName = `${world.icon} ${world.name}`;
+      session.skillKey = world.skillKey;
+      session.step = 0;
+      session.missionPerfects = 0;
+      session.powerUsesLeft = getMissionPowerUses(state.activeAnimal);
+      session.inputMode = state.settings.defaultKeypad ? 'keypad' : 'choices';
+      session.format = (world.skillKey === 'mul' || world.skillKey === 'div') ? 'horizontal' : 'vertical';
+      switchView('game');
+      loadNextProblem();
+    }
+
+    function startCustomMission(skillKey) {
+      playTapSound();
+      const world = WORLDS.find(w => w.skillKey === skillKey) || WORLDS[0];
+      startWorldMission(world.id);
+    }
+
+    function updateCompanionPowerUI() {
+      const animal = getAnimalById(state.activeAnimal);
+      const lvl = getAnimalLevel(state.activeAnimal);
+      const pill = document.getElementById('companionPowerPill');
+      const btn = document.getElementById('usePowerBtn');
+      const isEliminate = ['eliminate', 'eliminate_mul', 'legend_trex'].includes(animal.powerType);
+      const isShield = ['streak_shield', 'streak_shield_plus'].includes(animal.powerType);
+
+      if (pill) {
+        if (isShield) {
+          pill.textContent = `🛡️ ${animal.powerName} (Nv.${lvl}): ${session.powerUsesLeft} escudos`;
+        } else if (isEliminate) {
+          pill.textContent = `⚡ ${animal.powerName} (Nv.${lvl}): ${session.powerUsesLeft} usos`;
+        } else {
+          pill.textContent = `⚡ ${animal.powerName} (Nv.${lvl}): ${getAnimalPowerSummary(animal, lvl)}`;
+        }
+      }
+
+      if (btn) {
+        if (isEliminate && session.inputMode === 'choices') {
+          btn.style.display = 'inline-flex';
+          btn.disabled = session.powerUsesLeft <= 0 || session.locked;
+          btn.style.opacity = session.powerUsesLeft > 0 ? '1' : '0.55';
+          btn.textContent = session.powerUsesLeft > 0
+            ? `⚡ ${animal.powerName}: Quitar 1 falsa (${session.powerUsesLeft})`
+            : '⚡ Poder usado en esta misión';
+        } else {
+          btn.style.display = 'none';
+        }
+      }
+    }
+
+    function useActiveCompanionPower() {
+      if (session.locked || session.powerUsesLeft <= 0 || session.inputMode !== 'choices') return;
+      const buttons = Array.from(document.querySelectorAll('#choicesGrid .choice-btn'))
+        .filter(b => !b.disabled && parseInt(b.dataset.val, 10) !== session.problem.answer);
+      if (buttons.length === 0) {
+        showToast('¡Ya solo queda la respuesta correcta! 🌟');
+        return;
+      }
+      const victim = buttons[randInt(0, buttons.length - 1)];
+      victim.classList.add('wrong');
+      victim.disabled = true;
+      session.powerUsesLeft--;
+      playSuccessSound();
+      const animal = getAnimalById(state.activeAnimal);
+      setCocoSpeech(`⚡ ¡${animal.name} usó ${animal.powerName} y quitó una opción falsa!`, 'happy');
+      updateCompanionPowerUI();
+      persistActiveMission();
+    }
+
+    function renderCurrentProblemUI() {
+      document.getElementById('hudWorldName').textContent = session.worldName;
+      document.getElementById('problemTypeLabel').textContent = session.problem.label;
+
+      // Vertical column format is clearest for 2-number + / - and 3-number addition;
+      // 3-number chained subtraction/mixed, multiplication, and division use horizontal format
+      const canBeVertical = ['add2', 'sub2', 'add3'].includes(session.problem.kind);
+      document.getElementById('formatSwitch').style.display = canBeVertical ? 'inline-flex' : 'none';
+      if (!canBeVertical) session.format = 'horizontal';
+      document.getElementById('fmtVertBtn').classList.toggle('active', session.format === 'vertical');
+      document.getElementById('fmtHorizBtn').classList.toggle('active', session.format === 'horizontal');
+
+      renderSteppingStones();
+      renderProblemDisplay();
+      renderAnswerControls();
+      updateCompanionPowerUI();
+      if (session.hintUsed) {
+        showVisualHint();
+      } else {
+        hideVisualHint();
+      }
+
+      const comp = getAnimalById(state.activeAnimal);
+      const greeting = session.step === 0
+        ? `¡Vamos juntos con ${comp.name}! Tómate tu tiempo 🌿`
+        : `¡Reto ${session.step + 1} de ${MISSION_LENGTH}! ${comp.emoji} ¡Tú puedes!`;
+      setCocoSpeech(greeting, 'normal');
+    }
+
+    function loadNextProblem() {
+      session.problem = generateProblem(session.skillKey, session.step);
+      session.attemptsOnCurrent = 0;
+      session.hintUsed = false;
+      session.keypadValue = '';
+      session.locked = false;
+      session.format = ['add2', 'sub2', 'add3'].includes(session.problem.kind) ? 'vertical' : 'horizontal';
+
+      renderCurrentProblemUI();
+      clearScratchpad(false);
+      persistActiveMission();
+    }
+
+    function renderSteppingStones() {
+      const el = document.getElementById('steppingStones');
+      let html = '';
+      for (let i = 0; i < MISSION_LENGTH; i++) {
+        const cls = i < session.step ? 'done' : i === session.step ? 'current' : '';
+        const icon = i < session.step ? '✓' : (i + 1);
+        html += `<div class="stone ${cls}">${icon}</div>`;
+      }
+      html += `<span class="stone-chest" title="Cofre del Tesoro">🎁</span>`;
+      el.innerHTML = html;
+
+      const sb = document.getElementById('streakBadge');
+      if (session.streak >= 2) {
+        sb.style.display = 'inline-flex';
+        document.getElementById('streakNum').textContent = session.streak;
+      } else {
+        sb.style.display = 'none';
+      }
+    }
+
+    function setMathFormat(fmt) {
+      playTapSound();
+      session.format = fmt;
+      document.getElementById('fmtVertBtn').classList.toggle('active', fmt === 'vertical');
+      document.getElementById('fmtHorizBtn').classList.toggle('active', fmt === 'horizontal');
+      renderProblemDisplay();
+    }
+
+    function renderProblemDisplay(stateClass = '') {
+      const p = session.problem;
+      const container = document.getElementById('problemDisplay');
+      const displayVal = session.keypadValue !== '' ? session.keypadValue : '?';
+      const filledCls = session.keypadValue !== '' ? 'filled' : '';
+
+      if (session.format === 'vertical' && ['add2', 'sub2', 'add3', 'sub3', 'mix3'].includes(p.kind)) {
+        const needsHundreds = p.answer >= 100 || p.nums.some(n => n >= 100);
+        const colCls = needsHundreds ? 'cols-4' : 'cols-3';
+
+        let html = `<div class="vertical-math ${colCls}">`;
+        // Place Value Headers
+        html += `<div></div>`;
+        if (needsHundreds) html += `<div class="pv-header pv-c">C</div>`;
+        html += `<div class="pv-header pv-d">D</div><div class="pv-header pv-u">U</div>`;
+
+        p.nums.forEach((n, idx) => {
+          const opChar = idx === 0 ? '' : (p.ops[idx - 1] === '-' ? '−' : p.ops[idx - 1]);
+          const str = String(n).padStart(needsHundreds ? 3 : 2, ' ');
+          html += `<div class="v-op">${opChar}</div>`;
+          if (needsHundreds) {
+            html += `<div class="v-digit col-c">${str[0].trim()}</div>`;
+            html += `<div class="v-digit col-d">${str[1].trim()}</div>`;
+            html += `<div class="v-digit col-u">${str[2].trim()}</div>`;
+          } else {
+            html += `<div class="v-digit col-d">${str[0].trim()}</div>`;
+            html += `<div class="v-digit col-u">${str[1].trim()}</div>`;
+          }
+        });
+
+        html += `<div class="v-line"></div>`;
+        html += `<div></div><div id="answerSlot" class="v-answer-slot ${filledCls} ${stateClass}">${displayVal}</div>`;
+        html += `</div>`;
+        container.innerHTML = html;
+      } else {
+        let exprHtml = `<div class="horizontal-math">`;
+        p.nums.forEach((n, idx) => {
+          if (idx > 0) {
+            const sym = p.ops[idx - 1] === '-' ? '−' : p.ops[idx - 1];
+            exprHtml += `<span class="h-op">${sym}</span>`;
+          }
+          exprHtml += `<span>${n}</span>`;
+        });
+        exprHtml += `<span class="h-op">=</span><span id="answerSlot" class="h-answer-box ${filledCls} ${stateClass}">${displayVal}</span></div>`;
+        container.innerHTML = exprHtml;
+      }
+    }
+
+    function renderAnswerControls() {
+      const choicesGrid = document.getElementById('choicesGrid');
+      const keypadWrap = document.getElementById('keypadWrap');
+      const modeBtn = document.getElementById('inputModeBtn');
+
+      if (session.inputMode === 'choices') {
+        modeBtn.textContent = '🎯 Opciones';
+        choicesGrid.style.display = 'grid';
+        keypadWrap.classList.remove('active');
+        choicesGrid.innerHTML = session.problem.choices.map(val => `
+          <button class="choice-btn" data-val="${val}" onclick="checkChoiceAnswer(${val}, this)">
+            ${val}
+          </button>
+        `).join('');
+      } else {
+        modeBtn.textContent = '🔢 Teclado (+50% 💎)';
+        choicesGrid.style.display = 'none';
+        keypadWrap.classList.add('active');
+      }
+    }
+
+    function toggleInputMode() {
+      playTapSound();
+      session.inputMode = session.inputMode === 'choices' ? 'keypad' : 'choices';
+      session.keypadValue = '';
+      renderProblemDisplay();
+      renderAnswerControls();
+      updateCompanionPowerUI();
+    }
+
+    function pressKey(digit) {
+      if (session.locked) return;
+      playTapSound();
+      if (session.keypadValue.length >= 3) return;
+      session.keypadValue += digit;
+      renderProblemDisplay();
+    }
+
+    function pressBackspace() {
+      if (session.locked) return;
+      playTapSound();
+      session.keypadValue = session.keypadValue.slice(0, -1);
+      renderProblemDisplay();
+    }
+
+    function submitKeypadAnswer() {
+      if (session.locked) return;
+      if (session.keypadValue === '') {
+        showToast('¡Escribe un número primero! 🔢');
+        return;
+      }
+      const val = parseInt(session.keypadValue, 10);
+      evaluateAnswer(val, null);
+    }
+
+    function checkChoiceAnswer(val, btnEl) {
+      if (session.locked) return;
+      evaluateAnswer(val, btnEl);
+    }
+
+    function evaluateAnswer(val, btnEl) {
+      const p = session.problem;
+      const comp = getAnimalById(state.activeAnimal);
+      const compLvl = getAnimalLevel(state.activeAnimal);
+
+      if (val === p.answer) {
+        session.locked = true;
+        session.keypadValue = String(val);
+        renderProblemDisplay('correct');
+        if (btnEl) btnEl.classList.add('correct');
+
+        playSuccessSound();
+        launchConfetti(48);
+
+        const isFirstTry = session.attemptsOnCurrent === 0;
+        if (isFirstTry) {
+          session.streak++;
+          session.missionPerfects++;
+          if (session.streak > state.bestStreak) state.bestStreak = session.streak;
+        } else {
+          session.streak = 0;
+        }
+
+        // Base gems calculation
+        let gemsEarned = isFirstTry ? 6 : 3;
+        if (session.inputMode === 'keypad') gemsEarned = Math.ceil(gemsEarned * 1.5);
+        if (session.streak >= 3) gemsEarned += 2;
+
+        // Companion Power Gem Bonuses!
+        let powerBonus = 0;
+        if (comp.powerType === 'add_bonus') {
+          powerBonus = (p.kind === 'add2' || p.kind === 'add3') ? (compLvl + 1) : compLvl;
+        } else if (comp.powerType === 'hint_bonus' && session.hintUsed) {
+          powerBonus = compLvl + 2;
+        } else if (comp.powerType === 'streak_gems' && session.streak >= 2) {
+          powerBonus = compLvl * 2;
+        } else if (comp.powerType === 'eliminate_mul' && (p.kind === 'mul' || p.kind === 'div')) {
+          powerBonus = compLvl;
+        } else if (comp.powerType === 'first_try_bonus' && isFirstTry) {
+          powerBonus = compLvl + 1;
+        } else if (comp.powerType === 'three_qty_bonus') {
+          powerBonus = ['add3', 'sub3', 'mix3'].includes(p.kind) ? (compLvl + 2) : 1;
+        } else if (comp.powerType === 'lucky_gems') {
+          powerBonus = randInt(1, compLvl + 2);
+        } else if (comp.powerType === 'legend_trex') {
+          powerBonus = compLvl + 2;
+        }
+
+        gemsEarned += powerBonus;
+        state.gems += gemsEarned;
+
+        // Stats tracking
+        state.stats.totalSolved++;
+        if (isFirstTry) state.stats.firstTryCorrect++;
+        const sk = state.stats.bySkill[p.skillKey];
+        if (sk) {
+          sk.solved++;
+          if (isFirstTry) sk.firstTry++;
+        }
+        saveState();
+
+        const bonusTag = powerBonus > 0 ? ` (${comp.emoji} +${powerBonus} poder!)` : '';
+        const msg = PRAISE_PHRASES[randInt(0, PRAISE_PHRASES.length - 1)] + ` +${gemsEarned} 💎${bonusTag}`;
+        setCocoSpeech(msg, 'happy');
+        renderSteppingStones();
+        updateCompanionPowerUI();
+
+        setTimeout(() => {
+          session.step++;
+          if (session.step >= MISSION_LENGTH) {
+            state.activeMission = null;
+            saveState();
+            openTreasureChestModal();
+          } else {
+            loadNextProblem();
+          }
+        }, 1250);
+      } else {
+        // Gentle, zero-punishment feedback + Shield Companion Power!
+        session.attemptsOnCurrent++;
+        let shieldSaved = false;
+        if (['streak_shield', 'streak_shield_plus'].includes(comp.powerType) && session.powerUsesLeft > 0 && session.streak > 0) {
+          session.powerUsesLeft--;
+          shieldSaved = true;
+        } else {
+          session.streak = 0;
+        }
+
+        playGentleRetrySound();
+        if (btnEl) {
+          btnEl.classList.add('wrong');
+          btnEl.disabled = true;
+        } else {
+          session.keypadValue = '';
+        }
+        renderProblemDisplay('wrong');
+        renderSteppingStones();
+        updateCompanionPowerUI();
+
+        const msg = shieldSaved
+          ? `🛡️ ¡${comp.name} protegió tu racha 🔥! Intenta de nuevo, ¡tú puedes!`
+          : ENCOURAGE_PHRASES[randInt(0, ENCOURAGE_PHRASES.length - 1)];
+        setCocoSpeech(msg, 'encourage');
+
+        if (state.settings.autoHint && !session.hintUsed) {
+          showVisualHint();
+        }
+        persistActiveMission();
+      }
+    }
+
+    function setCocoSpeech(text, mood = 'normal') {
+      document.getElementById('cocoSpeech').textContent = text;
+      updateAllCocoAvatars(mood);
+    }
+
+    function petCoco() {
+      const comp = getAnimalById(state.activeAnimal);
+      const lvl = getAnimalLevel(state.activeAnimal);
+      playAnimalVoice(comp.soundFreq);
+      const cute = [
+        `${comp.emoji} ¡Jiji! ¡Soy ${comp.name} (Nv.${lvl}) y creo en ti!`,
+        `⚡ Mi poder ${comp.powerName}: ${getAnimalPowerSummary(comp, lvl)}`,
+        `${comp.emoji} ¡Juntos somos invencibles! ¡Vamos a ganar gemas! 💎`
+      ];
+      setCocoSpeech(cute[randInt(0, cute.length - 1)], 'happy');
+    }
+
+    /* =========================================================
+       VISUAL SCAFFOLDING HINTS (BASE-10 BLOCKS & GROUPS)
+       ========================================================= */
+    function renderBase10Blocks(num, crossOutTens = 0, crossOutOnes = 0) {
+      const tens = Math.floor(num / 10);
+      const ones = num % 10;
+      let html = '';
+      for (let i = 0; i < tens; i++) {
+        const crossed = i >= (tens - crossOutTens) ? 'crossed' : '';
+        html += `<span class="ten-rod ${crossed}">10</span>`;
+      }
+      for (let i = 0; i < ones; i++) {
+        const crossed = i >= (ones - crossOutOnes) ? 'crossed' : '';
+        html += `<span class="one-dot ${crossed}">1</span>`;
+      }
+      return html;
+    }
+
+    function toggleVisualHint() {
+      playTapSound();
+      const box = document.getElementById('visualHintBox');
+      if (box.classList.contains('open')) {
+        box.classList.remove('open');
+      } else {
+        showVisualHint();
+      }
+    }
+
+    function hideVisualHint() {
+      document.getElementById('visualHintBox').classList.remove('open');
+    }
+
+    function showVisualHint() {
+      session.hintUsed = true;
+      const p = session.problem;
+      const box = document.getElementById('visualHintBox');
+      let html = `<div class="hint-title">💡 Ayuda Visual de Coco — ¡Contemos juntos!</div><div class="hint-steps">`;
+
+      if (p.kind === 'add2') {
+        const [a, b] = p.nums;
+        const u1 = a % 10, u2 = b % 10;
+        const d1 = Math.floor(a / 10), d2 = Math.floor(b / 10);
+        const uSum = u1 + u2;
+        html += `<div class="blocks-row"><span class="blocks-label">${a} =</span>${renderBase10Blocks(a)}</div>`;
+        html += `<div class="blocks-row"><span class="blocks-label">+ ${b} =</span>${renderBase10Blocks(b)}</div>`;
+        if (uSum >= 10) {
+          html += `<div>1️⃣ <strong>Unidades (naranja):</strong> ${u1} + ${u2} = <strong>${uSum}</strong> → ¡Juntamos 10 en 1 bloque verde <span class="ten-rod">10</span> y sobran <strong>${uSum - 10}</strong>!</div>`;
+          html += `<div>2️⃣ <strong>Decenas (verde):</strong> ${d1} + ${d2} + 1 que llevamos = <strong>${d1 + d2 + 1}</strong> decenas.</div>`;
+        } else {
+          html += `<div>1️⃣ <strong>Unidades (naranja):</strong> ${u1} + ${u2} = <strong>${uSum}</strong></div>`;
+          html += `<div>2️⃣ <strong>Decenas (verde):</strong> ${d1} + ${d2} = <strong>${d1 + d2}</strong> bloques de 10.</div>`;
+        }
+      } else if (p.kind === 'sub2') {
+        const [a, b] = p.nums;
+        const u1 = a % 10, u2 = b % 10;
+        const d1 = Math.floor(a / 10), d2 = Math.floor(b / 10);
+        if (u1 >= u2) {
+          html += `<div class="blocks-row"><span class="blocks-label">${a} − ${b}:</span>${renderBase10Blocks(a, d2, u2)}</div>`;
+          html += `<div>1️⃣ <strong>Unidades:</strong> ${u1} − ${u2} = <strong>${u1 - u2}</strong></div>`;
+          html += `<div>2️⃣ <strong>Decenas:</strong> ${d1} − ${d2} = <strong>${d1 - d2}</strong> bloques de 10.</div>`;
+        } else {
+          html += `<div>🌟 Como ${u1} es menor que ${u2}, abrimos 1 bloque <span class="ten-rod">10</span> en 10 puntitos:</div>`;
+          html += `<div>1️⃣ <strong>Unidades:</strong> ${u1 + 10} − ${u2} = <strong>${u1 + 10 - u2}</strong></div>`;
+          html += `<div>2️⃣ <strong>Decenas:</strong> Nos quedaron ${d1 - 1} bloques de 10. Ahora ${d1 - 1} − ${d2} = <strong>${d1 - 1 - d2}</strong>.</div>`;
+        }
+      } else if (p.kind === 'add3' || p.kind === 'sub3' || p.kind === 'mix3') {
+        const [a, b, c] = p.nums;
+        const [op1, op2] = p.ops;
+        const mid = op1 === '+' ? (a + b) : (a - b);
+        const sym1 = op1 === '-' ? '−' : '+';
+        const sym2 = op2 === '-' ? '−' : '+';
+        html += `<div>🌿 ¡Con 3 cantidades lo hacemos en <strong>2 pasitos fáciles</strong>!</div>`;
+        html += `<div class="blocks-row"><strong>Paso 1:</strong> Primero junta los dos primeros → <span style="color:#0F766E;font-size:1.05rem;">${a} ${sym1} ${b} = <strong>${mid}</strong></span></div>`;
+        html += `<div class="blocks-row"><strong>Paso 2:</strong> Ahora con el tercero → <span style="color:#B45309;font-size:1.05rem;">${mid} ${sym2} ${c} = <strong>?</strong></span></div>`;
+      } else if (p.kind === 'mul') {
+        const [a, b] = p.nums;
+        html += `<div>🍌 <strong>${a} × ${b}</strong> significa <strong>${a} grupos</strong> con <strong>${b} frutas</strong> en cada grupo:</div>`;
+        html += `<div class="groups-visual">`;
+        for (let g = 1; g <= a; g++) {
+          html += `<div class="group-plate"><span class="group-plate-title">Grupo ${g}</span><div class="group-items">${'🥭'.repeat(b)}</div></div>`;
+        }
+        html += `</div>`;
+        const repeated = Array(a).fill(b).join(' + ');
+        html += `<div style="text-align:center;color:#065F46;">Suma rápida: ${repeated} = ?</div>`;
+      } else if (p.kind === 'div') {
+        const [n, d] = p.nums;
+        const q = p.answer;
+        html += `<div>🐟 Repartimos <strong>${n} peces</strong> en partes iguales entre <strong>${d} cocodrilitos</strong>:</div>`;
+        html += `<div class="groups-visual">`;
+        for (let g = 1; g <= d; g++) {
+          html += `<div class="group-plate"><span class="group-plate-title">🐊 #${g}</span><div class="group-items">${'🐟'.repeat(q)}</div></div>`;
+        }
+        html += `</div>`;
+        html += `<div style="text-align:center;color:#065F46;">¿Cuántos peces recibió cada cocodrilito? ¡Cuéntalos en un grupo!</div>`;
+      }
+
+      html += `</div>`;
+      box.innerHTML = html;
+      box.classList.add('open');
+    }
+
+    /* =========================================================
+       S-PEN & TOUCH SCRATCHPAD CANVAS
+       ========================================================= */
+    let scratchDrawing = false;
+    let scratchColor = '#1E293B';
+    let scratchCtx = null;
+    let scratchUndoStack = [];
+
+    function pushScratchUndo() {
+      const canvas = document.getElementById('scratchCanvas');
+      if (!canvas || canvas.width === 0 || canvas.height === 0) return;
+      try {
+        scratchUndoStack.push(canvas.toDataURL());
+        if (scratchUndoStack.length > 20) scratchUndoStack.shift();
+      } catch (e) { /* Ignore */ }
+    }
+
+    function initScratchpad() {
+      const canvas = document.getElementById('scratchCanvas');
+      scratchCtx = canvas.getContext('2d');
+
+      function resizeCanvas() {
+        const rect = canvas.parentElement.getBoundingClientRect();
+        if (rect.width === 0 || rect.height === 0) return;
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        const targetW = Math.round(rect.width * dpr);
+        const targetH = Math.round(rect.height * dpr);
+        if (canvas.width === targetW && canvas.height === targetH) return;
+
+        // Preserve existing drawing so Android address-bar/keyboard resizes NEVER wipe the pad!
+        let snapshot = null;
+        if (canvas.width > 0 && canvas.height > 0) {
+          snapshot = document.createElement('canvas');
+          snapshot.width = canvas.width;
+          snapshot.height = canvas.height;
+          snapshot.getContext('2d').drawImage(canvas, 0, 0);
+        }
+
+        canvas.width = targetW;
+        canvas.height = targetH;
+        scratchCtx.setTransform(1, 0, 0, 1, 0, 0);
+        if (snapshot) {
+          scratchCtx.drawImage(snapshot, 0, 0);
+        }
+        scratchCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        scratchCtx.lineCap = 'round';
+        scratchCtx.lineJoin = 'round';
+      }
+
+      window.addEventListener('resize', resizeCanvas);
+      canvas._resize = resizeCanvas;
+
+      function getPos(e) {
+        const rect = canvas.getBoundingClientRect();
+        return { x: e.clientX - rect.left, y: e.clientY - rect.top };
+      }
+
+      canvas.addEventListener('pointerdown', (e) => {
+        if (e.isPrimary === false) return;
+        e.preventDefault();
+        pushScratchUndo();
+        canvas.setPointerCapture(e.pointerId);
+        scratchDrawing = true;
+        const pos = getPos(e);
+        const pressure = e.pressure && e.pressure > 0 ? e.pressure : 0.5;
+        scratchCtx.strokeStyle = scratchColor;
+        scratchCtx.lineWidth = Math.max(3, Math.min(8, pressure * 7));
+        scratchCtx.beginPath();
+        scratchCtx.moveTo(pos.x, pos.y);
+      });
+
+      canvas.addEventListener('pointermove', (e) => {
+        if (!scratchDrawing || e.isPrimary === false) return;
+        e.preventDefault();
+        const pos = getPos(e);
+        scratchCtx.lineTo(pos.x, pos.y);
+        scratchCtx.stroke();
+      });
+
+      const stopDraw = () => { scratchDrawing = false; };
+      canvas.addEventListener('pointerup', stopDraw);
+      canvas.addEventListener('pointercancel', stopDraw);
+    }
+
+    function toggleScratchpad() {
+      playTapSound();
+      const drawer = document.getElementById('scratchpadDrawer');
+      const btn = document.getElementById('scratchToggleBtn');
+      const isOpen = drawer.classList.toggle('open');
+      btn.classList.toggle('active', isOpen);
+      if (isOpen) {
+        const canvas = document.getElementById('scratchCanvas');
+        if (canvas._resize) canvas._resize();
+      }
+    }
+
+    function toggleScratchpadSize() {
+      playTapSound();
+      const wrap = document.querySelector('.scratch-canvas-wrap');
+      const btn = document.getElementById('scratchSizeBtn');
+      const isExpanded = wrap.classList.toggle('expanded');
+      if (btn) btn.textContent = isExpanded ? '⛶ Normal' : '⛶ Grande';
+      setTimeout(() => {
+        const canvas = document.getElementById('scratchCanvas');
+        if (canvas && canvas._resize) canvas._resize();
+      }, 220);
+    }
+
+    function undoScratchpad() {
+      playTapSound();
+      const canvas = document.getElementById('scratchCanvas');
+      if (!scratchCtx || !canvas || scratchUndoStack.length === 0) return;
+      const dataUrl = scratchUndoStack.pop();
+      const img = new Image();
+      img.onload = () => {
+        const prevTransform = scratchCtx.getTransform();
+        scratchCtx.setTransform(1, 0, 0, 1, 0, 0);
+        scratchCtx.clearRect(0, 0, canvas.width, canvas.height);
+        scratchCtx.drawImage(img, 0, 0);
+        scratchCtx.setTransform(prevTransform);
+      };
+      img.src = dataUrl;
+    }
+
+    function setPenColor(hex, dotEl) {
+      playTapSound();
+      scratchColor = hex;
+      document.querySelectorAll('.color-dot').forEach(d => d.classList.remove('active'));
+      if (dotEl) dotEl.classList.add('active');
+    }
+
+    function clearScratchpad(saveUndo = true) {
+      const canvas = document.getElementById('scratchCanvas');
+      if (scratchCtx && canvas) {
+        if (saveUndo) {
+          playTapSound();
+          pushScratchUndo();
+        } else {
+          scratchUndoStack = [];
+        }
+        const prevTransform = scratchCtx.getTransform();
+        scratchCtx.setTransform(1, 0, 0, 1, 0, 0);
+        scratchCtx.clearRect(0, 0, canvas.width, canvas.height);
+        scratchCtx.setTransform(prevTransform);
+      }
+    }
+
+    /* =========================================================
+       TREASURE CHEST REWARD SYSTEM
+       ========================================================= */
+    let chestTapsRemaining = 3;
+
+    function openTreasureChestModal() {
+      chestTapsRemaining = 3;
+      document.getElementById('chestInteractiveArea').style.display = 'block';
+      document.getElementById('chestRewardArea').style.display = 'none';
+      document.getElementById('chestEmoji').textContent = '🎁';
+      document.getElementById('chestTapsLeft').textContent = '¡Toca el cofre! (3)';
+      document.getElementById('chestSubtitle').textContent = '¡Toca el Cofre del Tesoro 3 veces para abrirlo!';
+      document.getElementById('chestModal').classList.add('open');
+      playChestFanfare();
+      launchConfetti(80);
+    }
+
+    function tapTreasureChest() {
+      chestTapsRemaining--;
+      const emojiEl = document.getElementById('chestEmoji');
+      playTone(420 + (3 - chestTapsRemaining) * 140, 0.12, 'triangle', 0.2);
+
+      if (chestTapsRemaining > 0) {
+        emojiEl.style.transform = 'scale(1.25) rotate(-8deg)';
+        setTimeout(() => { emojiEl.style.transform = ''; }, 150);
+        document.getElementById('chestTapsLeft').textContent = `¡Sigue tocando! (${chestTapsRemaining})`;
+      } else {
+        revealTreasureRewards();
+      }
+    }
+
+    function revealTreasureRewards() {
+      playChestFanfare();
+      launchConfetti(120);
+
+      const comp = getAnimalById(state.activeAnimal);
+      const compLvl = getAnimalLevel(state.activeAnimal);
+
+      // Stars awarded for mission (1 to 3) + Panda bonus!
+      const starsEarned = session.missionPerfects >= 5 ? 3 : session.missionPerfects >= 3 ? 2 : 1;
+      const prevBest = state.worldStars[session.worldId] || 0;
+      let addedStars = 0;
+      if (starsEarned > prevBest) {
+        addedStars = starsEarned - prevBest;
+        state.worldStars[session.worldId] = starsEarned;
+      } else {
+        addedStars = 1; // Always give +1 bonus star for replaying!
+      }
+      const pandaStarBonus = comp.powerType === 'star_bonus' ? 1 : 0;
+      state.stars += (addedStars + pandaStarBonus);
+
+      // Gems: base + perfects + permanent Star Road boost + Hippo/Panda companion bonus!
+      let bonusGems = 15 + session.missionPerfects * 3;
+      const starBoost = getPermanentChestBonus();
+      let compChestGems = 0;
+      if (comp.powerType === 'chest_bonus') compChestGems = 4 + compLvl * 2;
+      if (comp.powerType === 'star_bonus') compChestGems = compLvl * 2;
+      bonusGems += starBoost + compChestGems;
+
+      state.gems += bonusGems;
+      state.chestsOpened++;
+
+      // Unlock a new Wild Animal automatically (excluding starExclusive animals like T-Rex)
+      const lockedAnimals = ANIMALS.filter(a => !a.starExclusive && !state.unlockedAnimals.includes(a.id));
+      let newlyUnlockedAnimal = null;
+      if (lockedAnimals.length > 0) {
+        newlyUnlockedAnimal = lockedAnimals[0];
+        state.unlockedAnimals.push(newlyUnlockedAnimal.id);
+        state.animalLevels[newlyUnlockedAnimal.id] = 1;
+      }
+
+      saveState();
+
+      document.getElementById('chestInteractiveArea').style.display = 'none';
+      document.getElementById('chestRewardArea').style.display = 'block';
+      document.getElementById('chestSubtitle').textContent = '¡Mira todo lo que ganaste por tu esfuerzo!';
+
+      const readyStarRewards = getUnclaimedStarRewardsCount();
+      let extraNotes = [];
+      if (compChestGems > 0) extraNotes.push(`${comp.emoji} +${compChestGems} 💎 por poder`);
+      if (pandaStarBonus > 0) extraNotes.push(`🐼 +1 ⭐ estrella extra`);
+      if (starBoost > 0) extraNotes.push(`⭐ +${starBoost} 💎 por Rango`);
+
+      let rewardHtml = `
+        <div style="font-size:1.7rem;letter-spacing:4px;">${'⭐'.repeat(starsEarned)}</div>
+        <div style="font-size:1.35rem;font-weight:900;color:#92400E;">+${bonusGems} 💎 Gemas de la Selva</div>
+        ${extraNotes.length ? `<div style="font-size:0.84rem;font-weight:800;color:#0F766E;">${extraNotes.join(' · ')}</div>` : ''}
+        ${readyStarRewards > 0 ? `<button class="btn-3d btn-blue" style="padding:8px 14px;font-size:0.9rem;" onclick="closeChestAndGo('stars')">🌟 ¡Tienes ${readyStarRewards} premio(s) de Estrellas por reclamar!</button>` : ''}
+      `;
+
+      if (newlyUnlockedAnimal) {
+        rewardHtml += `
+          <div style="margin-top:6px;padding:12px 16px;background:#ECFDF5;border:3px solid #6EE7B7;border-radius:18px;width:100%;">
+            <div style="font-size:0.85rem;font-weight:900;color:#065F46;text-transform:uppercase;">🎉 ¡Nuevo Compañero Rescatado!</div>
+            <div style="font-size:3.2rem;margin:4px 0;">${newlyUnlockedAnimal.emoji}</div>
+            <div style="font-size:1.15rem;font-weight:900;color:var(--jungle-deep);">${newlyUnlockedAnimal.name}</div>
+            <div style="font-size:0.82rem;font-weight:900;color:#92400E;margin-top:4px;">⚡ ${newlyUnlockedAnimal.powerName}: ${getAnimalPowerSummary(newlyUnlockedAnimal, 1)}</div>
+          </div>
+        `;
+      } else {
+        rewardHtml += `<div style="font-weight:800;color:var(--jungle-main);">¡Usa tus gemas para subir de nivel a tus animales y vestirlos en Mi Santuario! 🍌🎩</div>`;
+      }
+
+      document.getElementById('chestRewardContent').innerHTML = rewardHtml;
+    }
+
+    function continueSameMission() {
+      playTapSound();
+      document.getElementById('chestModal').classList.remove('open');
+      startWorldMission(session.worldId, true);
+    }
+
+    function closeChestAndGo(viewName) {
+      playTapSound();
+      document.getElementById('chestModal').classList.remove('open');
+      if (viewName === 'stars') {
+        openStarRoad();
+      } else {
+        switchView(viewName);
+      }
+    }
+
+    /* =========================================================
+       SANCTUARY, UNIVERSAL WARDROBE & STAR ROAD
+       ========================================================= */
+    function openStarRoad() {
+      playTapSound();
+      switchView('sanctuary');
+      switchSanctuaryTab('stars');
+    }
+
+    function switchSanctuaryTab(tab) {
+      playTapSound();
+      document.getElementById('sanctuaryAnimalsPane').style.display = tab === 'animals' ? 'grid' : 'none';
+      document.getElementById('sanctuaryWardrobePane').style.display = tab === 'wardrobe' ? 'grid' : 'none';
+      document.getElementById('sanctuaryStarsPane').style.display = tab === 'stars' ? 'flex' : 'none';
+
+      document.getElementById('tabAnimalsBtn').className = tab === 'animals' ? 'btn-3d btn-green' : 'btn-3d btn-cream';
+      document.getElementById('tabWardrobeBtn').className = tab === 'wardrobe' ? 'btn-3d btn-green' : 'btn-3d btn-cream';
+      document.getElementById('tabStarsBtn').className = tab === 'stars' ? 'btn-3d btn-green' : 'btn-3d btn-cream';
+      ['tabAnimalsBtn', 'tabWardrobeBtn', 'tabStarsBtn'].forEach(id => {
+        document.getElementById(id).style.padding = '11px 18px';
+      });
+
+      const sub = document.getElementById('sanctuarySubtitle');
+      if (sub) {
+        if (tab === 'animals') sub.textContent = '¡Elige tu compañero para jugar, aliméntalo para subir su poder y vístelo!';
+        if (tab === 'wardrobe') sub.textContent = '¡Elige cualquier animal desbloqueado y ponle accesorios!';
+        if (tab === 'stars') sub.textContent = '¡Junta ⭐ estrellas completando misiones y reclama premios exclusivos!';
+      }
+
+      if (tab === 'animals') renderSanctuary();
+      if (tab === 'wardrobe') renderWardrobe();
+      if (tab === 'stars') renderStarRoad();
+    }
+
+    function renderSanctuary() {
+      document.getElementById('sancAnimalCount').textContent = state.unlockedAnimals.length;
+      document.getElementById('heroAnimalCount').textContent = state.unlockedAnimals.length;
+
+      const grid = document.getElementById('sanctuaryAnimalsPane');
+      grid.innerHTML = ANIMALS.map(a => {
+        const unlocked = state.unlockedAnimals.includes(a.id);
+        const lvl = getAnimalLevel(a.id);
+        const isMax = lvl >= MAX_ANIMAL_LEVEL;
+        const isActive = state.activeAnimal === a.id;
+        const acc = ACCESSORIES.find(x => x.id === getAnimalAccessory(a.id));
+        const accBadge = acc && acc.id !== 'none' ? `<span style="position:absolute;top:10px;right:10px;font-size:1.25rem;" title="${acc.name}">${acc.icon}</span>` : '';
+        const hearts = '❤️'.repeat(lvl) + '🤍'.repeat(MAX_ANIMAL_LEVEL - lvl);
+        const feedCost = 5 + (lvl - 1) * 5;
+
+        if (unlocked) {
+          const cardCls = `animal-card unlocked ${isActive ? 'active-companion' : ''} ${isMax ? 'legendary' : ''}`;
+          return `
+            <div class="${cardCls}" id="acard_${a.id}" onclick="interactAnimal('${a.id}')">
+              ${accBadge}
+              <div class="animal-emoji-stage">${a.emoji}</div>
+              <h3 class="animal-name">${a.name}</h3>
+              <div class="hearts-row" title="Nivel de poder">${hearts} <small style="font-weight:900;color:${isMax ? '#B45309' : 'var(--text-muted)'};">${isMax ? '✨ MAX' : `Nv.${lvl}`}</small></div>
+              <div class="power-tag">⚡ <strong>${a.powerName}:</strong> ${getAnimalPowerSummary(a, lvl)}</div>
+              <div class="animal-fact" style="min-height:34px;">${a.fact}</div>
+              <div style="display:flex;gap:6px;width:100%;">
+                ${isActive
+                  ? `<button class="btn-3d btn-cream" style="flex:1;padding:8px 6px;font-size:0.82rem;" disabled>✅ Activo</button>`
+                  : `<button class="btn-3d btn-green" style="flex:1;padding:8px 6px;font-size:0.82rem;" onclick="event.stopPropagation(); selectCompanion('${a.id}')">🐾 Usar</button>`
+                }
+                <button class="btn-3d btn-blue" style="padding:8px 10px;font-size:0.82rem;" onclick="event.stopPropagation(); dressAnimal('${a.id}')" title="Vestir a ${a.name}">🎩 Vestir</button>
+              </div>
+              ${isMax
+                ? `<button class="btn-3d btn-cream" style="width:100%;padding:8px 10px;font-size:0.84rem;color:#B45309;" disabled>🌟 Poder al Máximo</button>`
+                : `<button class="btn-3d btn-amber" style="width:100%;padding:8px 10px;font-size:0.84rem;" onclick="event.stopPropagation(); feedAnimal('${a.id}')">🍌 Subir a Nv.${lvl + 1} (${feedCost} 💎)</button>`
+              }
+            </div>
+          `;
+        } else if (a.starExclusive) {
+          return `
+            <div class="animal-card locked">
+              <div class="animal-emoji-stage">${a.emoji}</div>
+              <h3 class="animal-name">${a.name}</h3>
+              <div class="power-tag">⚡ <strong>${a.powerName}:</strong> ${getAnimalPowerSummary(a, 1)}</div>
+              <div class="animal-fact">Exclusivo al juntar <strong>${a.starExclusive} ⭐</strong> en Premios Estrellas.</div>
+              <button class="btn-3d btn-blue" style="width:100%;padding:8px 10px;font-size:0.84rem;" onclick="switchSanctuaryTab('stars')">
+                ⭐ Ver en Premios (${state.stars}/${a.starExclusive})
+              </button>
+            </div>
+          `;
+        } else {
+          return `
+            <div class="animal-card locked">
+              <div class="animal-emoji-stage">${a.emoji}</div>
+              <h3 class="animal-name">${a.name}</h3>
+              <div class="power-tag">⚡ <strong>${a.powerName}:</strong> ${getAnimalPowerSummary(a, 1)}</div>
+              <div class="animal-fact">Rescátalo abriendo Cofres del Tesoro o con gemas.</div>
+              <button class="btn-3d btn-blue" style="width:100%;padding:8px 10px;font-size:0.86rem;" onclick="buyAnimal('${a.id}')">
+                🔓 Rescatar (${a.cost} 💎)
+              </button>
+            </div>
+          `;
+        }
+      }).join('');
+    }
+
+    function selectCompanion(id) {
+      if (!state.unlockedAnimals.includes(id)) return;
+      playSuccessSound();
+      state.activeAnimal = id;
+      if (state.activeMission) {
+        session.powerUsesLeft = getMissionPowerUses(id);
+        state.activeMission.powerUsesLeft = session.powerUsesLeft;
+      }
+      saveState();
+      updateAllCocoAvatars('happy');
+      renderSanctuary();
+      const a = getAnimalById(id);
+      showToast(`${a.emoji} ¡${a.name} ahora te acompaña en la aventura!`);
+    }
+
+    function dressAnimal(id) {
+      if (!state.unlockedAnimals.includes(id)) return;
+      wardrobeSelectedAnimal = id;
+      switchSanctuaryTab('wardrobe');
+    }
+
+    function interactAnimal(id) {
+      const a = getAnimalById(id);
+      playAnimalVoice(a.soundFreq);
+      const card = document.getElementById('acard_' + id);
+      if (card) {
+        card.classList.remove('bounce');
+        void card.offsetWidth;
+        card.classList.add('bounce');
+        setTimeout(() => card.classList.remove('bounce'), 350);
+      }
+      showToast(`${a.emoji} ${a.name}: "¡Mi poder es ${a.powerName}!"`);
+    }
+
+    function feedAnimal(id) {
+      const a = getAnimalById(id);
+      const curLvl = getAnimalLevel(id);
+      if (curLvl >= MAX_ANIMAL_LEVEL) {
+        showToast(`🌟 ¡${a.name} ya tiene su poder al máximo!`);
+        return;
+      }
+      const feedCost = 5 + (curLvl - 1) * 5;
+      if (state.gems < feedCost) {
+        showToast(`Necesitas ${feedCost} 💎 para subir a ${a.name} a Nv.${curLvl + 1}.`);
+        return;
+      }
+      state.gems -= feedCost;
+      state.animalLevels[id] = curLvl + 1;
+      saveState();
+      playSuccessSound();
+      launchConfetti(45);
+      renderSanctuary();
+      updateAllCocoAvatars('happy');
+      showToast(`🍌 ¡${a.name} subió a Nv.${curLvl + 1}! Nuevo poder: ${getAnimalPowerSummary(a, curLvl + 1)}`);
+    }
+
+    function buyAnimal(id) {
+      const a = getAnimalById(id);
+      if (a.starExclusive) return;
+      if (state.gems < a.cost) {
+        showToast(`Te faltan ${a.cost - state.gems} 💎 para rescatar a ${a.name}.`);
+        return;
+      }
+      state.gems -= a.cost;
+      state.unlockedAnimals.push(id);
+      state.animalLevels[id] = 1;
+      state.activeAnimal = id;
+      saveState();
+      playChestFanfare();
+      launchConfetti(70);
+      renderSanctuary();
+      updateAllCocoAvatars('happy');
+      showToast(`🎉 ¡Rescataste a ${a.name} y ya es tu compañero! ${a.emoji}`);
+    }
+
+    function selectWardrobeAnimal(id) {
+      playTapSound();
+      wardrobeSelectedAnimal = id;
+      renderWardrobe();
+    }
+
+    function renderWardrobe() {
+      if (!wardrobeSelectedAnimal || !state.unlockedAnimals.includes(wardrobeSelectedAnimal)) {
+        wardrobeSelectedAnimal = state.activeAnimal || 'cocodrilo';
+      }
+      const targetAnimal = getAnimalById(wardrobeSelectedAnimal);
+      const currentAccId = getAnimalAccessory(wardrobeSelectedAnimal);
+      const eq = ACCESSORIES.find(x => x.id === currentAccId) || ACCESSORIES[0];
+
+      // Strip of unlocked animals to dress ANY of them
+      const stripEl = document.getElementById('wardrobeAnimalStrip');
+      if (stripEl) {
+        stripEl.innerHTML = state.unlockedAnimals.map(aid => {
+          const a = getAnimalById(aid);
+          const isSel = aid === wardrobeSelectedAnimal;
+          return `<button class="wardrobe-animal-chip ${isSel ? 'active' : ''}" onclick="selectWardrobeAnimal('${aid}')" title="Vestir a ${a.name}">${a.emoji}</button>`;
+        }).join('');
+      }
+
+      const nameEl = document.getElementById('wardrobeAnimalName');
+      if (nameEl) nameEl.textContent = `${targetAnimal.emoji} ${targetAnimal.name}`;
+      document.getElementById('wardrobeEquippedLabel').textContent = `Puesto: ${eq.icon} ${eq.name}`;
+      updateAllCocoAvatars('happy');
+
+      const grid = document.getElementById('wardrobeItemsGrid');
+      grid.innerHTML = ACCESSORIES.map(item => {
+        const owned = state.unlockedAccessories.includes(item.id);
+        const equipped = currentAccId === item.id;
+        let btnHtml = '';
+        if (equipped) {
+          btnHtml = `<button class="btn-3d btn-cream" style="width:100%;padding:8px;" disabled>✅ Puesto</button>`;
+        } else if (owned) {
+          btnHtml = `<button class="btn-3d btn-green" style="width:100%;padding:8px;" onclick="equipAccessory('${item.id}')">👕 Poner a ${targetAnimal.name.split(' ')[0]}</button>`;
+        } else if (item.starExclusive) {
+          btnHtml = `<button class="btn-3d btn-blue" style="width:100%;padding:8px;font-size:0.84rem;" onclick="switchSanctuaryTab('stars')">⭐ Premio de ${item.starExclusive} ⭐</button>`;
+        } else {
+          btnHtml = `<button class="btn-3d btn-amber" style="width:100%;padding:8px;" onclick="buyAccessory('${item.id}')">💎 Comprar (${item.cost})</button>`;
+        }
+
+        return `
+          <div class="animal-card ${owned ? 'unlocked' : ''}">
+            <div class="animal-emoji-stage" style="background:${equipped ? '#FEF3C7' : '#E8F5E9'};">${item.icon}</div>
+            <h3 class="animal-name">${item.name}</h3>
+            <div class="animal-fact" style="min-height:30px;">${item.desc}</div>
+            ${btnHtml}
+          </div>
+        `;
+      }).join('');
+    }
+
+    function buyAccessory(id) {
+      const item = ACCESSORIES.find(x => x.id === id);
+      if (!item || item.starExclusive) return;
+      if (state.gems < item.cost) {
+        showToast(`Necesitas ${item.cost - state.gems} 💎 más para ${item.name}.`);
+        return;
+      }
+      const targetId = wardrobeSelectedAnimal || state.activeAnimal || 'cocodrilo';
+      state.gems -= item.cost;
+      if (!state.unlockedAccessories.includes(id)) state.unlockedAccessories.push(id);
+      state.animalAccessories[targetId] = id;
+      if (targetId === 'cocodrilo') state.equippedAccessory = id;
+      saveState();
+      playChestFanfare();
+      launchConfetti(60);
+      renderWardrobe();
+      const targetAnimal = getAnimalById(targetId);
+      showToast(`🎉 ¡${targetAnimal.name} ahora lleva ${item.name}!`);
+    }
+
+    function equipAccessory(id) {
+      playTapSound();
+      const targetId = wardrobeSelectedAnimal || state.activeAnimal || 'cocodrilo';
+      state.animalAccessories[targetId] = id;
+      if (targetId === 'cocodrilo') state.equippedAccessory = id;
+      saveState();
+      renderWardrobe();
+      const targetAnimal = getAnimalById(targetId);
+      showToast(`${targetAnimal.emoji} ¡Qué genial se ve ${targetAnimal.name}!`);
+    }
+
+    function renderStarRoad() {
+      const rankInfo = getExplorerRank(state.stars);
+      const nextText = rankInfo.next
+        ? `Te faltan <strong>${Math.max(0, rankInfo.next.stars - state.stars)} ⭐</strong> para llegar a <strong>${rankInfo.next.rank}</strong>`
+        : '¡Alcanzaste el rango máximo de toda la selva! 🏆';
+
+      document.getElementById('starRankBanner').innerHTML = `
+        <div>
+          <div style="font-size:0.84rem;font-weight:800;opacity:0.9;">TU RANGO ACTUAL DE EXPLORADOR</div>
+          <div style="font-size:1.55rem;font-weight:900;margin:2px 0;">${rankInfo.icon} ${rankInfo.rank}</div>
+          <div style="font-size:0.9rem;font-weight:700;opacity:0.95;">${nextText}</div>
+        </div>
+        <div style="text-align:center;background:rgba(255,255,255,0.18);padding:10px 18px;border-radius:18px;">
+          <div style="font-size:1.8rem;font-weight:900;">⭐ ${state.stars}</div>
+          <div style="font-size:0.78rem;font-weight:800;">Estrellas ganadas</div>
+        </div>
+      `;
+
+      const grid = document.getElementById('starMilestonesGrid');
+      grid.innerHTML = STAR_MILESTONES.map(m => {
+        const reached = state.stars >= m.stars;
+        const claimed = state.claimedStarRewards.includes(m.id);
+        const cls = claimed ? 'milestone-card claimed' : reached ? 'milestone-card ready' : 'milestone-card';
+
+        let actionHtml = '';
+        if (claimed) {
+          actionHtml = `<button class="btn-3d btn-cream" style="width:100%;padding:9px;" disabled>✅ Reclamado</button>`;
+        } else if (reached) {
+          actionHtml = `<button class="btn-3d btn-amber" style="width:100%;padding:10px;font-size:0.96rem;" onclick="claimStarReward('${m.id}')">🎁 ¡Reclamar Premio!</button>`;
+        } else {
+          actionHtml = `<button class="btn-3d btn-cream" style="width:100%;padding:8px;opacity:0.75;" disabled>🔒 Faltan ${m.stars - state.stars} ⭐</button>`;
+        }
+
+        return `
+          <div class="${cls}">
+            <span class="world-badge-num" style="background:#E0F2FE;color:#0369A1;">Meta: ${m.stars} ⭐</span>
+            <div style="font-size:2.9rem;line-height:1.1;">${m.icon}</div>
+            <h3 class="animal-name">${m.title}</h3>
+            <div style="font-size:0.8rem;font-weight:900;color:#0369A1;">Rango: ${m.rank}</div>
+            <div class="animal-fact" style="min-height:36px;">${m.desc}</div>
+            ${actionHtml}
+          </div>
+        `;
+      }).join('');
+    }
+
+    function claimStarReward(id) {
+      const m = STAR_MILESTONES.find(x => x.id === id);
+      if (!m || state.stars < m.stars || state.claimedStarRewards.includes(id)) return;
+
+      state.claimedStarRewards.push(id);
+      if (m.rewardType === 'gems') {
+        state.gems += m.amount;
+      } else if (m.rewardType === 'accessory') {
+        if (!state.unlockedAccessories.includes(m.accessoryId)) {
+          state.unlockedAccessories.push(m.accessoryId);
+        }
+      } else if (m.rewardType === 'acc_gems') {
+        if (!state.unlockedAccessories.includes(m.accessoryId)) {
+          state.unlockedAccessories.push(m.accessoryId);
+        }
+        state.gems += m.amount;
+      } else if (m.rewardType === 'animal') {
+        if (!state.unlockedAnimals.includes(m.animalId)) {
+          state.unlockedAnimals.push(m.animalId);
+          state.animalLevels[m.animalId] = 1;
+        }
+        state.activeAnimal = m.animalId;
+      }
+
+      saveState();
+      playChestFanfare();
+      launchConfetti(100);
+      renderStarRoad();
+      renderSanctuary();
+      updateAllCocoAvatars('happy');
+      showToast(`🎉 ¡Reclamaste: ${m.title}!`);
+    }
+
+    /* =========================================================
+       PARENTS GATE & PROGRESS DASHBOARD
+       ========================================================= */
+    let gateExpected = 56;
+
+    function openParentsGate() {
+      playTapSound();
+      const a = randInt(6, 9);
+      const b = randInt(6, 9);
+      gateExpected = a * b;
+      document.getElementById('gateMathExpr').textContent = `${a} × ${b} = ?`;
+      const opts = [gateExpected, gateExpected + randInt(2, 6), gateExpected - randInt(2, 5)].sort(() => Math.random() - 0.5);
+      document.getElementById('gateChoices').innerHTML = opts.map(v => `
+        <button class="btn-3d btn-blue" style="padding:12px;font-size:1.25rem;" onclick="checkParentsGate(${v})">${v}</button>
+      `).join('');
+      document.getElementById('parentsGateModal').classList.add('open');
+    }
+
+    function closeParentsGate() {
+      document.getElementById('parentsGateModal').classList.remove('open');
+    }
+
+    function checkParentsGate(val) {
+      if (val === gateExpected) {
+        closeParentsGate();
+        switchView('parents');
+      } else {
+        playGentleRetrySound();
+        showToast('Respuesta incorrecta. Intenta de nuevo.');
+      }
+    }
+
+    function renderParentsPanel() {
+      const s = state.stats;
+      const acc = s.totalSolved > 0 ? Math.round((s.firstTryCorrect / s.totalSolved) * 100) : 0;
+      document.getElementById('statSolved').textContent = s.totalSolved;
+      document.getElementById('statAccuracy').textContent = acc + '%';
+      document.getElementById('statBestStreak').textContent = state.bestStreak;
+      document.getElementById('statChests').textContent = state.chestsOpened;
+
+      const labels = {
+        add2_easy: '➕ Sumas 2 dígitos (sin llevar)',
+        sub2_easy: '➖ Restas 2 dígitos (sin prestar)',
+        add3: '➕ Sumas llevando y 3 cantidades',
+        sub3: '➖ Restas prestando y 3 cantidades',
+        mul: '✖️ Multiplicación visual',
+        div: '➗ División exacta (reparto)'
+      };
+
+      const barsEl = document.getElementById('skillBarsContainer');
+      barsEl.innerHTML = Object.keys(labels).map(k => {
+        const d = s.bySkill[k] || { solved: 0, firstTry: 0 };
+        const pct = d.solved > 0 ? Math.round((d.firstTry / d.solved) * 100) : 0;
+        const barColor = d.solved === 0 ? '#CBD5E1' : pct >= 75 ? '#22C55E' : pct >= 50 ? '#F59E0B' : '#F97316';
+        return `
+          <div class="skill-row">
+            <div class="skill-row-head">
+              <span>${labels[k]}</span>
+              <span>${d.solved} retos · ${pct}%</span>
+            </div>
+            <div class="bar-track">
+              <div class="bar-fill" style="width:${d.solved === 0 ? 4 : pct}%;background:${barColor};"></div>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      document.getElementById('setAutoHint').classList.toggle('on', !!state.settings.autoHint);
+      document.getElementById('setIncludeMulDiv').classList.toggle('on', !!state.settings.includeMulDiv);
+      document.getElementById('setDefaultKeypad').classList.toggle('on', !!state.settings.defaultKeypad);
+    }
+
+    function toggleSetting(key) {
+      playTapSound();
+      state.settings[key] = !state.settings[key];
+      saveState();
+      renderParentsPanel();
+      renderWorldsMap();
+    }
+
+    function confirmResetProgress() {
+      if (window.confirm('¿Seguro que deseas reiniciar todas las gemas, animales y estadísticas del niño?')) {
+        state = defaultState();
+        saveState();
+        renderParentsPanel();
+        renderWorldsMap();
+        renderSanctuary();
+        updateAllCocoAvatars();
+        showToast('Progreso reiniciado correctamente.');
+      }
+    }
+
+    /* =========================================================
+       NAVIGATION, SOUND, TOAST & CONFETTI ENGINE
+       ========================================================= */
+    function switchView(viewName) {
+      document.querySelectorAll('.view-section').forEach(sec => sec.classList.remove('active'));
+      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+
+      if (viewName === 'map') {
+        document.getElementById('viewMap').classList.add('active');
+        document.getElementById('navMap').classList.add('active');
+        renderWorldsMap();
+        updateAllCocoAvatars('normal');
+      } else if (viewName === 'game') {
+        document.getElementById('viewGame').classList.add('active');
+      } else if (viewName === 'sanctuary') {
+        document.getElementById('viewSanctuary').classList.add('active');
+        document.getElementById('navSanctuary').classList.add('active');
+        renderSanctuary();
+        renderWardrobe();
+        renderStarRoad();
+      } else if (viewName === 'parents') {
+        document.getElementById('viewParents').classList.add('active');
+        document.getElementById('navParents').classList.add('active');
+        renderParentsPanel();
+      }
+      updateTopBar();
+    }
+
+    function updateTopBar() {
+      document.getElementById('topGems').textContent = state.gems;
+      document.getElementById('topStars').textContent = state.stars;
+      document.getElementById('soundToggleBtn').textContent = state.soundOn ? '🔊' : '🔇';
+      const hc = document.getElementById('heroAnimalCount');
+      if (hc) hc.textContent = state.unlockedAnimals.length;
+
+      const rankBadge = document.getElementById('heroRankBadge');
+      if (rankBadge) rankBadge.textContent = getExplorerRank(state.stars).rank.split(' ')[0];
+
+      const unclaimed = getUnclaimedStarRewardsCount();
+      const starsPill = document.getElementById('starsPillBtn');
+      if (starsPill) {
+        starsPill.classList.toggle('has-reward', unclaimed > 0);
+        starsPill.title = unclaimed > 0
+          ? `¡Tienes ${unclaimed} premio(s) por reclamar!`
+          : 'Ver Camino de Estrellas y premios';
+      }
+      const tabStarsBtn = document.getElementById('tabStarsBtn');
+      if (tabStarsBtn) {
+        tabStarsBtn.textContent = unclaimed > 0
+          ? `⭐ Premios Estrellas (${unclaimed}!)`
+          : '⭐ Premios Estrellas';
+      }
+
+      const resumeBtn = document.getElementById('navResumeGame');
+      const gameActive = document.getElementById('viewGame').classList.contains('active');
+      if (resumeBtn) {
+        if (state.activeMission && state.activeMission.problem && !gameActive) {
+          resumeBtn.style.display = 'inline-flex';
+          document.getElementById('navResumeStep').textContent = `${state.activeMission.step + 1}/${MISSION_LENGTH}`;
+        } else {
+          resumeBtn.style.display = 'none';
+        }
+      }
+    }
+
+    function toggleSound() {
+      state.soundOn = !state.soundOn;
+      saveState();
+      if (state.soundOn) playTapSound();
+    }
+
+    let toastTimer = null;
+    function showToast(msg) {
+      const el = document.getElementById('toast');
+      el.textContent = msg;
+      el.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => el.classList.remove('show'), 2600);
+    }
+
+    /* Lightweight 60fps Confetti (Auto-stops for battery efficiency on Tab S6 Lite) */
+    let confettiParticles = [];
+    let confettiAnimId = null;
+
+    function launchConfetti(count = 50) {
+      const canvas = document.getElementById('confettiCanvas');
+      const ctx = canvas.getContext('2d');
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      const colors = ['#F59E0B', '#22C55E', '#38BDF8', '#FB7185', '#FACC15', '#34D399'];
+
+      for (let i = 0; i < count; i++) {
+        confettiParticles.push({
+          x: canvas.width * (0.25 + Math.random() * 0.5),
+          y: canvas.height * 0.35,
+          vx: (Math.random() - 0.5) * 14,
+          vy: -Math.random() * 12 - 3,
+          size: 7 + Math.random() * 7,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          rot: Math.random() * 360,
+          vrot: (Math.random() - 0.5) * 14,
+          life: 1
+        });
+      }
+
+      if (!confettiAnimId) {
+        function frame() {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          confettiParticles.forEach(p => {
+            p.x += p.vx;
+            p.y += p.vy;
+            p.vy += 0.36;
+            p.rot += p.vrot;
+            p.life -= 0.014;
+            ctx.save();
+            ctx.globalAlpha = Math.max(0, p.life);
+            ctx.translate(p.x, p.y);
+            ctx.rotate((p.rot * Math.PI) / 180);
+            ctx.fillStyle = p.color;
+            ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size * 0.65);
+            ctx.restore();
+          });
+          confettiParticles = confettiParticles.filter(p => p.life > 0 && p.y < canvas.height + 20);
+          if (confettiParticles.length > 0) {
+            confettiAnimId = requestAnimationFrame(frame);
+          } else {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            confettiAnimId = null;
+          }
+        }
+        confettiAnimId = requestAnimationFrame(frame);
+      }
+    }
+
+    /* =========================================================
+       INITIALIZATION
+       ========================================================= */
+    function initApp() {
+      initScratchpad();
+      updateTopBar();
+      renderWorldsMap();
+      renderSanctuary();
+      updateAllCocoAvatars('normal');
+
+      document.addEventListener('keydown', (e) => {
+        const gameActive = document.getElementById('viewGame').classList.contains('active');
+        if (!gameActive || session.inputMode !== 'keypad' || session.locked) return;
+        if (e.key >= '0' && e.key <= '9') {
+          pressKey(e.key);
+        } else if (e.key === 'Backspace') {
+          pressBackspace();
+        } else if (e.key === 'Enter') {
+          submitKeypadAnswer();
+        }
+      });
+    }
+
+    let deferredInstallPrompt = null;
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredInstallPrompt = e;
+      const btn = document.getElementById('installPwaBtn');
+      if (btn) btn.style.display = 'inline-flex';
+    });
+
+    window.addEventListener('appinstalled', () => {
+      deferredInstallPrompt = null;
+      const btn = document.getElementById('installPwaBtn');
+      if (btn) btn.style.display = 'none';
+      showToast('🎉 ¡App instalada en tu tablet!');
+    });
+
+    function promptInstallPWA() {
+      if (!deferredInstallPrompt) return;
+      deferredInstallPrompt.prompt();
+      deferredInstallPrompt.userChoice.finally(() => {
+        deferredInstallPrompt = null;
+        const btn = document.getElementById('installPwaBtn');
+        if (btn) btn.style.display = 'none';
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', initApp);
+    if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
+      navigator.serviceWorker.register('./sw.js').catch(() => {});
+    }
+  </script>
+</body>
+</html>
