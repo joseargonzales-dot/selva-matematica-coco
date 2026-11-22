@@ -1931,7 +1931,7 @@
               ▶️ ¡Aventura con Coco!
             </button>
             <button class="btn-3d btn-cream" onclick="switchView('sanctuary')">
-              🦁 Mis Animales (<span id="heroAnimalCount">1</span>/13)
+              🦁 Mis Animales (<span id="heroAnimalCount">1</span>/20)
             </button>
             <button class="btn-3d btn-blue" onclick="openStarRoad()">
               ⭐ Premios (<span id="heroRankBadge">Novato</span>)
@@ -1946,23 +1946,23 @@
 
       <div class="section-header-row">
         <h2 class="section-title">🧭 Elige tu Hábitat Salvaje</h2>
-        <span style="font-weight:800;font-size:0.86rem;color:var(--text-mid);">Sin tiempo límite · Con ayudas visuales 💡</span>
+        <span style="font-weight:800;font-size:0.86rem;color:var(--text-mid);">Retos más difíciles = ¡más 💎 gemas! · Sin reloj 💡</span>
       </div>
 
       <section id="worldsGrid" class="worlds-grid" aria-label="Mundos matemáticos"></section>
 
       <section class="custom-bar">
         <div>
-          <strong style="color:#92400E;font-size:1rem;">🎯 Práctica Rápida por Reto:</strong>
+          <strong style="color:#92400E;font-size:1rem;">🎯 Práctica Rápida por Nivel:</strong>
           <div style="font-size:0.82rem;font-weight:700;color:#B45309;">Elige exactamente qué quieres entrenar hoy</div>
         </div>
         <div class="custom-chips">
-          <button class="chip-btn" onclick="startCustomMission('add2_easy')">➕ Sumas 2 dígitos</button>
+          <button class="chip-btn" onclick="startCustomMission('add2_easy')">➕ Sumas fáciles</button>
+          <button class="chip-btn" onclick="startCustomMission('sub2_easy')">➖ Restas fáciles</button>
+          <button class="chip-btn" onclick="startCustomMission('add2_carry')">➕ Sumas llevando</button>
+          <button class="chip-btn" onclick="startCustomMission('sub2_borrow')">➖ Restas prestando</button>
           <button class="chip-btn" onclick="startCustomMission('add3')">➕ Sumas 3 cantidades</button>
-          <button class="chip-btn" onclick="startCustomMission('sub2_easy')">➖ Restas 2 dígitos</button>
           <button class="chip-btn" onclick="startCustomMission('sub3')">➖ Restas 3 cantidades</button>
-          <button id="chipMul" class="chip-btn" onclick="startCustomMission('mul')">✖️ Multiplicar</button>
-          <button id="chipDiv" class="chip-btn" onclick="startCustomMission('div')">➗ Dividir</button>
         </div>
       </section>
     </main>
@@ -2070,11 +2070,11 @@
     <section id="viewSanctuary" class="view-section">
       <div class="section-header-row">
         <div class="sanctuary-tabs">
-          <button id="tabAnimalsBtn" class="btn-3d btn-green" style="padding:11px 18px;" onclick="switchSanctuaryTab('animals')">🦁 Mis Animales (<span id="sancAnimalCount">1</span>/13)</button>
+          <button id="tabAnimalsBtn" class="btn-3d btn-green" style="padding:11px 18px;" onclick="switchSanctuaryTab('animals')">🦁 Mis Animales (<span id="sancAnimalCount">1</span>/20)</button>
           <button id="tabWardrobeBtn" class="btn-3d btn-cream" style="padding:11px 18px;" onclick="switchSanctuaryTab('wardrobe')">🎩 Vestir Animales</button>
           <button id="tabStarsBtn" class="btn-3d btn-cream" style="padding:11px 18px;" onclick="switchSanctuaryTab('stars')">⭐ Premios Estrellas</button>
         </div>
-        <span id="sanctuarySubtitle" style="font-weight:800;font-size:0.9rem;color:var(--jungle-deep);">¡Elige tu compañero, súbelo de nivel para potenciar su poder y vístelo!</span>
+        <span id="sanctuarySubtitle" style="font-weight:800;font-size:0.9rem;color:var(--jungle-deep);">¡Elige tu compañero, súbelo de nivel y combínale varias prendas!</span>
       </div>
 
       <div id="sanctuaryAnimalsPane" class="sanctuary-grid"></div>
@@ -2083,11 +2083,15 @@
         <div class="wardrobe-preview">
           <div style="font-size:0.82rem;font-weight:800;opacity:0.95;">Elige qué animal vestir:</div>
           <div id="wardrobeAnimalStrip" class="wardrobe-animal-strip"></div>
-          <strong id="wardrobeAnimalName" style="font-size:1.15rem;">🐊 Coco el Cocodrilo</strong>
-          <div id="wardrobeCocoContainer" style="width:220px;height:185px;"></div>
-          <div id="wardrobeEquippedLabel" style="font-weight:800;font-size:0.92rem;background:rgba(0,0,0,0.22);padding:6px 14px;border-radius:999px;">Sin accesorio</div>
+          <strong id="wardrobeAnimalName" style="font-size:1.15rem;">Coco el Cocodrilo</strong>
+          <div id="wardrobeCocoContainer" style="width:230px;height:195px;"></div>
+          <div id="wardrobeEquippedLabel" style="font-weight:800;font-size:0.86rem;background:rgba(0,0,0,0.22);padding:7px 14px;border-radius:14px;line-height:1.35;">Sin prendas puestas</div>
+          <button class="btn-3d btn-cream" style="padding:7px 14px;font-size:0.82rem;" onclick="clearAnimalOutfit()">🧹 Quitar todas las prendas</button>
         </div>
-        <div id="wardrobeItemsGrid" class="wardrobe-items-grid"></div>
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <div id="wardrobeSlotTabs" style="display:flex;gap:8px;flex-wrap:wrap;"></div>
+          <div id="wardrobeItemsGrid" class="wardrobe-items-grid"></div>
+        </div>
       </div>
 
       <div id="sanctuaryStarsPane" class="star-road-wrap" style="display:none;">
@@ -2145,15 +2149,8 @@
             </div>
             <div class="setting-card">
               <div>
-                <label>Incluir Multiplicación y División</label>
-                <small>Mundos 5 y 6 (tablas 2, 3, 4, 5 y 10 con grupos visuales)</small>
-              </div>
-              <button id="setIncludeMulDiv" class="toggle-switch on" onclick="toggleSetting('includeMulDiv')"></button>
-            </div>
-            <div class="setting-card">
-              <div>
                 <label>Modo Teclado Numérico por defecto</label>
-                <small>En lugar de 4 opciones, escribe la respuesta (+50% gemas)</small>
+                <small>En lugar de 4 opciones, escribe la respuesta (+1 💎 extra)</small>
               </div>
               <button id="setDefaultKeypad" class="toggle-switch" onclick="toggleSetting('defaultKeypad')"></button>
             </div>
@@ -2221,7 +2218,8 @@
         desc: 'Sumas de 2 dígitos sin llevar',
         example: '24 + 13',
         skillKey: 'add2_easy',
-        isMulDiv: false
+        baseGems: 2,
+        chestBase: 6
       },
       {
         id: 'sabana_leon',
@@ -2232,7 +2230,8 @@
         desc: 'Restas de 2 dígitos sin prestar',
         example: '47 − 23',
         skillKey: 'sub2_easy',
-        isMulDiv: false
+        baseGems: 2,
+        chestBase: 6
       },
       {
         id: 'copas_mono',
@@ -2240,10 +2239,11 @@
         name: 'Copas del Mono',
         icon: '🐒',
         bg: '#DCFCE7',
-        desc: 'Sumas llevando y de 3 cantidades',
-        example: '15 + 24 + 13',
-        skillKey: 'add3',
-        isMulDiv: false
+        desc: 'Sumas de 2 dígitos llevando',
+        example: '28 + 17',
+        skillKey: 'add2_carry',
+        baseGems: 3,
+        chestBase: 9
       },
       {
         id: 'laguna_elefante',
@@ -2251,10 +2251,11 @@
         name: 'Laguna del Elefante',
         icon: '🐘',
         bg: '#DBEAFE',
-        desc: 'Restas prestando y de 3 cantidades',
-        example: '56 − 14 − 12',
-        skillKey: 'sub3',
-        isMulDiv: false
+        desc: 'Restas de 2 dígitos prestando',
+        example: '52 − 18',
+        skillKey: 'sub2_borrow',
+        baseGems: 3,
+        chestBase: 9
       },
       {
         id: 'selva_jaguar',
@@ -2262,10 +2263,11 @@
         name: 'Selva del Jaguar',
         icon: '🐆',
         bg: '#FFEDD5',
-        desc: 'Multiplicar por grupos (2, 3, 4, 5, 10)',
-        example: '3 × 4',
-        skillKey: 'mul',
-        isMulDiv: true
+        desc: 'Sumas de 3 cantidades (2 dígitos)',
+        example: '15 + 24 + 18',
+        skillKey: 'add3',
+        baseGems: 5,
+        chestBase: 12
       },
       {
         id: 'cima_aguila',
@@ -2273,10 +2275,11 @@
         name: 'Cima del Águila',
         icon: '🦅',
         bg: '#E0E7FF',
-        desc: 'Dividir repartiendo en partes iguales',
-        example: '12 ÷ 3',
-        skillKey: 'div',
-        isMulDiv: true
+        desc: 'Restas y retos de 3 cantidades',
+        example: '64 − 18 − 15',
+        skillKey: 'sub3',
+        baseGems: 6,
+        chestBase: 14
       }
     ];
 
@@ -2284,38 +2287,63 @@
 
     const ANIMALS = [
       { id: 'cocodrilo', name: 'Coco el Cocodrilo', emoji: '🐊', cost: 0, soundFreq: 180, powerType: 'add_bonus', powerName: 'Mordisco de Gemas', fact: '¡Los cocodrilos pueden aguantar la respiración bajo el agua hasta 1 hora!' },
-      { id: 'leon', name: 'León Dorado', emoji: '🦁', cost: 25, soundFreq: 140, powerType: 'streak_shield', powerName: 'Rugido Protector', fact: 'El rugido de un león puede escucharse hasta a 8 kilómetros de distancia.' },
-      { id: 'mono', name: 'Mono Saltarín', emoji: '🐒', cost: 30, soundFreq: 520, powerType: 'eliminate', powerName: 'Ojo de Mono', fact: 'Algunos monos usan su cola larga como si fuera una quinta mano para trepar.' },
-      { id: 'elefante', name: 'Elefante Sabio', emoji: '🐘', cost: 35, soundFreq: 210, powerType: 'hint_bonus', powerName: 'Memoria Sabia', fact: '¡Los elefantes tienen una memoria increíble y saludan tocando sus trompas!' },
-      { id: 'jaguar', name: 'Jaguar Veloz', emoji: '🐆', cost: 40, soundFreq: 260, powerType: 'streak_gems', powerName: 'Salto de Racha', fact: 'A diferencia de otros gatos, ¡al jaguar le encanta nadar en los ríos!' },
-      { id: 'aguila', name: 'Águila Real', emoji: '🦅', cost: 45, soundFreq: 680, powerType: 'eliminate_mul', powerName: 'Vista de Águila', fact: 'Un águila puede ver un conejo pequeño desde más de 2 kilómetros de altura.' },
-      { id: 'hipo', name: 'Hipopótamo Feliz', emoji: '🦛', cost: 50, soundFreq: 130, powerType: 'chest_bonus', powerName: 'Tesoro del Río', fact: 'Los hipopótamos corren por el fondo del río y producen su propio protector solar.' },
-      { id: 'tigre', name: 'Tigre de Bengala', emoji: '🐯', cost: 55, soundFreq: 195, powerType: 'first_try_bonus', powerName: 'Garra Precisa', fact: 'Ningún tigre tiene las mismas rayas: ¡son únicas como nuestras huellas!' },
-      { id: 'gorila', name: 'Gorila Fuerte', emoji: '🦍', cost: 60, soundFreq: 160, powerType: 'three_qty_bonus', powerName: 'Fuerza de 3', fact: 'Los gorilas construyen cada noche una cama nueva con hojas suaves.' },
-      { id: 'rino', name: 'Rinoceronte Guardián', emoji: '🦏', cost: 65, soundFreq: 150, powerType: 'streak_shield_plus', powerName: 'Armadura Rino', fact: 'Su cuerno no es de hueso, está hecho del mismo material que nuestras uñas.' },
-      { id: 'tucan', name: 'Tucán Tropical', emoji: '🦜', cost: 70, soundFreq: 610, powerType: 'lucky_gems', powerName: 'Lluvia de Gemas', fact: 'El pico gigante del tucán es muy liviano y le sirve para mantenerse fresco.' },
-      { id: 'panda', name: 'Oso Panda', emoji: '🐼', cost: 80, soundFreq: 340, powerType: 'star_bonus', powerName: 'Bambú Estelar', fact: '¡Un panda puede pasar hasta 12 horas al día comiendo brotes de bambú!' },
-      { id: 'trex', name: 'T-Rex Explorador', emoji: '🦖', cost: 0, starExclusive: 12, soundFreq: 115, powerType: 'legend_trex', powerName: 'Rey Prehistórico', fact: '¡Exclusivo del Camino de Estrellas! El T-Rex tenía dientes del tamaño de plátanos.' }
+      { id: 'leon', name: 'León Dorado', emoji: '🦁', cost: 35, soundFreq: 140, powerType: 'streak_shield', powerName: 'Rugido Protector', fact: 'El rugido de un león puede escucharse hasta a 8 kilómetros de distancia.' },
+      { id: 'mono', name: 'Mono Saltarín', emoji: '🐒', cost: 40, soundFreq: 520, powerType: 'eliminate', powerName: 'Ojo de Mono', fact: 'Algunos monos usan su cola larga como si fuera una quinta mano para trepar.' },
+      { id: 'elefante', name: 'Elefante Sabio', emoji: '🐘', cost: 45, soundFreq: 210, powerType: 'hint_bonus', powerName: 'Memoria Sabia', fact: '¡Los elefantes tienen una memoria increíble y saludan tocando sus trompas!' },
+      { id: 'jaguar', name: 'Jaguar Veloz', emoji: '🐆', cost: 55, soundFreq: 260, powerType: 'streak_gems', powerName: 'Salto de Racha', fact: 'A diferencia de otros gatos, ¡al jaguar le encanta nadar en los ríos!' },
+      { id: 'aguila', name: 'Águila Real', emoji: '🦅', cost: 60, soundFreq: 680, powerType: 'eliminate_sub', powerName: 'Vista de Águila', fact: 'Un águila puede ver un conejo pequeño desde más de 2 kilómetros de altura.' },
+      { id: 'hipo', name: 'Hipopótamo Feliz', emoji: '🦛', cost: 65, soundFreq: 130, powerType: 'chest_bonus', powerName: 'Tesoro del Río', fact: 'Los hipopótamos corren por el fondo del río y producen su propio protector solar.' },
+      { id: 'tigre', name: 'Tigre de Bengala', emoji: '🐯', cost: 75, soundFreq: 195, powerType: 'first_try_bonus', powerName: 'Garra Precisa', fact: 'Ningún tigre tiene las mismas rayas: ¡son únicas como nuestras huellas!' },
+      { id: 'gorila', name: 'Gorila Fuerte', emoji: '🦍', cost: 80, soundFreq: 160, powerType: 'three_qty_bonus', powerName: 'Fuerza de 3', fact: 'Los gorilas construyen cada noche una cama nueva con hojas suaves.' },
+      { id: 'rino', name: 'Rinoceronte Guardián', emoji: '🦏', cost: 85, soundFreq: 150, powerType: 'streak_shield_plus', powerName: 'Armadura Rino', fact: 'Su cuerno no es de hueso, está hecho del mismo material que nuestras uñas.' },
+      { id: 'tucan', name: 'Tucán Tropical', emoji: '🦜', cost: 90, soundFreq: 610, powerType: 'lucky_gems', powerName: 'Lluvia de Gemas', fact: 'El pico gigante del tucán es muy liviano y le sirve para mantenerse fresco.' },
+      { id: 'panda', name: 'Oso Panda', emoji: '🐼', cost: 95, soundFreq: 340, powerType: 'star_bonus', powerName: 'Bambú Estelar', fact: '¡Un panda puede pasar hasta 12 horas al día comiendo brotes de bambú!' },
+      { id: 'lobo', name: 'Lobo Ártico', emoji: '🐺', cost: 100, soundFreq: 230, powerType: 'sub_bonus', powerName: 'Aullido Veloz', fact: 'Los lobos viven en manadas muy unidas y se comunican aullando a kilómetros.' },
+      { id: 'zorro', name: 'Zorro Astuto', emoji: '🦊', cost: 110, soundFreq: 480, powerType: 'eliminate', powerName: 'Truco de Zorro', fact: 'Los zorros usan su cola esponjosa como manta para abrigarse en la noche.' },
+      { id: 'oso', name: 'Oso Grizzly', emoji: '🐻', cost: 115, soundFreq: 125, powerType: 'streak_shield', powerName: 'Abrazo Fuerte', fact: 'Los osos grizzly pueden correr tan rápido como un caballo en distancias cortas.' },
+      { id: 'jirafa', name: 'Jirafa Alta', emoji: '🦒', cost: 120, soundFreq: 310, powerType: 'three_qty_bonus', powerName: 'Vista de Altura', fact: '¡La lengua de la jirafa mide casi medio metro y es de color morado oscuro!' },
+      { id: 'cebra', name: 'Cebra Rayada', emoji: '🦓', cost: 125, soundFreq: 390, powerType: 'streak_gems', powerName: 'Galope de Racha', fact: 'Las rayas de las cebras ayudan a confundir a los insectos y a refrescarse.' },
+      { id: 'tiburon', name: 'Tiburón Azul', emoji: '🦈', cost: 140, soundFreq: 145, powerType: 'chest_bonus', powerName: 'Aleta Tesoro', fact: '¡A los tiburones les crecen dientes nuevos durante toda su vida!' },
+      { id: 'trex', name: 'T-Rex Explorador', emoji: '🦖', cost: 0, starExclusive: 12, soundFreq: 115, powerType: 'legend_trex', powerName: 'Rey Prehistórico', fact: '¡Exclusivo del Camino de Estrellas! El T-Rex tenía dientes del tamaño de plátanos.' },
+      { id: 'dragon', name: 'Dragón Salvaje', emoji: '🐉', cost: 0, starExclusive: 20, soundFreq: 135, powerType: 'legend_dragon', powerName: 'Fuego Dorado', fact: '¡Compañero mítico de Leyenda Salvaje! Protege la selva con su fuego matemático.' }
+    ];
+
+    const OUTFIT_SLOTS = [
+      { id: 'head', label: '🧢 Cabeza' },
+      { id: 'eyes', label: '🕶️ Ojos' },
+      { id: 'neck', label: '🧣 Cuello' },
+      { id: 'back', label: '🦸 Espalda' }
     ];
 
     const ACCESSORIES = [
-      { id: 'none', name: 'Natural', icon: '🌿', cost: 0, desc: 'El look clásico salvaje' },
-      { id: 'hat', name: 'Sombrero Safari', icon: '👒', cost: 20, desc: 'Listo para explorar la selva' },
-      { id: 'glasses', name: 'Gafas Geniales', icon: '🕶️', cost: 30, desc: '¡Estilo Súper Explorador!' },
-      { id: 'scarf', name: 'Pañuelo Valiente', icon: '🧣', cost: 25, desc: 'Estilo aventurero valiente' },
-      { id: 'crown', name: 'Corona de Rey', icon: '👑', cost: 45, desc: 'El rey de las matemáticas' },
-      { id: 'cape', name: 'Capa de Héroe', icon: '🦸', cost: 55, desc: 'Súper poderes de cálculo' },
-      { id: 'star_glasses', name: 'Gafas Estelares', icon: '🌟', cost: 0, starExclusive: 6, desc: 'Exclusivo al llegar a 6 ⭐' },
-      { id: 'magic_hat', name: 'Sombrero Mágico', icon: '🎩', cost: 0, starExclusive: 16, desc: 'Exclusivo al llegar a 16 ⭐' }
+      // Cabeza (head)
+      { id: 'hat', slot: 'head', name: 'Sombrero Safari', icon: '👒', cost: 30, desc: 'Listo para explorar la selva' },
+      { id: 'cap', slot: 'head', name: 'Gorra Explorador', icon: '🧢', cost: 35, desc: '¡Estilo aventurero genial!' },
+      { id: 'viking', slot: 'head', name: 'Casco Vikingo', icon: '🛡️', cost: 55, desc: '¡Fuerza de guerrero valiente!' },
+      { id: 'crown', slot: 'head', name: 'Corona de Rey', icon: '👑', cost: 70, desc: 'El rey de las matemáticas' },
+      { id: 'magic_hat', slot: 'head', name: 'Sombrero Mágico', icon: '🎩', cost: 0, starExclusive: 16, desc: 'Exclusivo al llegar a 16 ⭐' },
+      // Ojos (eyes)
+      { id: 'glasses', slot: 'eyes', name: 'Gafas Geniales', icon: '🕶️', cost: 40, desc: '¡Modo súper explorador!' },
+      { id: 'mask', slot: 'eyes', name: 'Antifaz Héroe', icon: '🎭', cost: 50, desc: 'Identidad secreta de héroe' },
+      { id: 'monocle', slot: 'eyes', name: 'Monóculo Sabio', icon: '🧐', cost: 45, desc: 'Para pensar como científico' },
+      { id: 'star_glasses', slot: 'eyes', name: 'Gafas Estelares', icon: '🌟', cost: 0, starExclusive: 6, desc: 'Exclusivo al llegar a 6 ⭐' },
+      // Cuello (neck)
+      { id: 'scarf', slot: 'neck', name: 'Pañuelo Valiente', icon: '🧣', cost: 30, desc: 'Pañuelo rojo de expedición' },
+      { id: 'bowtie', slot: 'neck', name: 'Corbatín Elegante', icon: '🎀', cost: 35, desc: 'Muy elegante en la selva' },
+      { id: 'necklace', slot: 'neck', name: 'Collar de Gemas', icon: '📿', cost: 50, desc: 'Brilla con piedras mágicas' },
+      // Espalda (back)
+      { id: 'backpack', slot: 'back', name: 'Mochila Safari', icon: '🎒', cost: 45, desc: 'Guarda mapas y brújulas' },
+      { id: 'cape', slot: 'back', name: 'Capa de Héroe', icon: '🦸', cost: 65, desc: 'Capa roja de súper poderes' },
+      { id: 'gold_wings', slot: 'back', name: 'Alas Doradas', icon: '🪽', cost: 0, starExclusive: 9, desc: 'Exclusivo al llegar a 9 ⭐' }
     ];
 
     const STAR_MILESTONES = [
-      { id: 'star_3', stars: 3, rank: 'Rastreador del Río', icon: '🥉', title: '+25 💎 de Regalo', desc: 'Tesoro especial por tus primeras 3 estrellas', rewardType: 'gems', amount: 25 },
-      { id: 'star_6', stars: 6, rank: 'Amigo de la Sabana', icon: '🌟', title: 'Gafas Estelares Gratis', desc: 'Accesorio exclusivo para vestir a cualquier animal', rewardType: 'accessory', accessoryId: 'star_glasses' },
-      { id: 'star_9', stars: 9, rank: 'Guardián de la Selva', icon: '🎁', title: '+5 💎 en cada Cofre', desc: 'Bono permanente cada vez que abras un cofre', rewardType: 'chest_boost', amount: 5 },
+      { id: 'star_3', stars: 3, rank: 'Rastreador del Río', icon: '🥉', title: '+20 💎 de Regalo', desc: 'Tesoro especial por tus primeras 3 estrellas', rewardType: 'gems', amount: 20 },
+      { id: 'star_6', stars: 6, rank: 'Amigo de la Sabana', icon: '🌟', title: 'Gafas Estelares Gratis', desc: 'Prenda exclusiva de ojos para cualquier animal', rewardType: 'accessory', accessoryId: 'star_glasses' },
+      { id: 'star_9', stars: 9, rank: 'Guardián de la Selva', icon: '🪽', title: 'Alas Doradas + Bono Cofre', desc: 'Alas exclusivas + bono de +3 💎 en cada Cofre', rewardType: 'acc_boost', accessoryId: 'gold_wings', amount: 3 },
       { id: 'star_12', stars: 12, rank: 'Maestro Explorador', icon: '🦖', title: 'T-Rex Explorador', desc: '¡Desbloquea al compañero legendario T-Rex!', rewardType: 'animal', animalId: 'trex' },
-      { id: 'star_16', stars: 16, rank: 'Héroe Matemático', icon: '🎩', title: 'Sombrero Mágico + 35 💎', desc: 'Accesorio exclusivo de mago + gemas de regalo', rewardType: 'acc_gems', accessoryId: 'magic_hat', amount: 35 },
-      { id: 'star_20', stars: 20, rank: 'Leyenda Salvaje', icon: '🏆', title: '+10 💎 en cada Cofre', desc: '¡Rango máximo! Bono gigante en todos los cofres', rewardType: 'chest_boost', amount: 10 }
+      { id: 'star_16', stars: 16, rank: 'Héroe Matemático', icon: '🎩', title: 'Sombrero Mágico + 25 💎', desc: 'Sombrero exclusivo + gemas de regalo', rewardType: 'acc_gems', accessoryId: 'magic_hat', amount: 25 },
+      { id: 'star_20', stars: 20, rank: 'Leyenda Salvaje', icon: '🐉', title: 'Dragón Salvaje + Bono Cofre', desc: '¡Desbloquea al Dragón Salvaje y +5 💎 en Cofres!', rewardType: 'animal_boost', animalId: 'dragon', amount: 5 }
     ];
 
     const PRAISE_PHRASES = [
@@ -2339,9 +2367,13 @@
        ========================================================= */
     const STORAGE_KEY = 'selva_matematica_coco_v1';
 
+    function emptyOutfit() {
+      return { head: null, eyes: null, neck: null, back: null };
+    }
+
     function defaultState() {
       return {
-        gems: 15,
+        gems: 10,
         stars: 0,
         chestsOpened: 0,
         bestStreak: 0,
@@ -2349,15 +2381,13 @@
         unlockedAnimals: ['cocodrilo'],
         animalLevels: { cocodrilo: 1 },
         activeAnimal: 'cocodrilo',
-        unlockedAccessories: ['none'],
-        equippedAccessory: 'none',
-        animalAccessories: { cocodrilo: 'none' },
+        unlockedAccessories: [],
+        animalOutfits: { cocodrilo: emptyOutfit() },
         claimedStarRewards: [],
         worldStars: {},
         activeMission: null,
         settings: {
           autoHint: true,
-          includeMulDiv: true,
           defaultKeypad: false
         },
         stats: {
@@ -2366,10 +2396,10 @@
           bySkill: {
             add2_easy: { solved: 0, firstTry: 0 },
             sub2_easy: { solved: 0, firstTry: 0 },
+            add2_carry: { solved: 0, firstTry: 0 },
+            sub2_borrow: { solved: 0, firstTry: 0 },
             add3: { solved: 0, firstTry: 0 },
-            sub3: { solved: 0, firstTry: 0 },
-            mul: { solved: 0, firstTry: 0 },
-            div: { solved: 0, firstTry: 0 }
+            sub3: { solved: 0, firstTry: 0 }
           }
         }
       };
@@ -2383,18 +2413,47 @@
         if (!raw) return defaultState();
         const parsed = JSON.parse(raw);
         const def = defaultState();
-        const mergedAcc = {
+
+        // Migrate legacy single-accessory maps to multi-slot animalOutfits seamlessly
+        const outfits = {};
+        const legacyMap = {
           cocodrilo: parsed.equippedAccessory || 'none',
           ...(parsed.animalAccessories || {})
         };
-        const activeId = (parsed.activeAnimal && (parsed.unlockedAnimals || ['cocodrilo']).includes(parsed.activeAnimal))
+        Object.keys(legacyMap).forEach(aid => {
+          const itemId = legacyMap[aid];
+          outfits[aid] = emptyOutfit();
+          const accObj = ACCESSORIES.find(x => x.id === itemId);
+          if (accObj) outfits[aid][accObj.slot] = accObj.id;
+        });
+        if (parsed.animalOutfits && typeof parsed.animalOutfits === 'object') {
+          Object.keys(parsed.animalOutfits).forEach(aid => {
+            outfits[aid] = { ...emptyOutfit(), ...(parsed.animalOutfits[aid] || {}) };
+          });
+        }
+
+        // If a saved activeMission was from removed mul/div, clear only that activeMission safely
+        let activeMission = parsed.activeMission || null;
+        if (activeMission && (activeMission.skillKey === 'mul' || activeMission.skillKey === 'div')) {
+          activeMission = null;
+        }
+
+        const unlockedList = Array.isArray(parsed.unlockedAnimals) && parsed.unlockedAnimals.length
+          ? parsed.unlockedAnimals
+          : ['cocodrilo'];
+        const activeId = (parsed.activeAnimal && unlockedList.includes(parsed.activeAnimal))
           ? parsed.activeAnimal
           : 'cocodrilo';
+
         return {
           ...def,
           ...parsed,
           activeAnimal: activeId,
-          animalAccessories: mergedAcc,
+          animalOutfits: outfits,
+          activeMission,
+          unlockedAccessories: Array.isArray(parsed.unlockedAccessories)
+            ? parsed.unlockedAccessories.filter(x => x !== 'none')
+            : [],
           claimedStarRewards: Array.isArray(parsed.claimedStarRewards) ? parsed.claimedStarRewards : [],
           settings: { ...def.settings, ...(parsed.settings || {}) },
           stats: {
@@ -2423,31 +2482,37 @@
       return Math.min(MAX_ANIMAL_LEVEL, Math.max(1, state.animalLevels[id] || 1));
     }
 
-    function getAnimalAccessory(id) {
-      if (state.animalAccessories && state.animalAccessories[id]) {
-        return state.animalAccessories[id];
-      }
-      if (id === 'cocodrilo') return state.equippedAccessory || 'none';
-      return 'none';
+    function getAnimalOutfit(id) {
+      if (!state.animalOutfits) state.animalOutfits = {};
+      if (!state.animalOutfits[id]) state.animalOutfits[id] = emptyOutfit();
+      return state.animalOutfits[id];
+    }
+
+    function getFeedCost(curLvl) {
+      const table = [15, 25, 40, 60];
+      return table[Math.min(table.length - 1, Math.max(0, curLvl - 1))];
     }
 
     function getAnimalPowerSummary(animal, lvl) {
       const l = Math.min(MAX_ANIMAL_LEVEL, Math.max(1, lvl || 1));
+      const smallGem = Math.ceil(l / 2); // 1,1,2,2,3
       switch (animal.powerType) {
-        case 'add_bonus': return `+${l + 1} 💎 en sumas (+${l} en otros)`;
+        case 'add_bonus': return `+${smallGem} 💎 extra en sumas`;
+        case 'sub_bonus': return `+${smallGem} 💎 extra en restas`;
         case 'streak_shield': return `Protege tu racha 🔥 ${l} ${l === 1 ? 'vez' : 'veces'} por misión`;
         case 'eliminate': return `Elimina 1 opción falsa (${l} ${l === 1 ? 'uso' : 'usos'} por misión)`;
-        case 'hint_bonus': return `+${l + 2} 💎 extra al acertar usando pista 💡`;
-        case 'streak_gems': return `+${l * 2} 💎 extra en cada acierto con racha 🔥`;
-        case 'eliminate_mul': return `Elimina 1 falsa (${l} ${l === 1 ? 'uso' : 'usos'}) y +${l} 💎 en ×/÷`;
-        case 'chest_bonus': return `+${4 + l * 2} 💎 extra al abrir cada Cofre 🎁`;
-        case 'first_try_bonus': return `+${l + 1} 💎 extra al acertar al 1er intento`;
-        case 'three_qty_bonus': return `+${l + 2} 💎 en retos de 3 cantidades (+1 en otros)`;
+        case 'hint_bonus': return `+${smallGem + 1} 💎 extra al acertar usando pista 💡`;
+        case 'streak_gems': return `+${smallGem} 💎 extra en cada acierto con racha 🔥`;
+        case 'eliminate_sub': return `Elimina 1 falsa (${l} ${l === 1 ? 'uso' : 'usos'}) y +${smallGem} 💎 en restas`;
+        case 'chest_bonus': return `+${2 + l} 💎 extra al abrir cada Cofre 🎁`;
+        case 'first_try_bonus': return `+${smallGem} 💎 extra al acertar al 1er intento`;
+        case 'three_qty_bonus': return `+${smallGem + 1} 💎 extra en retos de 3 cantidades`;
         case 'streak_shield_plus': return `Protege tu racha 🔥 ${l + 1} veces por misión`;
-        case 'lucky_gems': return `Premio sorpresa de +1 a +${l + 2} 💎 por reto`;
-        case 'star_bonus': return `+1 ⭐ estrella extra y +${l * 2} 💎 en Cofres`;
-        case 'legend_trex': return `Elimina 1 falsa (${l} ${l === 1 ? 'uso' : 'usos'}) y +${l + 2} 💎 siempre`;
-        default: return `+${l} 💎 extra`;
+        case 'lucky_gems': return `Premio sorpresa de +1 a +${smallGem + 1} 💎 por reto`;
+        case 'star_bonus': return `+1 ⭐ estrella extra y +${smallGem} 💎 en Cofres`;
+        case 'legend_trex': return `Elimina 1 falsa (${l} ${l === 1 ? 'uso' : 'usos'}) y +${smallGem + 1} 💎 siempre`;
+        case 'legend_dragon': return `Elimina 1 falsa (${l} ${l === 1 ? 'uso' : 'usos'}) y +${smallGem + 2} 💎 siempre`;
+        default: return `+1 💎 extra`;
       }
     }
 
@@ -2471,8 +2536,8 @@
 
     function getPermanentChestBonus() {
       let bonus = 0;
-      if (state.claimedStarRewards.includes('star_9')) bonus += 5;
-      if (state.claimedStarRewards.includes('star_20')) bonus += 10;
+      if (state.claimedStarRewards.includes('star_9')) bonus += 3;
+      if (state.claimedStarRewards.includes('star_20')) bonus += 5;
       return bonus;
     }
 
@@ -2537,237 +2602,400 @@
     }
 
     /* =========================================================
-       CUSTOM ILLUSTRATED SVG: COCO THE CROCODILE (WITH OUTFITS!)
+       20-ANIMAL CARTOON AVATAR ENGINE (MULTI-SLOT DRESS-UP!)
+       Full illustrated characters — NEVER logo badges!
        ========================================================= */
-    function renderCocoSVG(accessoryId = state.equippedAccessory, mood = 'normal', idPrefix = 'c') {
-      const acc = accessoryId || 'none';
+    const ANIMAL_STYLES = {
+      cocodrilo: { body: '#2EAD6E', head: '#34C77B', belly: '#D9F99D', stroke: '#14532D', snout: '#4ADE80', extra: 'croc' },
+      leon:      { body: '#EAB308', head: '#FACC15', belly: '#FEF08A', stroke: '#713F12', snout: '#FEF3C7', extra: 'mane' },
+      mono:      { body: '#92400E', head: '#A16207', belly: '#FDE68A', stroke: '#451A03', snout: '#FDE68A', extra: 'monkey' },
+      elefante:  { body: '#94A3B8', head: '#CBD5E1', belly: '#E2E8F0', stroke: '#334155', snout: '#CBD5E1', extra: 'elephant' },
+      jaguar:    { body: '#F59E0B', head: '#FBBF24', belly: '#FEF3C7', stroke: '#78350F', snout: '#FEF3C7', extra: 'spots' },
+      aguila:    { body: '#78350F', head: '#FFFFFF', belly: '#92400E', stroke: '#451A03', snout: '#F59E0B', extra: 'eagle' },
+      hipo:      { body: '#8B5CF6', head: '#A78BFA', belly: '#DDD6FE', stroke: '#4C1D95', snout: '#C4B5FD', extra: 'hippo' },
+      tigre:     { body: '#F97316', head: '#FB923C', belly: '#FFEDD5', stroke: '#7C2D12', snout: '#FFFFFF', extra: 'tiger' },
+      gorila:    { body: '#374151', head: '#4B5563', belly: '#9CA3AF', stroke: '#111827', snout: '#D1D5DB', extra: 'gorilla' },
+      rino:      { body: '#64748B', head: '#94A3B8', belly: '#CBD5E1', stroke: '#1E293B', snout: '#CBD5E1', extra: 'rhino' },
+      tucan:     { body: '#1E293B', head: '#1E293B', belly: '#FACC15', stroke: '#0F172A', snout: '#F97316', extra: 'toucan' },
+      panda:     { body: '#F8FAFC', head: '#FFFFFF', belly: '#E2E8F0', stroke: '#0F172A', snout: '#FFFFFF', extra: 'panda' },
+      lobo:      { body: '#CBD5E1', head: '#E2E8F0', belly: '#FFFFFF', stroke: '#334155', snout: '#FFFFFF', extra: 'wolf' },
+      zorro:     { body: '#EA580C', head: '#F97316', belly: '#FFF7ED', stroke: '#7C2D12', snout: '#FFFFFF', extra: 'fox' },
+      oso:       { body: '#854D0E', head: '#A16207', belly: '#D97706', stroke: '#451A03', snout: '#FDE68A', extra: 'bear' },
+      jirafa:    { body: '#F59E0B', head: '#FBBF24', belly: '#FEF3C7', stroke: '#78350F', snout: '#FDE68A', extra: 'giraffe' },
+      cebra:     { body: '#F8FAFC', head: '#FFFFFF', belly: '#F1F5F9', stroke: '#0F172A', snout: '#CBD5E1', extra: 'zebra' },
+      tiburon:   { body: '#0284C7', head: '#38BDF8', belly: '#E0F2FE', stroke: '#0C4A6E', snout: '#E0F2FE', extra: 'shark' },
+      trex:      { body: '#16A34A', head: '#22C55E', belly: '#BBF7D0', stroke: '#14532D', snout: '#4ADE80', extra: 'trex' },
+      dragon:    { body: '#DC2626', head: '#EF4444', belly: '#FDE047', stroke: '#7F1D1D', snout: '#FCA5A5', extra: 'dragon' }
+    };
 
-      let mouthPath = 'M 118 118 Q 146 132 174 116';
-      let teethMarkup = `
-        <polygon points="130,122 135,131 140,124" fill="#FFFFFF"/>
-        <polygon points="154,124 159,132 164,121" fill="#FFFFFF"/>
-      `;
-      if (mood === 'happy') {
-        mouthPath = 'M 114 114 Q 146 144 178 112';
-        teethMarkup = `
-          <path d="M 118 115 Q 146 142 174 114 Z" fill="#E11D48"/>
-          <polygon points="126,118 131,128 137,120" fill="#FFFFFF"/>
-          <polygon points="155,120 161,128 166,117" fill="#FFFFFF"/>
+    function renderOutfitBack(backId) {
+      if (backId === 'cape') {
+        return `
+          <path d="M 58 118 Q 22 140 24 182 Q 74 170 110 172 Q 146 170 196 182 Q 198 140 162 118 Z" fill="#EF4444" stroke="#991B1B" stroke-width="3.5" stroke-linejoin="round"/>
+          <path d="M 64 128 Q 42 148 40 172" stroke="#FCA5A5" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <path d="M 156 128 Q 178 148 180 172" stroke="#FCA5A5" stroke-width="3" fill="none" stroke-linecap="round"/>
         `;
-      } else if (mood === 'encourage') {
-        mouthPath = 'M 128 122 Q 146 126 164 120';
-        teethMarkup = `<polygon points="142,124 146,130 150,124" fill="#FFFFFF"/>`;
       }
-
-      const capeSVG = acc === 'cape' ? `
-        <path d="M 48 110 Q 16 126 12 165 Q 52 158 84 148 Z" fill="#EF4444" stroke="#991B1B" stroke-width="3"/>
-        <path d="M 52 118 Q 28 134 24 158" stroke="#FCA5A5" stroke-width="3" fill="none" stroke-linecap="round"/>
-      ` : '';
-
-      const scarfSVG = acc === 'scarf' ? `
-        <path d="M 74 126 Q 98 136 120 124 L 116 140 Q 95 148 72 138 Z" fill="#F97316" stroke="#9A3412" stroke-width="2.5"/>
-        <path d="M 78 136 L 64 156 L 80 158 L 88 140 Z" fill="#EA580C" stroke="#9A3412" stroke-width="2"/>
-      ` : '';
-
-      const hatSVG = acc === 'hat' ? `
-        <g transform="translate(86, 20) rotate(-6)">
-          <ellipse cx="38" cy="36" rx="44" ry="11" fill="#D97706" stroke="#78350F" stroke-width="3"/>
-          <path d="M 12 34 C 14 8, 62 8, 64 34 Z" fill="#F59E0B" stroke="#78350F" stroke-width="3"/>
-          <rect x="13" y="26" width="50" height="7" rx="3" fill="#166534"/>
-        </g>
-      ` : '';
-
-      const crownSVG = acc === 'crown' ? `
-        <g transform="translate(96, 18) rotate(-4)">
-          <polygon points="6,36 12,10 26,24 36,4 46,24 60,10 66,36" fill="#FBBF24" stroke="#B45309" stroke-width="3" stroke-linejoin="round"/>
-          <circle cx="36" cy="24" r="4.5" fill="#EF4444"/>
-          <circle cx="20" cy="28" r="3.5" fill="#3B82F6"/>
-          <circle cx="52" cy="28" r="3.5" fill="#10B981"/>
-        </g>
-      ` : '';
-
-      const magicHatSVG = acc === 'magic_hat' ? `
-        <g transform="translate(88, 6) rotate(-6)">
-          <ellipse cx="38" cy="46" rx="44" ry="10" fill="#1E293B" stroke="#0F172A" stroke-width="3"/>
-          <rect x="16" y="10" width="44" height="36" rx="6" fill="#312E81" stroke="#0F172A" stroke-width="3"/>
-          <rect x="16" y="34" width="44" height="8" fill="#F59E0B"/>
-          <text x="38" y="29" text-anchor="middle" font-size="16">✨</text>
-        </g>
-      ` : '';
-
-      const glassesSVG = acc === 'glasses' ? `
-        <g>
-          <rect x="103" y="64" width="26" height="19" rx="6" fill="#111827" stroke="#FBBF24" stroke-width="3"/>
-          <rect x="135" y="64" width="26" height="19" rx="6" fill="#111827" stroke="#FBBF24" stroke-width="3"/>
-          <line x1="129" y1="72" x2="135" y2="72" stroke="#FBBF24" stroke-width="3.5"/>
-          <line x1="108" y1="70" x2="115" y2="77" stroke="#FFFFFF" stroke-width="2" opacity="0.7" stroke-linecap="round"/>
-          <line x1="140" y1="70" x2="147" y2="77" stroke="#FFFFFF" stroke-width="2" opacity="0.7" stroke-linecap="round"/>
-        </g>
-      ` : acc === 'star_glasses' ? `
-        <g>
-          <polygon points="116,58 120,68 131,68 122,74 125,84 116,78 107,84 110,74 101,68 112,68" fill="#FACC15" stroke="#B45309" stroke-width="2.5"/>
-          <polygon points="146,59 150,69 161,69 152,75 155,85 146,79 137,85 140,75 131,69 142,69" fill="#FACC15" stroke="#B45309" stroke-width="2.5"/>
-          <line x1="128" y1="71" x2="134" y2="71" stroke="#B45309" stroke-width="3"/>
-        </g>
-      ` : '';
-
-      const isLegend = getAnimalLevel('cocodrilo') >= MAX_ANIMAL_LEVEL;
-      const legendAura = isLegend ? `<circle cx="115" cy="105" r="76" fill="rgba(251,191,36,0.22)" stroke="#FBBF24" stroke-width="3" stroke-dasharray="8 6"/>` : '';
-
-      return `
-        <svg class="coco-svg ${mood === 'happy' ? 'happy' : mood === 'encourage' ? 'wiggle' : ''}" viewBox="0 0 220 185" xmlns="http://www.w3.org/2000/svg" aria-label="Coco el Cocodrilo">
-          ${legendAura}
-          <!-- Water Ripples -->
-          <ellipse cx="110" cy="162" rx="92" ry="15" fill="rgba(255,255,255,0.28)"/>
-          <ellipse cx="110" cy="164" rx="72" ry="9" fill="rgba(255,255,255,0.22)"/>
-
-          ${capeSVG}
-
-          <!-- Tail -->
-          <path d="M 60 132 Q 20 134 14 106 Q 26 112 42 114 Q 55 112 68 118 Z" fill="#229A5B" stroke="#14532D" stroke-width="3.5" stroke-linejoin="round"/>
-          <!-- Back Ridges -->
-          <polygon points="36,112 42,102 48,113" fill="#15803D"/>
-          <polygon points="52,112 60,100 68,112" fill="#15803D"/>
-          <polygon points="70,108 78,96 86,108" fill="#15803D"/>
-
-          <!-- Body -->
-          <ellipse cx="104" cy="134" rx="52" ry="30" fill="#2EAD6E" stroke="#14532D" stroke-width="3.5"/>
-          <!-- Belly Stripes -->
-          <path d="M 74 145 Q 104 162 136 146 Q 106 134 74 145 Z" fill="#D9F99D"/>
-          <line x1="90" y1="142" x2="94" y2="154" stroke="#84CC16" stroke-width="2.5" stroke-linecap="round"/>
-          <line x1="108" y1="142" x2="110" y2="155" stroke="#84CC16" stroke-width="2.5" stroke-linecap="round"/>
-          <line x1="124" y1="143" x2="122" y2="152" stroke="#84CC16" stroke-width="2.5" stroke-linecap="round"/>
-
-          <!-- Little Paws -->
-          <ellipse cx="82" cy="154" rx="14" ry="9" fill="#229A5B" stroke="#14532D" stroke-width="3"/>
-          <ellipse cx="132" cy="154" rx="14" ry="9" fill="#229A5B" stroke="#14532D" stroke-width="3"/>
-
-          ${scarfSVG}
-
-          <!-- Head & Snout -->
-          <path d="M 78 106 C 74 66, 118 52, 144 68 C 166 76, 198 84, 194 108 C 190 128, 148 138, 108 134 C 86 132, 80 120, 78 106 Z" fill="#34C77B" stroke="#14532D" stroke-width="3.5" stroke-linejoin="round"/>
-
-          <!-- Rosy Cheek -->
-          <ellipse cx="114" cy="108" rx="9" ry="5.5" fill="#FB7185" opacity="0.45"/>
-
-          <!-- Nostrils -->
-          <circle cx="176" cy="92" r="3" fill="#14532D"/>
-          <circle cx="185" cy="95" r="2.6" fill="#14532D"/>
-
-          <!-- Eyes -->
-          <circle cx="116" cy="72" r="14" fill="#FFFFFF" stroke="#14532D" stroke-width="3"/>
-          <circle cx="144" cy="73" r="13" fill="#FFFFFF" stroke="#14532D" stroke-width="3"/>
-          <circle cx="120" cy="72" r="6.5" fill="#111827"/>
-          <circle cx="148" cy="73" r="6" fill="#111827"/>
-          <circle cx="122" cy="69" r="2.3" fill="#FFFFFF"/>
-          <circle cx="150" cy="70" r="2.2" fill="#FFFFFF"/>
-
-          <!-- Mouth & Friendly Teeth -->
-          ${teethMarkup}
-          <path d="${mouthPath}" fill="none" stroke="#14532D" stroke-width="3.5" stroke-linecap="round"/>
-
-          <!-- Accessories -->
-          ${glassesSVG}
-          ${hatSVG}
-          ${crownSVG}
-          ${magicHatSVG}
-        </svg>
-      `;
+      if (backId === 'backpack') {
+        return `
+          <g>
+            <rect x="40" y="114" width="32" height="52" rx="12" fill="#D97706" stroke="#78350F" stroke-width="3"/>
+            <rect x="148" y="114" width="32" height="52" rx="12" fill="#D97706" stroke="#78350F" stroke-width="3"/>
+            <rect x="46" y="124" width="20" height="16" rx="5" fill="#F59E0B" stroke="#78350F" stroke-width="2"/>
+            <rect x="154" y="124" width="20" height="16" rx="5" fill="#F59E0B" stroke="#78350F" stroke-width="2"/>
+          </g>
+        `;
+      }
+      if (backId === 'gold_wings') {
+        return `
+          <g>
+            <path d="M 64 134 C 14 106, 8 152, 34 166 C 24 172, 46 178, 68 158 Z" fill="#FDE047" stroke="#B45309" stroke-width="3" stroke-linejoin="round"/>
+            <path d="M 156 134 C 206 106, 212 152, 186 166 C 196 172, 174 178, 152 158 Z" fill="#FDE047" stroke="#B45309" stroke-width="3" stroke-linejoin="round"/>
+            <path d="M 54 140 L 24 132 M 52 150 L 30 154" stroke="#D97706" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M 166 140 L 196 132 M 168 150 L 190 154" stroke="#D97706" stroke-width="2.5" stroke-linecap="round"/>
+          </g>
+        `;
+      }
+      return '';
     }
 
-    function renderCompanionSVG(animalId = state.activeAnimal, accessoryId = null, mood = 'normal') {
-      const acc = accessoryId !== null ? accessoryId : getAnimalAccessory(animalId);
-      if (animalId === 'cocodrilo') {
-        return renderCocoSVG(acc, mood);
+    function renderOutfitNeck(neckId) {
+      if (neckId === 'scarf') {
+        return `
+          <g transform="translate(66, 122)">
+            <path d="M 6 6 Q 44 18 82 6 L 80 20 Q 44 30 8 20 Z" fill="#EF4444" stroke="#991B1B" stroke-width="2.5"/>
+            <path d="M 56 16 L 68 42 L 82 37 L 72 13 Z" fill="#DC2626" stroke="#991B1B" stroke-width="2.5" stroke-linejoin="round"/>
+          </g>
+        `;
+      }
+      if (neckId === 'bowtie') {
+        return `
+          <g transform="translate(84, 124)">
+            <polygon points="0,2 24,12 0,22" fill="#2563EB" stroke="#1E3A8A" stroke-width="2.5" stroke-linejoin="round"/>
+            <polygon points="52,2 28,12 52,22" fill="#2563EB" stroke="#1E3A8A" stroke-width="2.5" stroke-linejoin="round"/>
+            <circle cx="26" cy="12" r="7" fill="#FACC15" stroke="#1E3A8A" stroke-width="2.5"/>
+          </g>
+        `;
+      }
+      if (neckId === 'necklace') {
+        return `
+          <g>
+            <path d="M 74 128 Q 110 148 146 128" fill="none" stroke="#92400E" stroke-width="3.5" stroke-linecap="round"/>
+            <circle cx="88" cy="136" r="5" fill="#38BDF8" stroke="#0369A1" stroke-width="1.8"/>
+            <circle cx="110" cy="142" r="6.5" fill="#FACC15" stroke="#B45309" stroke-width="2"/>
+            <circle cx="132" cy="136" r="5" fill="#4ADE80" stroke="#15803D" stroke-width="1.8"/>
+          </g>
+        `;
+      }
+      return '';
+    }
+
+    function renderOutfitEyes(eyesId) {
+      if (eyesId === 'glasses') {
+        return `
+          <g transform="translate(66, 70)">
+            <rect x="4" y="4" width="36" height="22" rx="7" fill="#111827" stroke="#FBBF24" stroke-width="3"/>
+            <rect x="48" y="4" width="36" height="22" rx="7" fill="#111827" stroke="#FBBF24" stroke-width="3"/>
+            <line x1="40" y1="14" x2="48" y2="14" stroke="#FBBF24" stroke-width="3.5"/>
+            <line x1="11" y1="10" x2="21" y2="20" stroke="#FFFFFF" stroke-width="2.5" opacity="0.7" stroke-linecap="round"/>
+            <line x1="55" y1="10" x2="65" y2="20" stroke="#FFFFFF" stroke-width="2.5" opacity="0.7" stroke-linecap="round"/>
+          </g>
+        `;
+      }
+      if (eyesId === 'star_glasses') {
+        return `
+          <g transform="translate(64, 66)">
+            <polygon points="24,2 29,14 42,14 32,21 36,34 24,26 12,34 16,21 6,14 19,14" fill="#FACC15" stroke="#B45309" stroke-width="2.5"/>
+            <polygon points="68,2 73,14 86,14 76,21 80,34 68,26 56,34 60,21 50,14 63,14" fill="#FACC15" stroke="#B45309" stroke-width="2.5"/>
+            <line x1="40" y1="18" x2="52" y2="18" stroke="#B45309" stroke-width="3.5"/>
+          </g>
+        `;
+      }
+      if (eyesId === 'mask') {
+        return `
+          <g transform="translate(62, 68)">
+            <path d="M 4 14 Q 24 0 48 12 Q 72 0 92 14 Q 88 30 68 28 Q 56 26 48 20 Q 40 26 28 28 Q 8 30 4 14 Z" fill="#2563EB" stroke="#1E3A8A" stroke-width="2.5"/>
+            <ellipse cx="26" cy="16" rx="10" ry="7" fill="#FFFFFF" stroke="#1E3A8A" stroke-width="2"/>
+            <ellipse cx="70" cy="16" rx="10" ry="7" fill="#FFFFFF" stroke="#1E3A8A" stroke-width="2"/>
+            <circle cx="27" cy="16" r="4" fill="#111827"/>
+            <circle cx="71" cy="16" r="4" fill="#111827"/>
+          </g>
+        `;
+      }
+      if (eyesId === 'monocle') {
+        return `
+          <g>
+            <circle cx="132" cy="84" r="15" fill="rgba(186,230,253,0.45)" stroke="#D97706" stroke-width="3.5"/>
+            <path d="M 147 88 Q 156 108 148 128" fill="none" stroke="#F59E0B" stroke-width="2.5" stroke-dasharray="3 2"/>
+          </g>
+        `;
+      }
+      return '';
+    }
+
+    function renderOutfitHead(headId) {
+      if (headId === 'hat') {
+        return `
+          <g transform="translate(72, 10)">
+            <ellipse cx="38" cy="36" rx="46" ry="11" fill="#D97706" stroke="#78350F" stroke-width="3"/>
+            <path d="M 12 34 C 14 8, 62 8, 64 34 Z" fill="#F59E0B" stroke="#78350F" stroke-width="3"/>
+            <rect x="13" y="26" width="50" height="7" rx="3" fill="#166534"/>
+          </g>
+        `;
+      }
+      if (headId === 'cap') {
+        return `
+          <g transform="translate(72, 12)">
+            <path d="M 10 34 C 12 6, 64 6, 66 34 Z" fill="#0284C7" stroke="#0C4A6E" stroke-width="3"/>
+            <path d="M 10 32 Q 44 26 84 36 Q 66 44 10 36 Z" fill="#38BDF8" stroke="#0C4A6E" stroke-width="3"/>
+            <circle cx="38" cy="10" r="4.5" fill="#FACC15" stroke="#0C4A6E" stroke-width="2"/>
+          </g>
+        `;
+      }
+      if (headId === 'viking') {
+        return `
+          <g transform="translate(70, 8)">
+            <path d="M 16 28 Q -4 18 4 4 Q 14 14 22 20 Z" fill="#FEF3C7" stroke="#78350F" stroke-width="2.5"/>
+            <path d="M 64 28 Q 84 18 76 4 Q 66 14 58 20 Z" fill="#FEF3C7" stroke="#78350F" stroke-width="2.5"/>
+            <path d="M 12 38 C 14 10, 66 10, 68 38 Z" fill="#64748B" stroke="#1E293B" stroke-width="3"/>
+            <rect x="10" y="32" width="60" height="9" rx="4" fill="#F59E0B" stroke="#78350F" stroke-width="2.5"/>
+          </g>
+        `;
+      }
+      if (headId === 'crown') {
+        return `
+          <g transform="translate(74, 8)">
+            <polygon points="6,38 12,10 26,24 36,4 46,24 60,10 66,38" fill="#FBBF24" stroke="#B45309" stroke-width="3" stroke-linejoin="round"/>
+            <circle cx="36" cy="24" r="4.5" fill="#EF4444"/>
+            <circle cx="20" cy="29" r="3.5" fill="#3B82F6"/>
+            <circle cx="52" cy="29" r="3.5" fill="#10B981"/>
+          </g>
+        `;
+      }
+      if (headId === 'magic_hat') {
+        return `
+          <g transform="translate(72, 2)">
+            <ellipse cx="38" cy="44" rx="46" ry="10" fill="#1E293B" stroke="#0F172A" stroke-width="3"/>
+            <rect x="16" y="8" width="44" height="36" rx="6" fill="#312E81" stroke="#0F172A" stroke-width="3"/>
+            <rect x="16" y="32" width="44" height="8" fill="#F59E0B"/>
+            <polygon points="38,14 40,20 46,20 41,24 43,30 38,26 33,30 35,24 30,20 36,20" fill="#FACC15"/>
+          </g>
+        `;
+      }
+      return '';
+    }
+
+    function renderCompanionSVG(animalId = state.activeAnimal, outfitOverride = null, mood = 'normal', isLocked = false) {
+      const animal = getAnimalById(animalId);
+      const st = ANIMAL_STYLES[animalId] || ANIMAL_STYLES.cocodrilo;
+      const outfit = outfitOverride || getAnimalOutfit(animalId);
+      const lvl = getAnimalLevel(animalId);
+      const isLegend = !isLocked && lvl >= MAX_ANIMAL_LEVEL;
+
+      // Distinct character ears / manes / horns / fins behind head
+      let headBack = '';
+      let faceDetail = '';
+      let snoutMarkup = '';
+
+      if (st.extra === 'mane') {
+        headBack = `
+          <circle cx="110" cy="86" r="56" fill="#B45309" stroke="#713F12" stroke-width="3.5" stroke-dasharray="14 6"/>
+          <circle cx="110" cy="86" r="50" fill="#D97706" stroke="#713F12" stroke-width="3"/>
+          <circle cx="72" cy="52" r="13" fill="${st.head}" stroke="${st.stroke}" stroke-width="3"/>
+          <circle cx="148" cy="52" r="13" fill="${st.head}" stroke="${st.stroke}" stroke-width="3"/>
+        `;
+      } else if (st.extra === 'elephant') {
+        headBack = `
+          <ellipse cx="52" cy="86" rx="28" ry="36" fill="${st.head}" stroke="${st.stroke}" stroke-width="3.5"/>
+          <ellipse cx="54" cy="88" rx="17" ry="24" fill="#FBCFE8" opacity="0.65"/>
+          <ellipse cx="168" cy="86" rx="28" ry="36" fill="${st.head}" stroke="${st.stroke}" stroke-width="3.5"/>
+          <ellipse cx="166" cy="88" rx="17" ry="24" fill="#FBCFE8" opacity="0.65"/>
+        `;
+        snoutMarkup = `
+          <path d="M 86 106 Q 74 116 78 126" fill="none" stroke="#FFFFFF" stroke-width="6" stroke-linecap="round"/>
+          <path d="M 134 106 Q 146 116 142 126" fill="none" stroke="#FFFFFF" stroke-width="6" stroke-linecap="round"/>
+          <path d="M 102 96 Q 100 124 116 128 Q 124 128 122 118" fill="none" stroke="${st.head}" stroke-width="14" stroke-linecap="round"/>
+          <path d="M 102 96 Q 100 124 116 128 Q 124 128 122 118" fill="none" stroke="${st.stroke}" stroke-width="3" stroke-linecap="round"/>
+        `;
+      } else if (st.extra === 'monkey' || st.extra === 'gorilla') {
+        headBack = `
+          <circle cx="62" cy="86" r="15" fill="${st.head}" stroke="${st.stroke}" stroke-width="3"/>
+          <circle cx="62" cy="86" r="8" fill="${st.snout}"/>
+          <circle cx="158" cy="86" r="15" fill="${st.head}" stroke="${st.stroke}" stroke-width="3"/>
+          <circle cx="158" cy="86" r="8" fill="${st.snout}"/>
+        `;
+        faceDetail = `<ellipse cx="110" cy="96" rx="34" ry="26" fill="${st.snout}"/>`;
+      } else if (st.extra === 'wolf' || st.extra === 'fox' || st.extra === 'tiger' || st.extra === 'spots') {
+        headBack = `
+          <polygon points="66,72 62,32 94,52" fill="${st.head}" stroke="${st.stroke}" stroke-width="3.5" stroke-linejoin="round"/>
+          <polygon points="71,64 69,42 87,54" fill="${st.snout}"/>
+          <polygon points="154,72 158,32 126,52" fill="${st.head}" stroke="${st.stroke}" stroke-width="3.5" stroke-linejoin="round"/>
+          <polygon points="149,64 151,42 133,54" fill="${st.snout}"/>
+        `;
+        if (st.extra === 'tiger') {
+          faceDetail = `
+            <path d="M 66 78 L 80 82 M 66 90 L 78 92 M 154 78 L 140 82 M 154 90 L 142 92" stroke="#111827" stroke-width="4" stroke-linecap="round"/>
+            <path d="M 102 48 L 106 60 M 110 46 L 110 60 M 118 48 L 114 60" stroke="#111827" stroke-width="3.5" stroke-linecap="round"/>
+          `;
+        } else if (st.extra === 'spots') {
+          faceDetail = `
+            <circle cx="76" cy="66" r="4.5" fill="#78350F"/><circle cx="144" cy="66" r="4.5" fill="#78350F"/>
+            <circle cx="70" cy="98" r="4" fill="#78350F"/><circle cx="150" cy="98" r="4" fill="#78350F"/>
+          `;
+        } else if (st.extra === 'fox') {
+          faceDetail = `<path d="M 66 94 Q 88 122 110 118 Q 132 122 154 94 Q 142 126 110 126 Q 78 126 66 94 Z" fill="#FFFFFF"/>`;
+        }
+      } else if (st.extra === 'panda' || st.extra === 'bear') {
+        const earCol = st.extra === 'panda' ? '#0F172A' : st.head;
+        headBack = `
+          <circle cx="72" cy="52" r="15" fill="${earCol}" stroke="${st.stroke}" stroke-width="3"/>
+          <circle cx="148" cy="52" r="15" fill="${earCol}" stroke="${st.stroke}" stroke-width="3"/>
+        `;
+        if (st.extra === 'panda') {
+          faceDetail = `
+            <ellipse cx="88" cy="84" rx="15" ry="13" fill="#0F172A" transform="rotate(-14 88 84)"/>
+            <ellipse cx="132" cy="84" rx="15" ry="13" fill="#0F172A" transform="rotate(14 132 84)"/>
+          `;
+        }
+      } else if (st.extra === 'giraffe') {
+        headBack = `
+          <line x1="88" y1="52" x2="82" y2="30" stroke="${st.stroke}" stroke-width="5" stroke-linecap="round"/>
+          <circle cx="82" cy="28" r="6" fill="#78350F"/>
+          <line x1="132" y1="52" x2="138" y2="30" stroke="${st.stroke}" stroke-width="5" stroke-linecap="round"/>
+          <circle cx="138" cy="28" r="6" fill="#78350F"/>
+          <ellipse cx="64" cy="64" rx="14" ry="8" fill="${st.head}" stroke="${st.stroke}" stroke-width="3"/>
+          <ellipse cx="156" cy="64" rx="14" ry="8" fill="${st.head}" stroke="${st.stroke}" stroke-width="3"/>
+        `;
+        faceDetail = `<circle cx="76" cy="76" r="5" fill="#B45309" opacity="0.7"/><circle cx="144" cy="74" r="5" fill="#B45309" opacity="0.7"/>`;
+      } else if (st.extra === 'zebra') {
+        headBack = `
+          <polygon points="70,66 68,34 92,50" fill="#FFFFFF" stroke="#0F172A" stroke-width="3"/>
+          <polygon points="150,66 152,34 128,50" fill="#FFFFFF" stroke="#0F172A" stroke-width="3"/>
+          <path d="M 98 44 L 104 30 L 110 42 L 116 30 L 122 44" fill="#0F172A"/>
+        `;
+        faceDetail = `
+          <path d="M 66 76 L 82 80 M 66 90 L 80 92 M 154 76 L 138 80 M 154 90 L 140 92" stroke="#0F172A" stroke-width="5" stroke-linecap="round"/>
+        `;
+      } else if (st.extra === 'shark') {
+        headBack = `
+          <path d="M 102 48 Q 112 16 128 46 Z" fill="#0284C7" stroke="#0C4A6E" stroke-width="3.5" stroke-linejoin="round"/>
+          <path d="M 62 138 Q 34 146 42 164 L 68 156 Z" fill="#0284C7" stroke="#0C4A6E" stroke-width="3"/>
+          <path d="M 158 138 Q 186 146 178 164 L 152 156 Z" fill="#0284C7" stroke="#0C4A6E" stroke-width="3"/>
+        `;
+      } else if (st.extra === 'dragon') {
+        headBack = `
+          <path d="M 80 54 Q 64 26 76 20 Q 86 30 92 48 Z" fill="#FACC15" stroke="#7F1D1D" stroke-width="3"/>
+          <path d="M 140 54 Q 156 26 144 20 Q 134 30 128 48 Z" fill="#FACC15" stroke="#7F1D1D" stroke-width="3"/>
+        `;
+      } else if (st.extra === 'rhino') {
+        headBack = `
+          <circle cx="72" cy="54" r="12" fill="${st.head}" stroke="${st.stroke}" stroke-width="3"/>
+          <circle cx="148" cy="54" r="12" fill="${st.head}" stroke="${st.stroke}" stroke-width="3"/>
+        `;
+        snoutMarkup = `<polygon points="100,104 110,76 120,104" fill="#F8FAFC" stroke="${st.stroke}" stroke-width="3" stroke-linejoin="round"/>`;
+      } else if (st.extra === 'croc' || st.extra === 'trex') {
+        headBack = `
+          <polygon points="88,48 96,34 104,48" fill="#15803D" stroke="${st.stroke}" stroke-width="2.5"/>
+          <polygon points="104,46 112,32 120,46" fill="#15803D" stroke="${st.stroke}" stroke-width="2.5"/>
+          <polygon points="120,48 128,36 134,50" fill="#15803D" stroke="${st.stroke}" stroke-width="2.5"/>
+        `;
+      } else if (st.extra === 'hippo') {
+        headBack = `
+          <circle cx="74" cy="52" r="11" fill="${st.head}" stroke="${st.stroke}" stroke-width="3"/>
+          <circle cx="146" cy="52" r="11" fill="${st.head}" stroke="${st.stroke}" stroke-width="3"/>
+        `;
       }
 
-      const animal = getAnimalById(animalId);
-      const lvl = getAnimalLevel(animalId);
-      const isLegend = lvl >= MAX_ANIMAL_LEVEL;
+      // Snout / Beak / Mouth
+      const smilePath = mood === 'happy'
+        ? 'M 92 108 Q 110 126 128 108'
+        : mood === 'encourage'
+          ? 'M 98 112 Q 110 116 122 112'
+          : 'M 94 109 Q 110 120 126 109';
 
-      const capeOverlay = acc === 'cape' ? `
-        <path d="M 60 112 Q 26 135 28 166 Q 74 156 110 156 Q 146 156 192 166 Q 194 135 160 112 Z" fill="#EF4444" stroke="#991B1B" stroke-width="3.5"/>
-      ` : '';
+      if (st.extra === 'eagle') {
+        snoutMarkup = `<path d="M 98 96 Q 110 88 122 96 L 110 116 Z" fill="#F59E0B" stroke="#78350F" stroke-width="3" stroke-linejoin="round"/>`;
+      } else if (st.extra === 'toucan') {
+        snoutMarkup = `<path d="M 98 94 Q 134 86 156 106 Q 132 118 98 110 Z" fill="#F97316" stroke="#7C2D12" stroke-width="3"/><path d="M 138 97 Q 152 102 155 106 Q 144 112 136 111 Z" fill="#EF4444"/>`;
+      } else if (!snoutMarkup) {
+        const showTeeth = ['croc', 'trex', 'shark', 'hippo', 'dragon'].includes(st.extra);
+        snoutMarkup = `
+          <ellipse cx="110" cy="108" rx="${st.extra === 'hippo' || st.extra === 'croc' ? 32 : 24}" ry="16" fill="${st.snout}" stroke="${st.stroke}" stroke-width="2.5"/>
+          <circle cx="102" cy="101" r="2.8" fill="${st.stroke}"/>
+          <circle cx="118" cy="101" r="2.8" fill="${st.stroke}"/>
+          ${showTeeth ? `<polygon points="98,111 102,119 106,112" fill="#FFFFFF"/><polygon points="114,112 118,119 122,111" fill="#FFFFFF"/>` : ''}
+          <path d="${smilePath}" fill="none" stroke="${st.stroke}" stroke-width="3" stroke-linecap="round"/>
+        `;
+      }
 
-      const scarfOverlay = acc === 'scarf' ? `
-        <g transform="translate(66, 130)">
-          <rect x="0" y="0" width="88" height="16" rx="8" fill="#F97316" stroke="#9A3412" stroke-width="2.5"/>
-          <path d="M 60 12 L 74 36 L 86 32 L 76 10 Z" fill="#EA580C" stroke="#9A3412" stroke-width="2.5"/>
-        </g>
-      ` : '';
-
-      const topAccessory = acc === 'hat' ? `
-        <g transform="translate(72, 16)">
-          <ellipse cx="38" cy="34" rx="44" ry="11" fill="#D97706" stroke="#78350F" stroke-width="3"/>
-          <path d="M 12 32 C 14 6, 62 6, 64 32 Z" fill="#F59E0B" stroke="#78350F" stroke-width="3"/>
-          <rect x="13" y="24" width="50" height="7" rx="3" fill="#166534"/>
-        </g>
-      ` : acc === 'crown' ? `
-        <g transform="translate(74, 14)">
-          <polygon points="6,36 12,10 26,24 36,4 46,24 60,10 66,36" fill="#FBBF24" stroke="#B45309" stroke-width="3" stroke-linejoin="round"/>
-          <circle cx="36" cy="24" r="4.5" fill="#EF4444"/>
-          <circle cx="20" cy="28" r="3.5" fill="#3B82F6"/>
-          <circle cx="52" cy="28" r="3.5" fill="#10B981"/>
-        </g>
-      ` : acc === 'magic_hat' ? `
-        <g transform="translate(72, 6)">
-          <ellipse cx="38" cy="44" rx="44" ry="10" fill="#1E293B" stroke="#0F172A" stroke-width="3"/>
-          <rect x="16" y="8" width="44" height="36" rx="6" fill="#312E81" stroke="#0F172A" stroke-width="3"/>
-          <rect x="16" y="32" width="44" height="8" fill="#F59E0B"/>
-          <text x="38" y="27" text-anchor="middle" font-size="16">✨</text>
-        </g>
-      ` : '';
-
-      const faceAccessory = acc === 'glasses' ? `
-        <g transform="translate(68, 78)">
-          <rect x="4" y="4" width="34" height="22" rx="7" fill="#111827" stroke="#FBBF24" stroke-width="3"/>
-          <rect x="46" y="4" width="34" height="22" rx="7" fill="#111827" stroke="#FBBF24" stroke-width="3"/>
-          <line x1="38" y1="14" x2="46" y2="14" stroke="#FBBF24" stroke-width="3.5"/>
-          <line x1="11" y1="10" x2="20" y2="19" stroke="#FFFFFF" stroke-width="2.5" opacity="0.7" stroke-linecap="round"/>
-          <line x1="53" y1="10" x2="62" y2="19" stroke="#FFFFFF" stroke-width="2.5" opacity="0.7" stroke-linecap="round"/>
-        </g>
-      ` : acc === 'star_glasses' ? `
-        <g transform="translate(66, 74)">
-          <polygon points="22,2 27,14 40,14 30,21 34,34 22,26 10,34 14,21 4,14 17,14" fill="#FACC15" stroke="#B45309" stroke-width="2.5"/>
-          <polygon points="66,2 71,14 84,14 74,21 78,34 66,26 54,34 58,21 48,14 61,14" fill="#FACC15" stroke="#B45309" stroke-width="2.5"/>
-          <line x1="38" y1="18" x2="50" y2="18" stroke="#B45309" stroke-width="3.5"/>
-        </g>
-      ` : '';
-
-      const bgCircle = isLegend
-        ? `<circle cx="110" cy="102" r="64" fill="#FEF3C7" stroke="#F59E0B" stroke-width="5"/><circle cx="110" cy="102" r="74" fill="none" stroke="#FBBF24" stroke-width="3" stroke-dasharray="8 6"/>`
-        : `<circle cx="110" cy="102" r="62" fill="rgba(255,253,245,0.88)" stroke="#FFFFFF" stroke-width="4"/>`;
+      const legendAura = isLegend
+        ? `<circle cx="110" cy="105" r="82" fill="rgba(251,191,36,0.2)" stroke="#FBBF24" stroke-width="3.5" stroke-dasharray="9 6"/>`
+        : '';
 
       return `
-        <svg class="coco-svg ${mood === 'happy' ? 'happy' : mood === 'encourage' ? 'wiggle' : ''}" viewBox="0 0 220 185" xmlns="http://www.w3.org/2000/svg" aria-label="${animal.name}">
-          <ellipse cx="110" cy="166" rx="84" ry="13" fill="rgba(255,255,255,0.28)"/>
-          ${capeOverlay}
-          ${bgCircle}
-          <text x="110" y="132" text-anchor="middle" font-size="94">${animal.emoji}</text>
-          ${scarfOverlay}
-          ${faceAccessory}
-          ${topAccessory}
-          ${isLegend ? `<text x="166" y="54" font-size="24">✨</text><text x="40" y="64" font-size="20">⭐</text>` : ''}
+        <svg class="coco-svg ${mood === 'happy' ? 'happy' : mood === 'encourage' ? 'wiggle' : ''}" viewBox="0 0 220 200" xmlns="http://www.w3.org/2000/svg" aria-label="${animal.name}" style="${isLocked ? 'filter:brightness(0.22) contrast(1.1);opacity:0.75;' : ''}">
+          ${legendAura}
+          <ellipse cx="110" cy="184" rx="76" ry="11" fill="rgba(0,0,0,0.12)"/>
+
+          <!-- BACK CLOTHING SLOT -->
+          ${isLocked ? '' : renderOutfitBack(outfit.back)}
+
+          <!-- CHARACTER BODY -->
+          <ellipse cx="110" cy="150" rx="44" ry="34" fill="${st.body}" stroke="${st.stroke}" stroke-width="3.5"/>
+          <ellipse cx="110" cy="154" rx="26" ry="22" fill="${st.belly}"/>
+          <!-- Cute Paws -->
+          <ellipse cx="74" cy="172" rx="15" ry="10" fill="${st.head}" stroke="${st.stroke}" stroke-width="3"/>
+          <ellipse cx="146" cy="172" rx="15" ry="10" fill="${st.head}" stroke="${st.stroke}" stroke-width="3"/>
+
+          <!-- CHARACTER EARS / MANE / HORNS -->
+          ${headBack}
+
+          <!-- CHARACTER HEAD -->
+          <ellipse cx="110" cy="88" rx="46" ry="42" fill="${st.head}" stroke="${st.stroke}" stroke-width="3.5"/>
+          ${faceDetail}
+
+          <!-- Rosy Cheeks -->
+          <ellipse cx="78" cy="100" rx="7.5" ry="4.5" fill="#FB7185" opacity="0.45"/>
+          <ellipse cx="142" cy="100" rx="7.5" ry="4.5" fill="#FB7185" opacity="0.45"/>
+
+          <!-- Expressive Cartoon Eyes -->
+          <circle cx="88" cy="82" r="11" fill="#FFFFFF" stroke="${st.stroke}" stroke-width="2.8"/>
+          <circle cx="132" cy="82" r="11" fill="#FFFFFF" stroke="${st.stroke}" stroke-width="2.8"/>
+          <circle cx="90" cy="82" r="5.5" fill="#111827"/>
+          <circle cx="130" cy="82" r="5.5" fill="#111827"/>
+          <circle cx="92" cy="79" r="2.2" fill="#FFFFFF"/>
+          <circle cx="132" cy="79" r="2.2" fill="#FFFFFF"/>
+
+          <!-- Snout / Beak / Smile -->
+          ${snoutMarkup}
+
+          <!-- NECK, EYES & HEAD CLOTHING SLOTS (ALL SIMULTANEOUS!) -->
+          ${isLocked ? '' : renderOutfitNeck(outfit.neck)}
+          ${isLocked ? '' : renderOutfitEyes(outfit.eyes)}
+          ${isLocked ? '' : renderOutfitHead(outfit.head)}
+
+          ${isLegend ? `<text x="170" y="42" font-size="22">✨</text><text x="32" y="54" font-size="18">⭐</text>` : ''}
         </svg>
       `;
     }
 
     let wardrobeSelectedAnimal = null;
+    let wardrobeSelectedSlot = 'head';
 
     function updateAllCocoAvatars(mood = 'normal') {
       const activeId = state.activeAnimal || 'cocodrilo';
       const activeAnimal = getAnimalById(activeId);
       const heroEl = document.getElementById('heroCocoContainer');
-      if (heroEl) heroEl.innerHTML = renderCompanionSVG(activeId, getAnimalAccessory(activeId), 'normal');
+      if (heroEl) heroEl.innerHTML = renderCompanionSVG(activeId, getAnimalOutfit(activeId), 'normal');
       const heroBubble = document.getElementById('heroBubble');
       if (heroBubble) heroBubble.textContent = `¡Hola! Soy ${activeAnimal.name} (Nv.${getAnimalLevel(activeId)})`;
 
       const gameEl = document.getElementById('gameCocoContainer');
-      if (gameEl) gameEl.innerHTML = renderCompanionSVG(activeId, getAnimalAccessory(activeId), mood);
+      if (gameEl) gameEl.innerHTML = renderCompanionSVG(activeId, getAnimalOutfit(activeId), mood);
 
       const wardId = wardrobeSelectedAnimal || activeId;
       const wardEl = document.getElementById('wardrobeCocoContainer');
-      if (wardEl) wardEl.innerHTML = renderCompanionSVG(wardId, getAnimalAccessory(wardId), 'happy');
+      if (wardEl) wardEl.innerHTML = renderCompanionSVG(wardId, getAnimalOutfit(wardId), 'happy');
     }
 
     /* =========================================================
@@ -2781,7 +3009,6 @@
       let problem = null;
 
       if (skillKey === 'add2_easy') {
-        // 2-digit + 2-digit without carrying (sum <= 99)
         const d1 = randInt(1, 6);
         const d2 = randInt(1, 8 - d1);
         const u1 = randInt(1, 7);
@@ -2791,14 +3018,14 @@
         problem = {
           skillKey,
           kind: 'add2',
-          label: '➕ Suma de 2 dígitos',
+          label: '➕ Suma fácil (2 dígitos) · 💎 2',
           nums: [a, b],
           ops: ['+'],
           answer: a + b,
-          hasCarry: false
+          hasCarry: false,
+          baseGems: 2
         };
       } else if (skillKey === 'sub2_easy') {
-        // 2-digit - 2-digit without borrowing
         const d1 = randInt(3, 8);
         const d2 = randInt(1, d1 - 1);
         const u1 = randInt(2, 9);
@@ -2808,130 +3035,101 @@
         problem = {
           skillKey,
           kind: 'sub2',
-          label: '➖ Resta de 2 dígitos',
+          label: '➖ Resta fácil (2 dígitos) · 💎 2',
           nums: [a, b],
           ops: ['-'],
           answer: a - b,
-          hasBorrow: false
+          hasBorrow: false,
+          baseGems: 2
+        };
+      } else if (skillKey === 'add2_carry') {
+        const d1 = randInt(1, 5);
+        const d2 = randInt(1, 7 - d1);
+        const u1 = randInt(4, 9);
+        const u2 = randInt(10 - u1, 9);
+        const a = d1 * 10 + u1;
+        const b = d2 * 10 + u2;
+        problem = {
+          skillKey,
+          kind: 'add2',
+          label: '➕ Suma llevando (2 dígitos) · 💎 3',
+          nums: [a, b],
+          ops: ['+'],
+          answer: a + b,
+          hasCarry: true,
+          baseGems: 3
+        };
+      } else if (skillKey === 'sub2_borrow') {
+        const d1 = randInt(3, 8);
+        const d2 = randInt(1, d1 - 2);
+        const u1 = randInt(0, 7);
+        const u2 = randInt(u1 + 1, 9);
+        const a = d1 * 10 + u1;
+        const b = d2 * 10 + u2;
+        problem = {
+          skillKey,
+          kind: 'sub2',
+          label: '➖ Resta prestando (2 dígitos) · 💎 3',
+          nums: [a, b],
+          ops: ['-'],
+          answer: a - b,
+          hasBorrow: true,
+          baseGems: 3
         };
       } else if (skillKey === 'add3') {
-        // Steps 0-1: 2-digit addition WITH carrying; Steps 2-4: 3 quantities of 2-digit numbers!
-        if (stepIndex < 2) {
-          const d1 = randInt(1, 5);
-          const d2 = randInt(1, 7 - d1);
-          const u1 = randInt(4, 9);
-          const u2 = randInt(10 - u1, 9);
-          const a = d1 * 10 + u1;
-          const b = d2 * 10 + u2;
-          problem = {
-            skillKey,
-            kind: 'add2',
-            label: '➕ Suma de 2 dígitos (llevando)',
-            nums: [a, b],
-            ops: ['+'],
-            answer: a + b,
-            hasCarry: true
-          };
-        } else {
-          // 3 quantities of 2-digit numbers! Keep total <= 99 for gentle 7yo readability (or up to 115)
-          const a = randInt(11, 32);
-          const b = randInt(11, 29);
-          const maxC = Math.min(35, 99 - a - b);
-          const c = randInt(10, Math.max(12, maxC));
-          problem = {
-            skillKey,
-            kind: 'add3',
-            label: '➕ Suma de 3 cantidades (2 dígitos)',
-            nums: [a, b, c],
-            ops: ['+', '+'],
-            answer: a + b + c,
-            hasCarry: ((a % 10) + (b % 10) + (c % 10)) >= 10
-          };
-        }
-      } else if (skillKey === 'sub3') {
-        // Steps 0-1: 2-digit subtraction WITH borrowing; Steps 2-4: 3-quantity subtraction or add+sub!
-        if (stepIndex < 2) {
-          const d1 = randInt(3, 8);
-          const d2 = randInt(1, d1 - 2);
-          const u1 = randInt(0, 7);
-          const u2 = randInt(u1 + 1, 9);
-          const a = d1 * 10 + u1;
-          const b = d2 * 10 + u2;
-          problem = {
-            skillKey,
-            kind: 'sub2',
-            label: '➖ Resta de 2 dígitos (prestando)',
-            nums: [a, b],
-            ops: ['-'],
-            answer: a - b,
-            hasBorrow: true
-          };
-        } else if (stepIndex % 2 === 0) {
-          // 3-quantity chained subtraction: a - b - c (all 2-digit, result >= 5)
+        const a = randInt(11, 34);
+        const b = randInt(11, 30);
+        const maxC = Math.min(35, 99 - a - b);
+        const c = randInt(10, Math.max(12, maxC));
+        problem = {
+          skillKey,
+          kind: 'add3',
+          label: '➕ Suma de 3 cantidades · 💎 5',
+          nums: [a, b, c],
+          ops: ['+', '+'],
+          answer: a + b + c,
+          hasCarry: ((a % 10) + (b % 10) + (c % 10)) >= 10,
+          baseGems: 5
+        };
+      } else {
+        // sub3: alternating 3-quantity chained subtraction and mixed add+sub
+        if (stepIndex % 2 === 0) {
           const b = randInt(10, 24);
           const c = randInt(10, 22);
           const a = b + c + randInt(8, 32);
           problem = {
-            skillKey,
+            skillKey: 'sub3',
             kind: 'sub3',
-            label: '➖ Resta de 3 cantidades',
+            label: '➖ Resta de 3 cantidades · 💎 6',
             nums: [a, b, c],
             ops: ['-', '-'],
             answer: a - b - c,
-            hasBorrow: true
+            hasBorrow: true,
+            baseGems: 6
           };
         } else {
-          // 3-quantity mixed: a + b - c (all 2-digit, friendly)
           const a = randInt(15, 38);
           const b = randInt(12, 28);
           const c = randInt(10, Math.min(30, a + b - 10));
           problem = {
-            skillKey,
+            skillKey: 'sub3',
             kind: 'mix3',
-            label: '➕➖ Reto de 3 cantidades',
+            label: '➕➖ Reto de 3 cantidades · 💎 6',
             nums: [a, b, c],
             ops: ['+', '-'],
-            answer: a + b - c
+            answer: a + b - c,
+            baseGems: 6
           };
         }
-      } else if (skillKey === 'mul') {
-        // Age-7 friendly multiplication: tables 2, 3, 4, 5, 10
-        const tables = [2, 3, 4, 5, 10];
-        const a = tables[randInt(0, tables.length - 1)];
-        const b = a === 10 ? randInt(2, 9) : randInt(2, 7);
-        problem = {
-          skillKey,
-          kind: 'mul',
-          label: '✖️ Multiplicación en grupos',
-          nums: [a, b],
-          ops: ['×'],
-          answer: a * b
-        };
-      } else if (skillKey === 'div') {
-        // Age-7 friendly exact fair-sharing division
-        const divisors = [2, 3, 4, 5, 10];
-        const d = divisors[randInt(0, divisors.length - 1)];
-        const q = d === 10 ? randInt(2, 8) : randInt(2, 7);
-        const dividend = d * q;
-        problem = {
-          skillKey,
-          kind: 'div',
-          label: '➗ Repartir en partes iguales',
-          nums: [dividend, d],
-          ops: ['÷'],
-          answer: q
-        };
       }
 
       problem.choices = generateChoices(problem.answer, skillKey);
       return problem;
     }
 
-    function generateChoices(correct, skillKey) {
+    function generateChoices(correct) {
       const set = new Set([correct]);
-      const offsets = (skillKey === 'mul' || skillKey === 'div')
-        ? [-4, -3, -2, -1, 1, 2, 3, 4, 5, 6]
-        : [-10, -2, -1, 1, 2, 10, -11, 11, -3, 3];
+      const offsets = [-10, -2, -1, 1, 2, 10, -11, 11, -3, 3];
 
       let guard = 0;
       while (set.size < 4 && guard < 60) {
@@ -2973,7 +3171,7 @@
       const animal = getAnimalById(animalId);
       const lvl = getAnimalLevel(animalId);
       if (animal.powerType === 'streak_shield_plus') return lvl + 1;
-      if (['streak_shield', 'eliminate', 'eliminate_mul', 'legend_trex'].includes(animal.powerType)) return lvl;
+      if (['streak_shield', 'eliminate', 'eliminate_sub', 'legend_trex', 'legend_dragon'].includes(animal.powerType)) return lvl;
       return 0;
     }
 
@@ -3016,18 +3214,17 @@
 
     function renderWorldsMap() {
       const grid = document.getElementById('worldsGrid');
-      const visibleWorlds = WORLDS.filter(w => !w.isMulDiv || state.settings.includeMulDiv);
       const activeId = state.activeMission ? state.activeMission.worldId : null;
       const activeStep = state.activeMission ? (state.activeMission.step + 1) : 1;
 
-      grid.innerHTML = visibleWorlds.map(w => {
+      grid.innerHTML = WORLDS.map(w => {
         const earned = Math.min(3, state.worldStars[w.id] || 0);
         const starsHtml = '⭐'.repeat(earned) + '☆'.repeat(3 - earned);
         const isInProgress = activeId === w.id;
         return `
           <button class="world-card" onclick="startWorldMission('${w.id}')">
             <div class="world-top">
-              <span class="world-badge-num">${isInProgress ? `⏳ En curso (${activeStep}/${MISSION_LENGTH})` : `Mundo ${w.num}`}</span>
+              <span class="world-badge-num">${isInProgress ? `⏳ En curso (${activeStep}/${MISSION_LENGTH})` : `Mundo ${w.num} · 💎 ${w.baseGems}/reto`}</span>
               <span class="world-stars" aria-label="${earned} de 3 estrellas">${starsHtml}</span>
             </div>
             <div class="world-body">
@@ -3052,9 +3249,6 @@
           ? `▶️ ¡Continuar Aventura! (${activeStep}/${MISSION_LENGTH})`
           : `▶️ ¡Jugar con ${comp.emoji} ${comp.name.split(' ')[0]}!`;
       }
-
-      document.getElementById('chipMul').style.display = state.settings.includeMulDiv ? '' : 'none';
-      document.getElementById('chipDiv').style.display = state.settings.includeMulDiv ? '' : 'none';
     }
 
     function startRecommendedMission() {
@@ -3063,8 +3257,7 @@
         resumeActiveMission();
         return;
       }
-      const visible = WORLDS.filter(w => !w.isMulDiv || state.settings.includeMulDiv);
-      const nextWorld = visible.find(w => (state.worldStars[w.id] || 0) < 3) || visible[0];
+      const nextWorld = WORLDS.find(w => (state.worldStars[w.id] || 0) < 3) || WORLDS[0];
       startWorldMission(nextWorld.id, true);
     }
 
@@ -3082,7 +3275,7 @@
       session.missionPerfects = 0;
       session.powerUsesLeft = getMissionPowerUses(state.activeAnimal);
       session.inputMode = state.settings.defaultKeypad ? 'keypad' : 'choices';
-      session.format = (world.skillKey === 'mul' || world.skillKey === 'div') ? 'horizontal' : 'vertical';
+      session.format = 'vertical';
       switchView('game');
       loadNextProblem();
     }
@@ -3098,7 +3291,7 @@
       const lvl = getAnimalLevel(state.activeAnimal);
       const pill = document.getElementById('companionPowerPill');
       const btn = document.getElementById('usePowerBtn');
-      const isEliminate = ['eliminate', 'eliminate_mul', 'legend_trex'].includes(animal.powerType);
+      const isEliminate = ['eliminate', 'eliminate_sub', 'legend_trex', 'legend_dragon'].includes(animal.powerType);
       const isShield = ['streak_shield', 'streak_shield_plus'].includes(animal.powerType);
 
       if (pill) {
@@ -3277,7 +3470,7 @@
           </button>
         `).join('');
       } else {
-        modeBtn.textContent = '🔢 Teclado (+50% 💎)';
+        modeBtn.textContent = '🔢 Teclado (+1 💎)';
         choicesGrid.style.display = 'none';
         keypadWrap.classList.add('active');
       }
@@ -3345,29 +3538,35 @@
           session.streak = 0;
         }
 
-        // Base gems calculation
-        let gemsEarned = isFirstTry ? 6 : 3;
-        if (session.inputMode === 'keypad') gemsEarned = Math.ceil(gemsEarned * 1.5);
-        if (session.streak >= 3) gemsEarned += 2;
+        // Complexity-scaled gem economy: harder math = bigger reward!
+        const baseForProblem = p.baseGems || 2;
+        let gemsEarned = isFirstTry ? baseForProblem : Math.max(1, Math.floor(baseForProblem / 2));
+        if (session.inputMode === 'keypad') gemsEarned += 1;
+        if (session.streak >= 3) gemsEarned += 1;
 
-        // Companion Power Gem Bonuses!
+        // Balanced Companion Power Gem Bonuses
+        const smallGem = Math.ceil(compLvl / 2); // 1,1,2,2,3
         let powerBonus = 0;
-        if (comp.powerType === 'add_bonus') {
-          powerBonus = (p.kind === 'add2' || p.kind === 'add3') ? (compLvl + 1) : compLvl;
+        if (comp.powerType === 'add_bonus' && (p.kind === 'add2' || p.kind === 'add3')) {
+          powerBonus = smallGem;
+        } else if (comp.powerType === 'sub_bonus' && (p.kind === 'sub2' || p.kind === 'sub3' || p.kind === 'mix3')) {
+          powerBonus = smallGem;
         } else if (comp.powerType === 'hint_bonus' && session.hintUsed) {
-          powerBonus = compLvl + 2;
+          powerBonus = smallGem + 1;
         } else if (comp.powerType === 'streak_gems' && session.streak >= 2) {
-          powerBonus = compLvl * 2;
-        } else if (comp.powerType === 'eliminate_mul' && (p.kind === 'mul' || p.kind === 'div')) {
-          powerBonus = compLvl;
+          powerBonus = smallGem;
+        } else if (comp.powerType === 'eliminate_sub' && (p.kind === 'sub2' || p.kind === 'sub3' || p.kind === 'mix3')) {
+          powerBonus = smallGem;
         } else if (comp.powerType === 'first_try_bonus' && isFirstTry) {
-          powerBonus = compLvl + 1;
-        } else if (comp.powerType === 'three_qty_bonus') {
-          powerBonus = ['add3', 'sub3', 'mix3'].includes(p.kind) ? (compLvl + 2) : 1;
+          powerBonus = smallGem;
+        } else if (comp.powerType === 'three_qty_bonus' && ['add3', 'sub3', 'mix3'].includes(p.kind)) {
+          powerBonus = smallGem + 1;
         } else if (comp.powerType === 'lucky_gems') {
-          powerBonus = randInt(1, compLvl + 2);
+          powerBonus = randInt(1, smallGem + 1);
         } else if (comp.powerType === 'legend_trex') {
-          powerBonus = compLvl + 2;
+          powerBonus = smallGem + 1;
+        } else if (comp.powerType === 'legend_dragon') {
+          powerBonus = smallGem + 2;
         }
 
         gemsEarned += powerBonus;
@@ -3735,6 +3934,7 @@
 
       const comp = getAnimalById(state.activeAnimal);
       const compLvl = getAnimalLevel(state.activeAnimal);
+      const worldObj = WORLDS.find(w => w.id === session.worldId) || WORLDS[0];
 
       // Stars awarded for mission (1 to 3) + Panda bonus!
       const starsEarned = session.missionPerfects >= 5 ? 3 : session.missionPerfects >= 3 ? 2 : 1;
@@ -3744,26 +3944,27 @@
         addedStars = starsEarned - prevBest;
         state.worldStars[session.worldId] = starsEarned;
       } else {
-        addedStars = 1; // Always give +1 bonus star for replaying!
+        addedStars = 1;
       }
       const pandaStarBonus = comp.powerType === 'star_bonus' ? 1 : 0;
       state.stars += (addedStars + pandaStarBonus);
 
-      // Gems: base + perfects + permanent Star Road boost + Hippo/Panda companion bonus!
-      let bonusGems = 15 + session.missionPerfects * 3;
+      // Gems: scaled by world complexity (6..14) + perfects (+1 each) + Star Road + Companion
+      let bonusGems = (worldObj.chestBase || 6) + session.missionPerfects;
       const starBoost = getPermanentChestBonus();
       let compChestGems = 0;
-      if (comp.powerType === 'chest_bonus') compChestGems = 4 + compLvl * 2;
-      if (comp.powerType === 'star_bonus') compChestGems = compLvl * 2;
+      if (comp.powerType === 'chest_bonus') compChestGems = 2 + compLvl;
+      if (comp.powerType === 'star_bonus') compChestGems = Math.ceil(compLvl / 2);
       bonusGems += starBoost + compChestGems;
 
       state.gems += bonusGems;
       state.chestsOpened++;
 
-      // Unlock a new Wild Animal automatically (excluding starExclusive animals like T-Rex)
+      // Rescue a free animal every 3rd chest so pacing stays exciting and gems stay valuable!
       const lockedAnimals = ANIMALS.filter(a => !a.starExclusive && !state.unlockedAnimals.includes(a.id));
       let newlyUnlockedAnimal = null;
-      if (lockedAnimals.length > 0) {
+      const chestsUntilFreeRescue = 3 - (state.chestsOpened % 3);
+      if (lockedAnimals.length > 0 && state.chestsOpened % 3 === 0) {
         newlyUnlockedAnimal = lockedAnimals[0];
         state.unlockedAnimals.push(newlyUnlockedAnimal.id);
         state.animalLevels[newlyUnlockedAnimal.id] = 1;
@@ -3777,9 +3978,9 @@
 
       const readyStarRewards = getUnclaimedStarRewardsCount();
       let extraNotes = [];
-      if (compChestGems > 0) extraNotes.push(`${comp.emoji} +${compChestGems} 💎 por poder`);
-      if (pandaStarBonus > 0) extraNotes.push(`🐼 +1 ⭐ estrella extra`);
-      if (starBoost > 0) extraNotes.push(`⭐ +${starBoost} 💎 por Rango`);
+      if (compChestGems > 0) extraNotes.push(`${comp.emoji} +${compChestGems} 💎 poder`);
+      if (pandaStarBonus > 0) extraNotes.push(`🐼 +1 ⭐ extra`);
+      if (starBoost > 0) extraNotes.push(`⭐ +${starBoost} 💎 rango`);
 
       let rewardHtml = `
         <div style="font-size:1.7rem;letter-spacing:4px;">${'⭐'.repeat(starsEarned)}</div>
@@ -3791,14 +3992,16 @@
       if (newlyUnlockedAnimal) {
         rewardHtml += `
           <div style="margin-top:6px;padding:12px 16px;background:#ECFDF5;border:3px solid #6EE7B7;border-radius:18px;width:100%;">
-            <div style="font-size:0.85rem;font-weight:900;color:#065F46;text-transform:uppercase;">🎉 ¡Nuevo Compañero Rescatado!</div>
-            <div style="font-size:3.2rem;margin:4px 0;">${newlyUnlockedAnimal.emoji}</div>
+            <div style="font-size:0.85rem;font-weight:900;color:#065F46;text-transform:uppercase;">🎉 ¡Cofre Salvaje — Nuevo Compañero!</div>
+            <div style="width:120px;height:105px;margin:4px auto;">${renderCompanionSVG(newlyUnlockedAnimal.id, emptyOutfit(), 'happy')}</div>
             <div style="font-size:1.15rem;font-weight:900;color:var(--jungle-deep);">${newlyUnlockedAnimal.name}</div>
             <div style="font-size:0.82rem;font-weight:900;color:#92400E;margin-top:4px;">⚡ ${newlyUnlockedAnimal.powerName}: ${getAnimalPowerSummary(newlyUnlockedAnimal, 1)}</div>
           </div>
         `;
+      } else if (lockedAnimals.length > 0) {
+        rewardHtml += `<div style="font-weight:800;font-size:0.9rem;color:var(--jungle-main);">🐾 Faltan <strong>${chestsUntilFreeRescue}</strong> ${chestsUntilFreeRescue === 1 ? 'cofre' : 'cofres'} para rescatar un amigo gratis, ¡o rescata uno con tus 💎 en Mi Santuario!</div>`;
       } else {
-        rewardHtml += `<div style="font-weight:800;color:var(--jungle-main);">¡Usa tus gemas para subir de nivel a tus animales y vestirlos en Mi Santuario! 🍌🎩</div>`;
+        rewardHtml += `<div style="font-weight:800;color:var(--jungle-main);">¡Usa tus gemas para subir de nivel a tus animales y combinar prendas en Mi Santuario! 🍌🎩</div>`;
       }
 
       document.getElementById('chestRewardContent').innerHTML = rewardHtml;
@@ -3864,17 +4067,16 @@
         const lvl = getAnimalLevel(a.id);
         const isMax = lvl >= MAX_ANIMAL_LEVEL;
         const isActive = state.activeAnimal === a.id;
-        const acc = ACCESSORIES.find(x => x.id === getAnimalAccessory(a.id));
-        const accBadge = acc && acc.id !== 'none' ? `<span style="position:absolute;top:10px;right:10px;font-size:1.25rem;" title="${acc.name}">${acc.icon}</span>` : '';
+        const outfit = getAnimalOutfit(a.id);
         const hearts = '❤️'.repeat(lvl) + '🤍'.repeat(MAX_ANIMAL_LEVEL - lvl);
-        const feedCost = 5 + (lvl - 1) * 5;
+        const feedCost = getFeedCost(lvl);
+        const avatarSvg = renderCompanionSVG(a.id, unlocked ? outfit : emptyOutfit(), 'normal', !unlocked);
 
         if (unlocked) {
           const cardCls = `animal-card unlocked ${isActive ? 'active-companion' : ''} ${isMax ? 'legendary' : ''}`;
           return `
             <div class="${cardCls}" id="acard_${a.id}" onclick="interactAnimal('${a.id}')">
-              ${accBadge}
-              <div class="animal-emoji-stage">${a.emoji}</div>
+              <div style="width:116px;height:106px;margin:0 auto;">${avatarSvg}</div>
               <h3 class="animal-name">${a.name}</h3>
               <div class="hearts-row" title="Nivel de poder">${hearts} <small style="font-weight:900;color:${isMax ? '#B45309' : 'var(--text-muted)'};">${isMax ? '✨ MAX' : `Nv.${lvl}`}</small></div>
               <div class="power-tag">⚡ <strong>${a.powerName}:</strong> ${getAnimalPowerSummary(a, lvl)}</div>
@@ -3895,7 +4097,7 @@
         } else if (a.starExclusive) {
           return `
             <div class="animal-card locked">
-              <div class="animal-emoji-stage">${a.emoji}</div>
+              <div style="width:116px;height:106px;margin:0 auto;">${avatarSvg}</div>
               <h3 class="animal-name">${a.name}</h3>
               <div class="power-tag">⚡ <strong>${a.powerName}:</strong> ${getAnimalPowerSummary(a, 1)}</div>
               <div class="animal-fact">Exclusivo al juntar <strong>${a.starExclusive} ⭐</strong> en Premios Estrellas.</div>
@@ -3907,10 +4109,10 @@
         } else {
           return `
             <div class="animal-card locked">
-              <div class="animal-emoji-stage">${a.emoji}</div>
+              <div style="width:116px;height:106px;margin:0 auto;">${avatarSvg}</div>
               <h3 class="animal-name">${a.name}</h3>
               <div class="power-tag">⚡ <strong>${a.powerName}:</strong> ${getAnimalPowerSummary(a, 1)}</div>
-              <div class="animal-fact">Rescátalo abriendo Cofres del Tesoro o con gemas.</div>
+              <div class="animal-fact">Rescátalo con gemas o abriendo cada 3 Cofres del Tesoro.</div>
               <button class="btn-3d btn-blue" style="width:100%;padding:8px 10px;font-size:0.86rem;" onclick="buyAnimal('${a.id}')">
                 🔓 Rescatar (${a.cost} 💎)
               </button>
@@ -3961,7 +4163,7 @@
         showToast(`🌟 ¡${a.name} ya tiene su poder al máximo!`);
         return;
       }
-      const feedCost = 5 + (curLvl - 1) * 5;
+      const feedCost = getFeedCost(curLvl);
       if (state.gems < feedCost) {
         showToast(`Necesitas ${feedCost} 💎 para subir a ${a.name} a Nv.${curLvl + 1}.`);
         return;
@@ -3973,7 +4175,7 @@
       launchConfetti(45);
       renderSanctuary();
       updateAllCocoAvatars('happy');
-      showToast(`🍌 ¡${a.name} subió a Nv.${curLvl + 1}! Nuevo poder: ${getAnimalPowerSummary(a, curLvl + 1)}`);
+      showToast(`🍌 ¡${a.name} subió a Nv.${curLvl + 1}! Poder: ${getAnimalPowerSummary(a, curLvl + 1)}`);
     }
 
     function buyAnimal(id) {
@@ -3992,7 +4194,7 @@
       launchConfetti(70);
       renderSanctuary();
       updateAllCocoAvatars('happy');
-      showToast(`🎉 ¡Rescataste a ${a.name} y ya es tu compañero! ${a.emoji}`);
+      showToast(`🎉 ¡Rescataste a ${a.name} y ya es tu compañero!`);
     }
 
     function selectWardrobeAnimal(id) {
@@ -4001,15 +4203,30 @@
       renderWardrobe();
     }
 
+    function selectWardrobeSlot(slotId) {
+      playTapSound();
+      wardrobeSelectedSlot = slotId;
+      renderWardrobe();
+    }
+
+    function clearAnimalOutfit() {
+      playTapSound();
+      const targetId = wardrobeSelectedAnimal || state.activeAnimal || 'cocodrilo';
+      state.animalOutfits[targetId] = emptyOutfit();
+      saveState();
+      renderWardrobe();
+      renderSanctuary();
+      showToast('🧹 Prendas quitadas. ¡Listo para un nuevo estilo!');
+    }
+
     function renderWardrobe() {
       if (!wardrobeSelectedAnimal || !state.unlockedAnimals.includes(wardrobeSelectedAnimal)) {
         wardrobeSelectedAnimal = state.activeAnimal || 'cocodrilo';
       }
       const targetAnimal = getAnimalById(wardrobeSelectedAnimal);
-      const currentAccId = getAnimalAccessory(wardrobeSelectedAnimal);
-      const eq = ACCESSORIES.find(x => x.id === currentAccId) || ACCESSORIES[0];
+      const outfit = getAnimalOutfit(wardrobeSelectedAnimal);
 
-      // Strip of unlocked animals to dress ANY of them
+      // Strip of unlocked animals
       const stripEl = document.getElementById('wardrobeAnimalStrip');
       if (stripEl) {
         stripEl.innerHTML = state.unlockedAnimals.map(aid => {
@@ -4019,20 +4236,37 @@
         }).join('');
       }
 
+      // Slot category tabs (head, eyes, neck, back)
+      const slotTabsEl = document.getElementById('wardrobeSlotTabs');
+      if (slotTabsEl) {
+        slotTabsEl.innerHTML = OUTFIT_SLOTS.map(s => {
+          const isSel = s.id === wardrobeSelectedSlot;
+          const hasItem = !!outfit[s.id];
+          return `<button class="btn-3d ${isSel ? 'btn-blue' : 'btn-cream'}" style="padding:8px 14px;font-size:0.88rem;" onclick="selectWardrobeSlot('${s.id}')">${s.label}${hasItem ? ' ✓' : ''}</button>`;
+        }).join('');
+      }
+
+      const wornItems = OUTFIT_SLOTS
+        .map(s => ACCESSORIES.find(x => x.id === outfit[s.id]))
+        .filter(Boolean);
+
       const nameEl = document.getElementById('wardrobeAnimalName');
-      if (nameEl) nameEl.textContent = `${targetAnimal.emoji} ${targetAnimal.name}`;
-      document.getElementById('wardrobeEquippedLabel').textContent = `Puesto: ${eq.icon} ${eq.name}`;
+      if (nameEl) nameEl.textContent = targetAnimal.name;
+      document.getElementById('wardrobeEquippedLabel').textContent = wornItems.length
+        ? `Puesto (${wornItems.length}/4): ${wornItems.map(i => i.icon + ' ' + i.name).join(' · ')}`
+        : 'Sin prendas — ¡combina hasta 4 a la vez!';
       updateAllCocoAvatars('happy');
 
+      const slotItems = ACCESSORIES.filter(item => item.slot === wardrobeSelectedSlot);
       const grid = document.getElementById('wardrobeItemsGrid');
-      grid.innerHTML = ACCESSORIES.map(item => {
+      grid.innerHTML = slotItems.map(item => {
         const owned = state.unlockedAccessories.includes(item.id);
-        const equipped = currentAccId === item.id;
+        const equipped = outfit[item.slot] === item.id;
         let btnHtml = '';
         if (equipped) {
-          btnHtml = `<button class="btn-3d btn-cream" style="width:100%;padding:8px;" disabled>✅ Puesto</button>`;
+          btnHtml = `<button class="btn-3d btn-coral" style="width:100%;padding:8px;" onclick="toggleOutfitItem('${item.id}')">✖️ Quitar</button>`;
         } else if (owned) {
-          btnHtml = `<button class="btn-3d btn-green" style="width:100%;padding:8px;" onclick="equipAccessory('${item.id}')">👕 Poner a ${targetAnimal.name.split(' ')[0]}</button>`;
+          btnHtml = `<button class="btn-3d btn-green" style="width:100%;padding:8px;" onclick="toggleOutfitItem('${item.id}')">👕 Poner</button>`;
         } else if (item.starExclusive) {
           btnHtml = `<button class="btn-3d btn-blue" style="width:100%;padding:8px;font-size:0.84rem;" onclick="switchSanctuaryTab('stars')">⭐ Premio de ${item.starExclusive} ⭐</button>`;
         } else {
@@ -4060,25 +4294,31 @@
       const targetId = wardrobeSelectedAnimal || state.activeAnimal || 'cocodrilo';
       state.gems -= item.cost;
       if (!state.unlockedAccessories.includes(id)) state.unlockedAccessories.push(id);
-      state.animalAccessories[targetId] = id;
-      if (targetId === 'cocodrilo') state.equippedAccessory = id;
+      const outfit = getAnimalOutfit(targetId);
+      outfit[item.slot] = id;
       saveState();
       playChestFanfare();
       launchConfetti(60);
       renderWardrobe();
+      renderSanctuary();
       const targetAnimal = getAnimalById(targetId);
       showToast(`🎉 ¡${targetAnimal.name} ahora lleva ${item.name}!`);
     }
 
-    function equipAccessory(id) {
+    function toggleOutfitItem(id) {
       playTapSound();
+      const item = ACCESSORIES.find(x => x.id === id);
+      if (!item) return;
       const targetId = wardrobeSelectedAnimal || state.activeAnimal || 'cocodrilo';
-      state.animalAccessories[targetId] = id;
-      if (targetId === 'cocodrilo') state.equippedAccessory = id;
+      const outfit = getAnimalOutfit(targetId);
+      if (outfit[item.slot] === id) {
+        outfit[item.slot] = null;
+      } else {
+        outfit[item.slot] = id;
+      }
       saveState();
       renderWardrobe();
-      const targetAnimal = getAnimalById(targetId);
-      showToast(`${targetAnimal.emoji} ¡Qué genial se ve ${targetAnimal.name}!`);
+      renderSanctuary();
     }
 
     function renderStarRoad() {
@@ -4134,7 +4374,7 @@
       state.claimedStarRewards.push(id);
       if (m.rewardType === 'gems') {
         state.gems += m.amount;
-      } else if (m.rewardType === 'accessory') {
+      } else if (m.rewardType === 'accessory' || m.rewardType === 'acc_boost') {
         if (!state.unlockedAccessories.includes(m.accessoryId)) {
           state.unlockedAccessories.push(m.accessoryId);
         }
@@ -4143,7 +4383,7 @@
           state.unlockedAccessories.push(m.accessoryId);
         }
         state.gems += m.amount;
-      } else if (m.rewardType === 'animal') {
+      } else if (m.rewardType === 'animal' || m.rewardType === 'animal_boost') {
         if (!state.unlockedAnimals.includes(m.animalId)) {
           state.unlockedAnimals.push(m.animalId);
           state.animalLevels[m.animalId] = 1;
@@ -4203,10 +4443,10 @@
       const labels = {
         add2_easy: '➕ Sumas 2 dígitos (sin llevar)',
         sub2_easy: '➖ Restas 2 dígitos (sin prestar)',
-        add3: '➕ Sumas llevando y 3 cantidades',
-        sub3: '➖ Restas prestando y 3 cantidades',
-        mul: '✖️ Multiplicación visual',
-        div: '➗ División exacta (reparto)'
+        add2_carry: '➕ Sumas 2 dígitos (llevando)',
+        sub2_borrow: '➖ Restas 2 dígitos (prestando)',
+        add3: '➕ Sumas de 3 cantidades',
+        sub3: '➖ Restas y retos de 3 cantidades'
       };
 
       const barsEl = document.getElementById('skillBarsContainer');
@@ -4228,7 +4468,6 @@
       }).join('');
 
       document.getElementById('setAutoHint').classList.toggle('on', !!state.settings.autoHint);
-      document.getElementById('setIncludeMulDiv').classList.toggle('on', !!state.settings.includeMulDiv);
       document.getElementById('setDefaultKeypad').classList.toggle('on', !!state.settings.defaultKeypad);
     }
 
