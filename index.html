@@ -1339,7 +1339,7 @@
 
     .scratch-canvas-wrap {
       width: 100%;
-      height: 300px;
+      height: 360px;
       border-radius: 14px;
       border: 2px dashed #BFDBFE;
       background: #F8FAFC;
@@ -1350,7 +1350,7 @@
     }
 
     .scratch-canvas-wrap.expanded {
-      height: 440px;
+      height: 560px;
     }
 
     #scratchCanvas {
@@ -1982,7 +1982,7 @@
         <div class="hud-controls">
           <span id="streakBadge" class="streak-badge" style="display:none;">🔥 <span id="streakNum">0</span></span>
           <button id="inputModeBtn" class="hud-toggle-btn" onclick="toggleInputMode()">🎯 Opciones</button>
-          <button id="scratchToggleBtn" class="hud-toggle-btn" onclick="toggleScratchpad()">✏️ Pizarra</button>
+          <button id="scratchToggleBtn" class="hud-toggle-btn active" onclick="toggleScratchpad()">✏️ Pizarra</button>
         </div>
       </div>
 
@@ -2021,8 +2021,8 @@
             <div id="visualHintBox" class="visual-hint-box"></div>
           </div>
 
-          <!-- S-PEN / FINGER SCRATCHPAD -->
-          <div id="scratchpadDrawer" class="scratchpad-drawer">
+          <!-- S-PEN / FINGER SCRATCHPAD (OPEN & EXPANDED BY DEFAULT) -->
+          <div id="scratchpadDrawer" class="scratchpad-drawer open">
             <div class="scratch-toolbar">
               <span class="scratch-title">✏️ Pizarra (Dedo o S-Pen)</span>
               <div class="pen-colors">
@@ -2030,12 +2030,12 @@
                 <button class="color-dot" style="background:#0F766E;" onclick="setPenColor('#0F766E', this)" title="Verde Decenas"></button>
                 <button class="color-dot" style="background:#D97706;" onclick="setPenColor('#D97706', this)" title="Naranja Unidades"></button>
                 <button class="color-dot" style="background:#DC2626;" onclick="setPenColor('#DC2626', this)" title="Rojo"></button>
-                <button id="scratchSizeBtn" class="hud-toggle-btn" style="padding:5px 10px;" onclick="toggleScratchpadSize()" title="Hacer más grande">⛶ Grande</button>
+                <button id="scratchSizeBtn" class="hud-toggle-btn" style="padding:5px 10px;" onclick="toggleScratchpadSize()" title="Cambiar tamaño">⛶ Normal</button>
                 <button class="hud-toggle-btn" style="padding:5px 10px;" onclick="undoScratchpad()" title="Deshacer último trazo">↩️ Deshacer</button>
                 <button class="hud-toggle-btn" style="padding:5px 10px;" onclick="clearScratchpad(true)" title="Limpiar pizarra">🧹 Borrar</button>
               </div>
             </div>
-            <div class="scratch-canvas-wrap">
+            <div class="scratch-canvas-wrap expanded">
               <canvas id="scratchCanvas"></canvas>
             </div>
           </div>
@@ -4505,6 +4505,10 @@
         updateAllCocoAvatars('normal');
       } else if (viewName === 'game') {
         document.getElementById('viewGame').classList.add('active');
+        requestAnimationFrame(() => {
+          const canvas = document.getElementById('scratchCanvas');
+          if (canvas && canvas._resize) canvas._resize();
+        });
       } else if (viewName === 'sanctuary') {
         document.getElementById('viewSanctuary').classList.add('active');
         document.getElementById('navSanctuary').classList.add('active');
