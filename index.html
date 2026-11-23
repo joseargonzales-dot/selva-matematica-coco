@@ -1981,7 +1981,6 @@
 
         <div class="hud-controls">
           <span id="streakBadge" class="streak-badge" style="display:none;">🔥 <span id="streakNum">0</span></span>
-          <button id="inputModeBtn" class="hud-toggle-btn" onclick="toggleInputMode()">🎯 Opciones</button>
           <button id="scratchToggleBtn" class="hud-toggle-btn active" onclick="toggleScratchpad()">✏️ Pizarra</button>
         </div>
       </div>
@@ -1996,7 +1995,7 @@
           </div>
 
           <div class="coco-panel-footer">
-            <div id="companionPowerPill" class="companion-power-pill">⚡ Poder: +2 💎 en sumas</div>
+            <div id="companionPowerPill" class="companion-power-pill">⚡ Poder: +1 💎 en sumas</div>
             <button id="usePowerBtn" class="btn-3d btn-blue hint-btn" style="display:none;" onclick="useActiveCompanionPower()">
               ⚡ Usar Poder
             </button>
@@ -2040,11 +2039,8 @@
             </div>
           </div>
 
-          <!-- ANSWER AREA: CHOICES -->
-          <div id="choicesGrid" class="choices-grid"></div>
-
-          <!-- ANSWER AREA: KEYPAD -->
-          <div id="keypadWrap" class="keypad-wrap">
+          <!-- ANSWER AREA: NUMERIC KEYPAD ONLY -->
+          <div id="keypadWrap" class="keypad-wrap active">
             <div class="keypad-grid">
               <button class="key-btn" onclick="pressKey('1')">1</button>
               <button class="key-btn" onclick="pressKey('2')">2</button>
@@ -2146,13 +2142,6 @@
                 <small>Abre los bloques Base 10 si se equivoca una vez</small>
               </div>
               <button id="setAutoHint" class="toggle-switch on" onclick="toggleSetting('autoHint')"></button>
-            </div>
-            <div class="setting-card">
-              <div>
-                <label>Modo Teclado Numérico por defecto</label>
-                <small>En lugar de 4 opciones, escribe la respuesta (+1 💎 extra)</small>
-              </div>
-              <button id="setDefaultKeypad" class="toggle-switch" onclick="toggleSetting('defaultKeypad')"></button>
             </div>
             <div class="setting-card">
               <div>
@@ -2500,18 +2489,18 @@
         case 'add_bonus': return `+${smallGem} 💎 extra en sumas`;
         case 'sub_bonus': return `+${smallGem} 💎 extra en restas`;
         case 'streak_shield': return `Protege tu racha 🔥 ${l} ${l === 1 ? 'vez' : 'veces'} por misión`;
-        case 'eliminate': return `Elimina 1 opción falsa (${l} ${l === 1 ? 'uso' : 'usos'} por misión)`;
+        case 'eliminate': return `Revela el 1er dígito (${l} ${l === 1 ? 'uso' : 'usos'} por misión)`;
         case 'hint_bonus': return `+${smallGem + 1} 💎 extra al acertar usando pista 💡`;
         case 'streak_gems': return `+${smallGem} 💎 extra en cada acierto con racha 🔥`;
-        case 'eliminate_sub': return `Elimina 1 falsa (${l} ${l === 1 ? 'uso' : 'usos'}) y +${smallGem} 💎 en restas`;
+        case 'eliminate_sub': return `Revela 1er dígito (${l} ${l === 1 ? 'uso' : 'usos'}) y +${smallGem} 💎 en restas`;
         case 'chest_bonus': return `+${2 + l} 💎 extra al abrir cada Cofre 🎁`;
         case 'first_try_bonus': return `+${smallGem} 💎 extra al acertar al 1er intento`;
         case 'three_qty_bonus': return `+${smallGem + 1} 💎 extra en retos de 3 cantidades`;
         case 'streak_shield_plus': return `Protege tu racha 🔥 ${l + 1} veces por misión`;
         case 'lucky_gems': return `Premio sorpresa de +1 a +${smallGem + 1} 💎 por reto`;
         case 'star_bonus': return `+1 ⭐ estrella extra y +${smallGem} 💎 en Cofres`;
-        case 'legend_trex': return `Elimina 1 falsa (${l} ${l === 1 ? 'uso' : 'usos'}) y +${smallGem + 1} 💎 siempre`;
-        case 'legend_dragon': return `Elimina 1 falsa (${l} ${l === 1 ? 'uso' : 'usos'}) y +${smallGem + 2} 💎 siempre`;
+        case 'legend_trex': return `Revela 1er dígito (${l} ${l === 1 ? 'uso' : 'usos'}) y +${smallGem + 1} 💎 siempre`;
+        case 'legend_dragon': return `Revela 1er dígito (${l} ${l === 1 ? 'uso' : 'usos'}) y +${smallGem + 2} 💎 siempre`;
         default: return `+1 💎 extra`;
       }
     }
@@ -3274,7 +3263,7 @@
       session.step = 0;
       session.missionPerfects = 0;
       session.powerUsesLeft = getMissionPowerUses(state.activeAnimal);
-      session.inputMode = state.settings.defaultKeypad ? 'keypad' : 'choices';
+      session.inputMode = 'keypad';
       session.format = 'vertical';
       switchView('game');
       loadNextProblem();
@@ -3291,13 +3280,13 @@
       const lvl = getAnimalLevel(state.activeAnimal);
       const pill = document.getElementById('companionPowerPill');
       const btn = document.getElementById('usePowerBtn');
-      const isEliminate = ['eliminate', 'eliminate_sub', 'legend_trex', 'legend_dragon'].includes(animal.powerType);
+      const isRevealDigit = ['eliminate', 'eliminate_sub', 'legend_trex', 'legend_dragon'].includes(animal.powerType);
       const isShield = ['streak_shield', 'streak_shield_plus'].includes(animal.powerType);
 
       if (pill) {
         if (isShield) {
           pill.textContent = `🛡️ ${animal.powerName} (Nv.${lvl}): ${session.powerUsesLeft} escudos`;
-        } else if (isEliminate) {
+        } else if (isRevealDigit) {
           pill.textContent = `⚡ ${animal.powerName} (Nv.${lvl}): ${session.powerUsesLeft} usos`;
         } else {
           pill.textContent = `⚡ ${animal.powerName} (Nv.${lvl}): ${getAnimalPowerSummary(animal, lvl)}`;
@@ -3305,12 +3294,12 @@
       }
 
       if (btn) {
-        if (isEliminate && session.inputMode === 'choices') {
+        if (isRevealDigit) {
           btn.style.display = 'inline-flex';
           btn.disabled = session.powerUsesLeft <= 0 || session.locked;
           btn.style.opacity = session.powerUsesLeft > 0 ? '1' : '0.55';
           btn.textContent = session.powerUsesLeft > 0
-            ? `⚡ ${animal.powerName}: Quitar 1 falsa (${session.powerUsesLeft})`
+            ? `⚡ ${animal.powerName}: Ver 1er dígito (${session.powerUsesLeft})`
             : '⚡ Poder usado en esta misión';
         } else {
           btn.style.display = 'none';
@@ -3319,20 +3308,16 @@
     }
 
     function useActiveCompanionPower() {
-      if (session.locked || session.powerUsesLeft <= 0 || session.inputMode !== 'choices') return;
-      const buttons = Array.from(document.querySelectorAll('#choicesGrid .choice-btn'))
-        .filter(b => !b.disabled && parseInt(b.dataset.val, 10) !== session.problem.answer);
-      if (buttons.length === 0) {
-        showToast('¡Ya solo queda la respuesta correcta! 🌟');
-        return;
-      }
-      const victim = buttons[randInt(0, buttons.length - 1)];
-      victim.classList.add('wrong');
-      victim.disabled = true;
+      if (session.locked || session.powerUsesLeft <= 0 || !session.problem) return;
+      const ansStr = String(session.problem.answer);
+      const firstDigit = ansStr[0];
+      const blanks = '_'.repeat(Math.max(0, ansStr.length - 1));
+      session.keypadValue = firstDigit;
       session.powerUsesLeft--;
       playSuccessSound();
+      renderProblemDisplay();
       const animal = getAnimalById(state.activeAnimal);
-      setCocoSpeech(`⚡ ¡${animal.name} usó ${animal.powerName} y quitó una opción falsa!`, 'happy');
+      setCocoSpeech(`⚡ ¡${animal.name} usó ${animal.powerName}! El resultado empieza con ${firstDigit}${blanks}`, 'happy');
       updateCompanionPowerUI();
       persistActiveMission();
     }
@@ -3456,33 +3441,9 @@
     }
 
     function renderAnswerControls() {
-      const choicesGrid = document.getElementById('choicesGrid');
+      session.inputMode = 'keypad';
       const keypadWrap = document.getElementById('keypadWrap');
-      const modeBtn = document.getElementById('inputModeBtn');
-
-      if (session.inputMode === 'choices') {
-        modeBtn.textContent = '🎯 Opciones';
-        choicesGrid.style.display = 'grid';
-        keypadWrap.classList.remove('active');
-        choicesGrid.innerHTML = session.problem.choices.map(val => `
-          <button class="choice-btn" data-val="${val}" onclick="checkChoiceAnswer(${val}, this)">
-            ${val}
-          </button>
-        `).join('');
-      } else {
-        modeBtn.textContent = '🔢 Teclado (+1 💎)';
-        choicesGrid.style.display = 'none';
-        keypadWrap.classList.add('active');
-      }
-    }
-
-    function toggleInputMode() {
-      playTapSound();
-      session.inputMode = session.inputMode === 'choices' ? 'keypad' : 'choices';
-      session.keypadValue = '';
-      renderProblemDisplay();
-      renderAnswerControls();
-      updateCompanionPowerUI();
+      if (keypadWrap) keypadWrap.classList.add('active');
     }
 
     function pressKey(digit) {
@@ -3508,11 +3469,6 @@
       }
       const val = parseInt(session.keypadValue, 10);
       evaluateAnswer(val, null);
-    }
-
-    function checkChoiceAnswer(val, btnEl) {
-      if (session.locked) return;
-      evaluateAnswer(val, btnEl);
     }
 
     function evaluateAnswer(val, btnEl) {
@@ -3541,7 +3497,6 @@
         // Complexity-scaled gem economy: harder math = bigger reward!
         const baseForProblem = p.baseGems || 2;
         let gemsEarned = isFirstTry ? baseForProblem : Math.max(1, Math.floor(baseForProblem / 2));
-        if (session.inputMode === 'keypad') gemsEarned += 1;
         if (session.streak >= 3) gemsEarned += 1;
 
         // Balanced Companion Power Gem Bonuses
@@ -4468,7 +4423,6 @@
       }).join('');
 
       document.getElementById('setAutoHint').classList.toggle('on', !!state.settings.autoHint);
-      document.getElementById('setDefaultKeypad').classList.toggle('on', !!state.settings.defaultKeypad);
     }
 
     function toggleSetting(key) {
