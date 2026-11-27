@@ -224,10 +224,26 @@
       color: #92400E;
     }
 
-    .pill-stars {
+    .pill-xp {
       background: #E0F2FE;
       border-color: #7DD3FC;
       color: #0369A1;
+      gap: 8px;
+    }
+
+    .top-xp-mini-track {
+      width: 54px;
+      height: 8px;
+      background: rgba(3, 105, 161, 0.18);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .top-xp-mini-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #0284C7, #22C55E);
+      border-radius: 999px;
+      transition: width 0.35s ease;
     }
 
     .icon-btn {
@@ -786,8 +802,9 @@
       width: 100%;
       height: 100%;
       overflow: visible;
+      filter: drop-shadow(0 10px 14px rgba(0, 0, 0, 0.22));
       transition: transform 0.25s cubic-bezier(0.2, 0.9, 0.3, 1.3);
-      animation: cocoFloat 3.2s ease-in-out infinite;
+      animation: cocoFloat 3.6s ease-in-out infinite;
     }
 
     .coco-svg.happy {
@@ -799,8 +816,8 @@
     }
 
     @keyframes cocoFloat {
-      0%, 100% { transform: translateY(0px); }
-      50% { transform: translateY(-6px); }
+      0%, 100% { transform: perspective(600px) translateY(0px) rotateY(-2deg) scale(1); }
+      50% { transform: perspective(600px) translateY(-6px) rotateY(2deg) scale(1.015); }
     }
 
     @keyframes cocoJump {
@@ -1512,104 +1529,142 @@
       background: linear-gradient(180deg, #FFFBEB 0%, #FEF3C7 100%);
     }
 
-    .power-tag {
-      background: #EEF7F0;
-      border: 2px solid #BCE0C2;
-      color: var(--jungle-deep);
-      border-radius: 12px;
-      padding: 6px 8px;
-      font-size: 0.78rem;
-      font-weight: 800;
-      line-height: 1.25;
+    .explorer-xp-card {
+      background: rgba(255, 253, 245, 0.96);
+      border: 2px solid #7DD3FC;
+      border-radius: 16px;
+      padding: 10px 12px;
       width: 100%;
-    }
-
-    .companion-power-pill {
-      background: rgba(255, 253, 245, 0.94);
-      border: 2px solid #FCD34D;
-      color: #92400E;
-      border-radius: 14px;
-      padding: 7px 10px;
-      font-size: 0.82rem;
-      font-weight: 900;
-      text-align: center;
-      width: 100%;
-      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);
-    }
-
-    .star-road-wrap {
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.12);
       display: flex;
       flex-direction: column;
-      gap: 14px;
+      gap: 6px;
     }
 
-    .rank-banner {
-      background: linear-gradient(135deg, #0369A1 0%, #0284C7 60%, #0EA5E9 100%);
+    .explorer-xp-card.hero-variant {
+      background: rgba(255, 255, 255, 0.16);
+      border-color: rgba(255, 255, 255, 0.45);
       color: #FFFFFF;
-      border-radius: var(--radius-md);
-      border-bottom: 6px solid #075985;
-      padding: 16px 20px;
+      margin: 10px 0 14px;
+      max-width: 480px;
+      box-shadow: none;
+    }
+
+    .explorer-xp-top {
       display: flex;
-      align-items: center;
       justify-content: space-between;
-      gap: 14px;
-      flex-wrap: wrap;
-    }
-
-    .star-milestones-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 14px;
-    }
-
-    .milestone-card {
-      background: var(--cream-bg);
-      border: 3px solid #BAE6FD;
-      border-bottom: 6px solid #38BDF8;
-      border-radius: var(--radius-md);
-      padding: 16px;
-      display: flex;
-      flex-direction: column;
       align-items: center;
-      text-align: center;
+      font-size: 0.85rem;
+      font-weight: 900;
+      color: #0369A1;
       gap: 8px;
     }
 
-    .milestone-card.ready {
-      border-color: #F59E0B;
-      border-bottom-color: #B45309;
-      background: #FFFBEB;
-      box-shadow: 0 0 0 4px rgba(251, 191, 36, 0.28);
+    .explorer-xp-card.hero-variant .explorer-xp-top {
+      color: #FFFFFF;
     }
 
-    .milestone-card.claimed {
-      border-color: #86EFAC;
-      border-bottom-color: #22C55E;
-      background: #F0FDF4;
+    .xp-bar-track {
+      width: 100%;
+      height: 12px;
+      background: #E0F2FE;
+      border-radius: 999px;
+      overflow: hidden;
+      border: 1.5px solid #BAE6FD;
     }
 
-    .pill-stars.clickable {
-      cursor: pointer;
-      transition: transform 0.12s ease;
+    .explorer-xp-card.hero-variant .xp-bar-track {
+      background: rgba(0, 0, 0, 0.25);
+      border-color: rgba(255, 255, 255, 0.35);
     }
 
-    .pill-stars.clickable:active {
-      transform: scale(0.95);
+    .xp-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #0EA5E9 0%, #22C55E 100%);
+      border-radius: 999px;
+      transition: width 0.4s cubic-bezier(0.22, 1, 0.36, 1);
     }
 
-    .pill-stars.has-reward {
-      animation: chestPulse 1.4s ease-in-out infinite;
-      background: #FEF3C7;
-      border-color: #F59E0B;
+    .explorer-xp-card.hero-variant .xp-bar-fill {
+      background: linear-gradient(90deg, #FDE047 0%, #22C55E 100%);
+    }
+
+    .explorer-stage-sub {
+      font-size: 0.78rem;
+      font-weight: 800;
+      color: var(--text-mid);
+    }
+
+    .explorer-xp-card.hero-variant .explorer-stage-sub {
+      color: rgba(255, 255, 255, 0.92);
+    }
+
+    .special-xp-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%);
+      border: 2px solid #F59E0B;
       color: #92400E;
+      border-radius: 999px;
+      padding: 4px 12px;
+      font-size: 0.82rem;
+      font-weight: 900;
+      box-shadow: 0 2px 6px rgba(245, 158, 11, 0.25);
+      animation: chestPulse 1.8s ease-in-out infinite;
     }
 
-    @media (max-width: 980px) {
-      .star-milestones-grid { grid-template-columns: repeat(2, 1fr); }
+    .world-special-tag {
+      display: inline-block;
+      background: #FEF3C7;
+      border: 1.5px solid #F59E0B;
+      color: #92400E;
+      border-radius: 999px;
+      padding: 2px 8px;
+      font-size: 0.74rem;
+      font-weight: 900;
     }
 
-    @media (max-width: 780px) {
-      .star-milestones-grid { grid-template-columns: 1fr; }
+    .story-chapter-box {
+      background: #F0FDF4;
+      border: 3px solid #86EFAC;
+      border-radius: 18px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 4px 12px rgba(22, 163, 74, 0.12);
+    }
+
+    .story-scene-visual {
+      width: 100%;
+      height: 118px;
+      display: block;
+    }
+
+    .story-scene-visual svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .story-chapter-caption {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 6px 12px;
+      background: #ECFDF5;
+      border-top: 2px solid #BBF7D0;
+      font-size: 0.84rem;
+      font-weight: 800;
+      color: var(--jungle-deep);
+    }
+
+    .explorer-mini-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
     }
 
     /* =========================================================
@@ -1907,13 +1962,16 @@
         <button id="navResumeGame" class="nav-btn" style="display:none;background:#FEF3C7;color:#92400E;border-bottom-color:#F59E0B;" onclick="resumeActiveMission()">🎮 Volver al Reto (<span id="navResumeStep">1/5</span>)</button>
         <button id="navMap" class="nav-btn active" onclick="switchView('map')">🗺️ Aventura</button>
         <button id="navSanctuary" class="nav-btn" onclick="switchView('sanctuary')">🏕️ Mi Santuario</button>
-        <button id="navParents" class="nav-btn" onclick="openParentsGate()">👨‍👩‍👦 Padres</button>
       </nav>
 
       <div class="status-pills">
         <button id="installPwaBtn" class="nav-btn" style="display:none;background:#DCFCE7;color:#166534;border-bottom-color:#22C55E;padding:8px 12px;font-size:0.86rem;" onclick="promptInstallPWA()">📲 Instalar</button>
         <div class="stat-pill pill-gems" title="Gemas de la selva">💎 <span id="topGems">0</span></div>
-        <button id="starsPillBtn" class="stat-pill pill-stars clickable" onclick="openStarRoad()" title="Ver Camino de Estrellas y premios">⭐ <span id="topStars">0</span></button>
+        <div class="stat-pill pill-xp" title="Nivel y XP de Explorador">
+          <span>🧭 Nv.<span id="topLevel">1</span></span>
+          <div class="top-xp-mini-track"><div id="topXpFill" class="top-xp-mini-fill" style="width:0%;"></div></div>
+          <span style="font-size:0.82rem;"><span id="topXpText">0/100</span> XP</span>
+        </div>
         <button id="soundToggleBtn" class="icon-btn" onclick="toggleSound()" title="Activar o silenciar sonido">🔊</button>
       </div>
     </header>
@@ -1925,16 +1983,26 @@
       <section class="hero-banner">
         <div class="hero-copy">
           <h2>¡Hola, Explorador! 🌿</h2>
-          <p>Elige tu animal favorito, sube su nivel para potenciar sus poderes y junta ⭐ estrellas para desbloquear premios exclusivos.</p>
+          <p>Gana ⚡ XP para subir de nivel y desbloquear retos cada vez más geniales: de sumas fáciles a restas (<strong>Reto Especial ×2 XP</strong>) y operaciones de 3 cantidades.</p>
+          <div class="explorer-xp-card hero-variant">
+            <div class="explorer-xp-top">
+              <span id="heroExplorerTitle">🧭 Nivel 1 · Explorador Curioso</span>
+              <span id="heroXpText">0 / 100 XP</span>
+            </div>
+            <div class="xp-bar-track">
+              <div id="heroXpFill" class="xp-bar-fill" style="width:0%;"></div>
+            </div>
+            <div id="heroStageDesc" class="explorer-stage-sub">Etapa actual: Sumas fáciles y primeros retos de resta (×2 XP)</div>
+          </div>
           <div class="hero-actions">
             <button id="quickPlayBtn" class="btn-3d btn-amber" onclick="startRecommendedMission()">
-              ▶️ ¡Aventura con Coco!
+              ▶️ ¡Aventura Explorador!
+            </button>
+            <button class="btn-3d btn-blue" onclick="startFreePractice(true)">
+              💎 Farmear Gemas (Libre)
             </button>
             <button class="btn-3d btn-cream" onclick="switchView('sanctuary')">
               🦁 Mis Animales (<span id="heroAnimalCount">1</span>/20)
-            </button>
-            <button class="btn-3d btn-blue" onclick="openStarRoad()">
-              ⭐ Premios (<span id="heroRankBadge">Novato</span>)
             </button>
           </div>
         </div>
@@ -1945,26 +2013,11 @@
       </section>
 
       <div class="section-header-row">
-        <h2 class="section-title">🧭 Elige tu Hábitat Salvaje</h2>
-        <span style="font-weight:800;font-size:0.86rem;color:var(--text-mid);">Retos más difíciles = ¡más 💎 gemas! · Sin reloj 💡</span>
+        <h2 class="section-title">📖 Mundos de Historia</h2>
+        <span style="font-weight:800;font-size:0.86rem;color:var(--text-mid);">1 historia por cada animal desbloqueado · Dificultad según tu Nivel de Explorador 🧭</span>
       </div>
 
-      <section id="worldsGrid" class="worlds-grid" aria-label="Mundos matemáticos"></section>
-
-      <section class="custom-bar">
-        <div>
-          <strong style="color:#92400E;font-size:1rem;">🎯 Práctica Rápida por Nivel:</strong>
-          <div style="font-size:0.82rem;font-weight:700;color:#B45309;">Elige exactamente qué quieres entrenar hoy</div>
-        </div>
-        <div class="custom-chips">
-          <button class="chip-btn" onclick="startCustomMission('add2_easy')">➕ Sumas fáciles</button>
-          <button class="chip-btn" onclick="startCustomMission('sub2_easy')">➖ Restas fáciles</button>
-          <button class="chip-btn" onclick="startCustomMission('add2_carry')">➕ Sumas llevando</button>
-          <button class="chip-btn" onclick="startCustomMission('sub2_borrow')">➖ Restas prestando</button>
-          <button class="chip-btn" onclick="startCustomMission('add3')">➕ Sumas 3 cantidades</button>
-          <button class="chip-btn" onclick="startCustomMission('sub3')">➖ Restas 3 cantidades</button>
-        </div>
-      </section>
+      <section id="worldsGrid" class="worlds-grid" aria-label="Mundos de historia"></section>
     </main>
 
     <!-- =========================================================
@@ -1974,10 +2027,10 @@
       <div class="game-hud">
         <div class="hud-left">
           <button class="btn-3d btn-cream" style="padding:8px 14px;font-size:0.9rem;" onclick="switchView('map')">⬅️ Mapa</button>
-          <span id="hudWorldName" class="hud-mission-title">🐊 Río de Coco</span>
+          <span id="hudWorldName" class="hud-mission-title">🐊 Historia de Coco</span>
         </div>
 
-        <div id="steppingStones" class="stepping-stones" aria-label="Progreso de la misión"></div>
+        <div id="steppingStones" class="stepping-stones" aria-label="Progreso de la historia"></div>
 
         <div class="hud-controls">
           <span id="streakBadge" class="streak-badge" style="display:none;">🔥 <span id="streakNum">0</span></span>
@@ -1986,32 +2039,53 @@
       </div>
 
       <div class="arena-grid">
-        <!-- LEFT: COCO THE CROCODILE -->
+        <!-- LEFT: STORY ANIMAL & EXPLORER BOY XP -->
         <aside class="coco-panel">
-          <div id="cocoSpeech" class="speech-bubble">¡Vamos juntos! Puedes usar los bloques de ayuda cuando quieras.</div>
+          <div id="cocoSpeech" class="speech-bubble">¡Vamos juntos! Resuelve la operación para continuar la historia.</div>
 
-          <div class="coco-stage-wrap" onclick="petCoco()" title="¡Toca a Coco!">
+          <div class="coco-stage-wrap" onclick="petCoco()" title="¡Toca al protagonista!">
             <div id="gameCocoContainer" style="width:100%;height:100%;"></div>
           </div>
 
           <div class="coco-panel-footer">
-            <div id="companionPowerPill" class="companion-power-pill">⚡ Poder: +1 💎 en sumas</div>
-            <button id="usePowerBtn" class="btn-3d btn-blue hint-btn" style="display:none;" onclick="useActiveCompanionPower()">
-              ⚡ Usar Poder
-            </button>
+            <div class="explorer-xp-card">
+              <div class="explorer-mini-row">
+                <div id="gameExplorerAvatar" style="width:46px;height:48px;flex-shrink:0;"></div>
+                <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:5px;">
+                  <div class="explorer-xp-top">
+                    <span id="gameExplorerTitle">🧭 Niño Explorador Nv.1</span>
+                    <span id="gameXpText">0/100 XP</span>
+                  </div>
+                  <div class="xp-bar-track">
+                    <div id="gameXpFill" class="xp-bar-fill" style="width:0%;"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
             <button id="hintBtn" class="btn-3d btn-amber hint-btn" onclick="toggleVisualHint()">
               💡 Pista (Bloques)
             </button>
           </div>
         </aside>
 
-        <!-- RIGHT: MATH PROBLEM & INTERACTION -->
+        <!-- RIGHT: STORY CHAPTER, MATH PROBLEM & INTERACTION -->
         <div class="math-panel">
           <div class="problem-header">
-            <span id="problemTypeLabel" class="problem-type-pill">➕ Suma de 2 dígitos</span>
+            <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+              <span id="problemTypeLabel" class="problem-type-pill">➕ Suma de 2 dígitos</span>
+              <span id="specialChallengeBadge" class="special-xp-badge" style="display:none;">🌟 Reto Especial ×2 XP</span>
+            </div>
             <div id="formatSwitch" class="format-switch">
               <button id="fmtVertBtn" class="format-opt active" onclick="setMathFormat('vertical')">Vertical</button>
               <button id="fmtHorizBtn" class="format-opt" onclick="setMathFormat('horizontal')">Horizontal</button>
+            </div>
+          </div>
+
+          <div id="storyChapterBox" class="story-chapter-box">
+            <div id="storySceneVisual" class="story-scene-visual"></div>
+            <div class="story-chapter-caption">
+              <span id="storyChapterText">¡Comienza la aventura!</span>
+              <span id="storyChapterTag" style="color:#15803D;white-space:nowrap;">Escena 1/5</span>
             </div>
           </div>
 
@@ -2061,16 +2135,15 @@
     </section>
 
     <!-- =========================================================
-         VIEW 3: MI SANTUARIO, VESTUARIO Y CAMINO DE ESTRELLAS
+         VIEW 3: MI SANTUARIO Y VESTUARIO
          ========================================================= -->
     <section id="viewSanctuary" class="view-section">
       <div class="section-header-row">
         <div class="sanctuary-tabs">
           <button id="tabAnimalsBtn" class="btn-3d btn-green" style="padding:11px 18px;" onclick="switchSanctuaryTab('animals')">🦁 Mis Animales (<span id="sancAnimalCount">1</span>/20)</button>
           <button id="tabWardrobeBtn" class="btn-3d btn-cream" style="padding:11px 18px;" onclick="switchSanctuaryTab('wardrobe')">🎩 Vestir Animales</button>
-          <button id="tabStarsBtn" class="btn-3d btn-cream" style="padding:11px 18px;" onclick="switchSanctuaryTab('stars')">⭐ Premios Estrellas</button>
         </div>
-        <span id="sanctuarySubtitle" style="font-weight:800;font-size:0.9rem;color:var(--jungle-deep);">¡Elige tu compañero, súbelo de nivel y combínale varias prendas!</span>
+        <span id="sanctuarySubtitle" style="font-weight:800;font-size:0.9rem;color:var(--jungle-deep);">¡Elige tu avatar favorito y combínale hasta 4 prendas!</span>
       </div>
 
       <div id="sanctuaryAnimalsPane" class="sanctuary-grid"></div>
@@ -2089,71 +2162,8 @@
           <div id="wardrobeItemsGrid" class="wardrobe-items-grid"></div>
         </div>
       </div>
-
-      <div id="sanctuaryStarsPane" class="star-road-wrap" style="display:none;">
-        <div id="starRankBanner" class="rank-banner"></div>
-        <div id="starMilestonesGrid" class="star-milestones-grid"></div>
-      </div>
     </section>
 
-    <!-- =========================================================
-         VIEW 4: ZONA DE PADRES
-         ========================================================= -->
-    <section id="viewParents" class="view-section">
-      <div class="parents-panel">
-        <div class="section-header-row">
-          <div>
-            <h2 class="section-title">📊 Progreso de Aprendizaje (Zona Padres)</h2>
-            <p style="margin:4px 0 0;font-size:0.88rem;font-weight:700;color:var(--text-muted);">Seguimiento del niño y configuración pedagógica</p>
-          </div>
-          <button class="btn-3d btn-green" style="padding:10px 18px;" onclick="switchView('map')">⬅️ Volver al Juego</button>
-        </div>
-
-        <div class="stats-summary-grid">
-          <div class="summary-box">
-            <div class="summary-num" id="statSolved">0</div>
-            <div class="summary-label">Retos resueltos</div>
-          </div>
-          <div class="summary-box">
-            <div class="summary-num" id="statAccuracy">0%</div>
-            <div class="summary-label">Aciertos al 1er intento</div>
-          </div>
-          <div class="summary-box">
-            <div class="summary-num" id="statBestStreak">0</div>
-            <div class="summary-label">Mejor racha 🔥</div>
-          </div>
-          <div class="summary-box">
-            <div class="summary-num" id="statChests">0</div>
-            <div class="summary-label">Cofres abiertos 🎁</div>
-          </div>
-        </div>
-
-        <div>
-          <h3 style="margin:0 0 10px;font-size:1.05rem;color:var(--jungle-deep);">Dominio por tipo de operación</h3>
-          <div id="skillBarsContainer" class="skill-bars"></div>
-        </div>
-
-        <div>
-          <h3 style="margin:0 0 10px;font-size:1.05rem;color:var(--jungle-deep);">Ajustes recomendados para 7 años</h3>
-          <div class="settings-list">
-            <div class="setting-card">
-              <div>
-                <label>Ayuda visual automática al fallar</label>
-                <small>Abre los bloques Base 10 si se equivoca una vez</small>
-              </div>
-              <button id="setAutoHint" class="toggle-switch on" onclick="toggleSetting('autoHint')"></button>
-            </div>
-            <div class="setting-card">
-              <div>
-                <label>Reiniciar todo el progreso</label>
-                <small>Borra estadísticas, gemas y animales desbloqueados</small>
-              </div>
-              <button class="btn-3d btn-coral" style="padding:8px 14px;font-size:0.85rem;" onclick="confirmResetProgress()">🗑️ Reiniciar</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
   </div>
 
   <!-- =========================================================
@@ -2180,121 +2190,276 @@
     </div>
   </div>
 
-  <!-- PARENTS GATE MODAL -->
-  <div id="parentsGateModal" class="modal-overlay" role="dialog" aria-modal="true">
-    <div class="modal-card" style="max-width:390px;">
-      <h2 style="margin:0 0 8px;color:var(--jungle-deep);">🔒 Acceso para Padres</h2>
-      <p id="gateQuestionText" style="font-weight:800;color:var(--text-mid);margin:0 0 14px;">Para entrar, resuelve esta multiplicación rápida:</p>
-      <div id="gateMathExpr" style="font-size:2rem;font-weight:900;color:var(--jungle-deep);margin-bottom:14px;">7 × 8 = ?</div>
-      <div id="gateChoices" style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px;"></div>
-      <button class="btn-3d btn-cream" style="padding:10px 20px;" onclick="closeParentsGate()">Cancelar</button>
-    </div>
-  </div>
-
   <div id="toast" class="toast"></div>
 
   <script>
     /* =========================================================
        DATA DEFINITIONS: WORLDS, WILD ANIMALS, COCO ACCESSORIES
        ========================================================= */
-    const WORLDS = [
-      {
-        id: 'rio_coco',
-        num: 1,
-        name: 'Río de Coco',
-        icon: '🐊',
+    const ANIMAL_STORIES = {
+      cocodrilo: {
+        title: 'El Tesoro del Río Esmeralda',
         bg: '#CCFBF1',
-        desc: 'Sumas de 2 dígitos sin llevar',
-        example: '24 + 13',
-        skillKey: 'add2_easy',
-        baseGems: 2,
-        chestBase: 6
+        teaser: 'Coco encuentra un mapa antiguo flotando en el río.',
+        chapters: [
+          'Coco el Cocodrilo vio una botella brillante en la orilla del Río Esmeralda. ¡Resuelve la operación para abrir el mapa secreto!',
+          'El mapa marca un puente de troncos cubierto de musgo. Ayuda a Coco a calcular el peso para cruzar sin mojarse.',
+          'Una tortuga amiga perdió sus piedras de colores en la corriente. ¡Calcula cuántas faltan para seguir adelante!',
+          'Detrás de la cascada hay una cueva iluminada por luciérnagas. Resuelve el acertijo de la puerta de piedra.',
+          '¡Coco llegó al altar del río! Una última operación abrirá el Cofre del Tesoro Esmeralda.'
+        ]
       },
-      {
-        id: 'sabana_leon',
-        num: 2,
-        name: 'Sabana del León',
-        icon: '🦁',
+      leon: {
+        title: 'El Rugido de la Sabana Dorada',
         bg: '#FEF3C7',
-        desc: 'Restas de 2 dígitos sin prestar',
-        example: '47 − 23',
-        skillKey: 'sub2_easy',
-        baseGems: 2,
-        chestBase: 6
+        teaser: 'El León Dorado guía a la manada hacia el gran baobab.',
+        chapters: [
+          'Al amanecer, el León Dorado subió a la Roca del Sol y descubrió huellas misteriosas hacia el viejo baobab.',
+          'El viento borró parte del camino entre los pastizales. Ayuda al León a contar los pasos hasta el oasis.',
+          'Un grupo de suricatas vigías necesita ayuda para repartir sus provisiones antes de seguir el viaje.',
+          'En la sombra del baobab antiguo hay símbolos tallados en la corteza. ¡Descífralos con tu cálculo!',
+          '¡La manada llegó a salvo! Resuelve el último desafío para celebrar bajo las estrellas de la sabana.'
+        ]
       },
-      {
-        id: 'copas_mono',
-        num: 3,
-        name: 'Copas del Mono',
-        icon: '🐒',
+      mono: {
+        title: 'El Festival de las Copas Altas',
         bg: '#DCFCE7',
-        desc: 'Sumas de 2 dígitos llevando',
-        example: '28 + 17',
-        skillKey: 'add2_carry',
-        baseGems: 3,
-        chestBase: 9
+        teaser: 'El Mono Saltarín prepara el gran banquete en los árboles.',
+        chapters: [
+          'El Mono Saltarín encontró lianas gigantes que llevan a la aldea secreta en las copas de la selva.',
+          'Saltando de rama en rama, debe juntar mangos maduros para todos sus amigos del bosque.',
+          'Un tucán mensajero le pide ayuda para contar las invitaciones del festival antes del mediodía.',
+          'Las lianas se enredaron cerca de la plataforma central. ¡Calcula el salto exacto para desenredarlas!',
+          '¡Todo está listo para la fiesta en las alturas! Resuelve esta última cuenta para abrir el cofre de frutas.'
+        ]
       },
-      {
-        id: 'laguna_elefante',
-        num: 4,
-        name: 'Laguna del Elefante',
-        icon: '🐘',
+      elefante: {
+        title: 'La Ruta de la Laguna Azul',
         bg: '#DBEAFE',
-        desc: 'Restas de 2 dígitos prestando',
-        example: '52 − 18',
-        skillKey: 'sub2_borrow',
-        baseGems: 3,
-        chestBase: 9
+        teaser: 'El Elefante Sabio recuerda el camino al manantial oculto.',
+        chapters: [
+          'El Elefante Sabio recordó una antigua leyenda sobre un manantial cristalino escondido tras las colinas.',
+          'Al llegar al primer sendero, debe apartar unos troncos caídos calculando la fuerza exacta.',
+          'En el camino encuentra crías de antílope buscando sombra. ¡Ayúdalas a contar la distancia al agua!',
+          'La neblina cubre las rocas de la laguna. Usa tu mente matemática para guiar los pasos del Elefante.',
+          '¡El agua brilla frente a ustedes! Una operación final revela el tesoro guardado por el manantial.'
+        ]
       },
-      {
-        id: 'selva_jaguar',
-        num: 5,
-        name: 'Selva del Jaguar',
-        icon: '🐆',
+      jaguar: {
+        title: 'La Carrera Nocturna del Jaguar',
         bg: '#FFEDD5',
-        desc: 'Sumas de 3 cantidades (2 dígitos)',
-        example: '15 + 24 + 18',
-        skillKey: 'add3',
-        baseGems: 5,
-        chestBase: 12
+        teaser: 'El Jaguar Veloz sigue el rastro de una estrella fugaz.',
+        chapters: [
+          'Una estrella fugaz cayó en lo profundo de la selva y el Jaguar Veloz salió a buscar dónde aterrizó.',
+          'Cruzó un arroyo saltando sobre piedras planas. ¡Calcula el ritmo de sus saltos!',
+          'Las luciérnagas iluminan tres caminos distintos; solo el cálculo correcto muestra la ruta brillante.',
+          'El Jaguar trepa a un árbol gigante para observar el resplandor dorado entre las hojas.',
+          '¡Encontró el fragmento de estrella! Resuelve el reto final para guardar su luz en el cofre.'
+        ]
       },
-      {
-        id: 'cima_aguila',
-        num: 6,
-        name: 'Cima del Águila',
-        icon: '🦅',
+      aguila: {
+        title: 'Sobre las Nubes de la Cima',
         bg: '#E0E7FF',
-        desc: 'Restas y retos de 3 cantidades',
-        example: '64 − 18 − 15',
-        skillKey: 'sub3',
-        baseGems: 6,
-        chestBase: 14
+        teaser: 'El Águila Real vigila los valles desde las montañas.',
+        chapters: [
+          'El Águila Real desplegó sus alas sobre los picos nevados buscando un nido perdido por el viento.',
+          'Desde lo alto divisó plumas doradas brillando en un cañón profundo. ¡Calcula la altura del descenso!',
+          'Una ráfaga de viento empuja las nubes; ayuda al Águila a mantener el rumbo exacto.',
+          'Al aterrizar en la cornisa, descubre una inscripción antigua en la roca de la montaña.',
+          '¡El nido está a salvo! Completa la última operación para recibir la recompensa de las alturas.'
+        ]
+      },
+      hipo: {
+        title: 'El Baile del Río Tranquilo',
+        bg: '#EDE9FE',
+        teaser: 'El Hipopótamo Feliz organiza una sinfonía de burbujas.',
+        chapters: [
+          'El Hipopótamo Feliz descubrió que sus chapoteos producen notas musicales mágicas en el río.',
+          'Invitó a las ranas del pantano para formar un coro, pero primero deben contar los nenúfares.',
+          'Algunas burbujas se escaparon río abajo; ayuda al Hipopótamo a recuperar el ritmo.',
+          'Juntos construyen un escenario de juncos dorados en medio de la poza tranquila.',
+          '¡La música suena por toda la selva! Resuelve el último compás para abrir el cofre del río.'
+        ]
+      },
+      tigre: {
+        title: 'El Templo de Bambú',
+        bg: '#FFEDD5',
+        teaser: 'El Tigre de Bengala protege los secretos del bosque.',
+        chapters: [
+          'El Tigre de Bengala patrulla el bosque de bambú cuando escucha un eco misterioso.',
+          'Entre la espesura aparece una escalinata de piedra cubierta de enredaderas.',
+          'Para activar las antorchas del templo, el Tigre necesita que calcules la clave numérica.',
+          'Dentro del salón principal, un espejo de agua refleja símbolos luminosos.',
+          '¡El templo reconoce al Explorador! Resuelve la última prueba para abrir el cofre ancestral.'
+        ]
+      },
+      gorila: {
+        title: 'El Guardián de la Montaña Verde',
+        bg: '#E5E7EB',
+        teaser: 'El Gorila Fuerte construye un refugio gigante de hojas.',
+        chapters: [
+          'El Gorila Fuerte encontró un valle lleno de helechos gigantes perfecto para su familia.',
+          'Primero debe reunir ramas resistentes para armar un techo contra la lluvia tropical.',
+          'Unos pequeños pájaros le ayudan a contar cuántas hojas suaves hacen falta para las camas.',
+          'Antes de anochecer, una roca bloquea la entrada del claro. ¡Calcula cómo moverla en equipo!',
+          '¡El refugio quedó increíble! Completa la última cuenta para celebrar con el tesoro del valle.'
+        ]
+      },
+      rino: {
+        title: 'La Muralla del Cañón',
+        bg: '#E2E8F0',
+        teaser: 'El Rinoceronte Guardián protege el paso de la sabana.',
+        chapters: [
+          'El Rinoceronte Guardián escucha un estruendo lejano y corre a revisar el paso del cañón.',
+          'Varias piedras rodaron por la ladera; ayúdale a calcular cuántas debe despejar.',
+          'Una caravana de cebras espera para cruzar con seguridad antes del atardecer.',
+          'El Rinoceronte marca el sendero seguro con su cuerno firme sobre la tierra.',
+          '¡El paso quedó libre! Resuelve el último cálculo para recibir el cofre del guardián.'
+        ]
+      },
+      tucan: {
+        title: 'El Arcoíris de Plumas',
+        bg: '#FEF9C3',
+        teaser: 'El Tucán Tropical lleva mensajes de colores por la selva.',
+        chapters: [
+          'Después de la lluvia, el Tucán Tropical vuela buscando los colores del arcoíris escondidos en flores.',
+          'Recoge polen dorado de las orquídeas más altas calculando cada vuelo.',
+          'Un colibrí amigo se une a la misión y juntos cuentan las gotas brillantes en las hojas.',
+          'En la copa del árbol más alto encuentran una pluma mágica que brilla con siete colores.',
+          '¡El arcoíris vuelve a lucir en el cielo! Resuelve la última operación para abrir el cofre.'
+        ]
+      },
+      panda: {
+        title: 'El Jardín de Bambú Dorado',
+        bg: '#F1F5F9',
+        teaser: 'El Oso Panda busca los brotes más dulces del valle.',
+        chapters: [
+          'El Oso Panda despierta con hambre y sigue un aroma delicioso hacia las colinas de niebla.',
+          'En el primer bosque cuenta los brotes tiernos que crecieron tras la lluvia de primavera.',
+          'Comparte su merienda con una ardilla curiosa que le enseña un atajo secreto.',
+          'Al cruzar un puente de madera, encuentran una linterna de papel con un acertijo.',
+          '¡Llegaron al Jardín Dorado! Resuelve el último reto para abrir el cofre de bambú.'
+        ]
+      },
+      lobo: {
+        title: 'La Senda de la Luna Llena',
+        bg: '#E0F2FE',
+        teaser: 'El Lobo Ártico guía a su manada bajo la aurora.',
+        chapters: [
+          'El Lobo Ártico aúlla suavemente llamando a su manada para iniciar la travesía nocturna.',
+          'Las estrellas reflejadas en la nieve marcan el camino; calcula la distancia del primer tramo.',
+          'Un viento helado levanta escarcha, pero el Lobo escucha el eco de sus compañeros.',
+          'Encuentran una cueva de cristal azul que brilla con la luz de la luna.',
+          '¡Toda la manada se reúne en la cima! Resuelve la última cuenta para abrir el cofre helado.'
+        ]
+      },
+      zorro: {
+        title: 'Los Trucos del Bosque Otoñal',
+        bg: '#FFEDD5',
+        teaser: 'El Zorro Astuto resuelve enigmas entre hojas doradas.',
+        chapters: [
+          'El Zorro Astuto encontró una caja con cerradura de madera escondida bajo un roble.',
+          'Para encontrar la llave, sigue pistas dejadas por las bellotas en el sendero.',
+          'Un búho sabio le lanza un acertijo numérico desde lo alto de una rama.',
+          'El Zorro usa su ingenio para abrir el pasadizo secreto bajo las raíces del árbol.',
+          '¡La caja se abre con un clic! Resuelve la operación final para descubrir el tesoro.'
+        ]
+      },
+      oso: {
+        title: 'La Cosecha de Miel Silvestre',
+        bg: '#FEF3C7',
+        teaser: 'El Oso Grizzly prepara reservas antes del invierno.',
+        chapters: [
+          'El Oso Grizzly sale de su cueva siguiendo el dulce zumbido de un prado lleno de flores.',
+          'Primero pesca salmones brillantes en el río rápido calculando el momento exacto.',
+          'Luego recoge frambuesas rojas en el claro del bosque junto a los arbustos.',
+          'Unas abejas amigables le dejan un panal dorado si resuelve su acertijo.',
+          '¡Su despensa está llena! Una última operación abre el cofre del bosque.'
+        ]
+      },
+      jirafa: {
+        title: 'Las Hojas Más Altas del Cielo',
+        bg: '#FEF9C3',
+        teaser: 'La Jirafa Alta alcanza los frutos que nadie más ve.',
+        chapters: [
+          'La Jirafa Alta estira su largo cuello para divisar el árbol legendario de la sabana.',
+          'Desde arriba puede ver a todos los animales y ayudarles a encontrar el mejor camino.',
+          'Recoge flores de acacia para regalar a las crías que descansan bajo la sombra.',
+          'Cuando cae la tarde, las nubes forman figuras numéricas sobre el horizonte.',
+          '¡Alcanzó la rama más alta! Resuelve el reto final para bajar el cofre dorado.'
+        ]
+      },
+      cebra: {
+        title: 'El Galope de las Llanuras',
+        bg: '#F1F5F9',
+        teaser: 'La Cebra Rayada lidera la gran carrera de amistad.',
+        chapters: [
+          'La Cebra Rayada reúne a sus amigas para cruzar las llanuras verdes hasta el lago.',
+          'Cada salto sobre los charcos deja huellas rítmicas que debes contar con precisión.',
+          'Al llegar a una bifurcación, las rayas de las rocas indican la ruta más rápida.',
+          'Corren junto al viento sintiendo la brisa fresca que anuncia que el lago está cerca.',
+          '¡Cruzan la meta juntas! Resuelve la última operación para abrir el cofre de la llanura.'
+        ]
+      },
+      tiburon: {
+        title: 'El Arrecife de Corales Mágicos',
+        bg: '#DBEAFE',
+        teaser: 'El Tiburón Azul explora un barco hundido lleno de perlas.',
+        chapters: [
+          'El Tiburón Azul nada veloz hacia un arrecife iluminado por peces de mil colores.',
+          'Entre los corales descubre el timón de un antiguo barco explorador.',
+          'Un pulpo amigable guarda las perlas y pide ayuda para contarlas por grupos.',
+          'Al entrar en la bodega del barco, encuentran una brújula dorada intacta.',
+          '¡El tesoro submarino es suyo! Resuelve el último cálculo para abrir el cofre.'
+        ]
+      },
+      trex: {
+        title: 'El Valle Prehistórico Perdido',
+        bg: '#DCFCE7',
+        teaser: 'El T-Rex Explorador sigue huellas gigantes de dinosaurios.',
+        chapters: [
+          'El T-Rex Explorador escucha el retumbar de un volcán dormido en el valle perdido.',
+          'Sigue unas huellas enormes impresas en la roca hacia un nido de huevos brillantes.',
+          'Los helechos gigantes esconden un puente natural sobre un río de aguas cálidas.',
+          'Con un rugido alegre, despierta los cristales luminosos de la caverna prehistórica.',
+          '¡El valle está en paz! Resuelve el último desafío para abrir el cofre prehistórico.'
+        ]
+      },
+      dragon: {
+        title: 'La Leyenda del Fuego Dorado',
+        bg: '#FEE2E2',
+        teaser: 'El Dragón Salvaje surca las nubes protegiendo la selva.',
+        chapters: [
+          'El Dragón Salvaje despega desde el Pico de Fuego para proteger la selva entera.',
+          'Con su aliento dorado enciende los faros antiguos en lo alto de las montañas.',
+          'Atraviesa tormentas de nubes calculando la velocidad exacta de su vuelo.',
+          'En la isla flotante encuentra la gema maestra que da equilibrio a los números.',
+          '¡La selva brilla con luz dorada! Resuelve el reto legendario para abrir el cofre mítico.'
+        ]
       }
-    ];
-
-    const MAX_ANIMAL_LEVEL = 5;
+    };
 
     const ANIMALS = [
-      { id: 'cocodrilo', name: 'Coco el Cocodrilo', emoji: '🐊', cost: 0, soundFreq: 180, powerType: 'add_bonus', powerName: 'Mordisco de Gemas', fact: '¡Los cocodrilos pueden aguantar la respiración bajo el agua hasta 1 hora!' },
-      { id: 'leon', name: 'León Dorado', emoji: '🦁', cost: 35, soundFreq: 140, powerType: 'streak_shield', powerName: 'Rugido Protector', fact: 'El rugido de un león puede escucharse hasta a 8 kilómetros de distancia.' },
-      { id: 'mono', name: 'Mono Saltarín', emoji: '🐒', cost: 40, soundFreq: 520, powerType: 'eliminate', powerName: 'Ojo de Mono', fact: 'Algunos monos usan su cola larga como si fuera una quinta mano para trepar.' },
-      { id: 'elefante', name: 'Elefante Sabio', emoji: '🐘', cost: 45, soundFreq: 210, powerType: 'hint_bonus', powerName: 'Memoria Sabia', fact: '¡Los elefantes tienen una memoria increíble y saludan tocando sus trompas!' },
-      { id: 'jaguar', name: 'Jaguar Veloz', emoji: '🐆', cost: 55, soundFreq: 260, powerType: 'streak_gems', powerName: 'Salto de Racha', fact: 'A diferencia de otros gatos, ¡al jaguar le encanta nadar en los ríos!' },
-      { id: 'aguila', name: 'Águila Real', emoji: '🦅', cost: 60, soundFreq: 680, powerType: 'eliminate_sub', powerName: 'Vista de Águila', fact: 'Un águila puede ver un conejo pequeño desde más de 2 kilómetros de altura.' },
-      { id: 'hipo', name: 'Hipopótamo Feliz', emoji: '🦛', cost: 65, soundFreq: 130, powerType: 'chest_bonus', powerName: 'Tesoro del Río', fact: 'Los hipopótamos corren por el fondo del río y producen su propio protector solar.' },
-      { id: 'tigre', name: 'Tigre de Bengala', emoji: '🐯', cost: 75, soundFreq: 195, powerType: 'first_try_bonus', powerName: 'Garra Precisa', fact: 'Ningún tigre tiene las mismas rayas: ¡son únicas como nuestras huellas!' },
-      { id: 'gorila', name: 'Gorila Fuerte', emoji: '🦍', cost: 80, soundFreq: 160, powerType: 'three_qty_bonus', powerName: 'Fuerza de 3', fact: 'Los gorilas construyen cada noche una cama nueva con hojas suaves.' },
-      { id: 'rino', name: 'Rinoceronte Guardián', emoji: '🦏', cost: 85, soundFreq: 150, powerType: 'streak_shield_plus', powerName: 'Armadura Rino', fact: 'Su cuerno no es de hueso, está hecho del mismo material que nuestras uñas.' },
-      { id: 'tucan', name: 'Tucán Tropical', emoji: '🦜', cost: 90, soundFreq: 610, powerType: 'lucky_gems', powerName: 'Lluvia de Gemas', fact: 'El pico gigante del tucán es muy liviano y le sirve para mantenerse fresco.' },
-      { id: 'panda', name: 'Oso Panda', emoji: '🐼', cost: 95, soundFreq: 340, powerType: 'star_bonus', powerName: 'Bambú Estelar', fact: '¡Un panda puede pasar hasta 12 horas al día comiendo brotes de bambú!' },
-      { id: 'lobo', name: 'Lobo Ártico', emoji: '🐺', cost: 100, soundFreq: 230, powerType: 'sub_bonus', powerName: 'Aullido Veloz', fact: 'Los lobos viven en manadas muy unidas y se comunican aullando a kilómetros.' },
-      { id: 'zorro', name: 'Zorro Astuto', emoji: '🦊', cost: 110, soundFreq: 480, powerType: 'eliminate', powerName: 'Truco de Zorro', fact: 'Los zorros usan su cola esponjosa como manta para abrigarse en la noche.' },
-      { id: 'oso', name: 'Oso Grizzly', emoji: '🐻', cost: 115, soundFreq: 125, powerType: 'streak_shield', powerName: 'Abrazo Fuerte', fact: 'Los osos grizzly pueden correr tan rápido como un caballo en distancias cortas.' },
-      { id: 'jirafa', name: 'Jirafa Alta', emoji: '🦒', cost: 120, soundFreq: 310, powerType: 'three_qty_bonus', powerName: 'Vista de Altura', fact: '¡La lengua de la jirafa mide casi medio metro y es de color morado oscuro!' },
-      { id: 'cebra', name: 'Cebra Rayada', emoji: '🦓', cost: 125, soundFreq: 390, powerType: 'streak_gems', powerName: 'Galope de Racha', fact: 'Las rayas de las cebras ayudan a confundir a los insectos y a refrescarse.' },
-      { id: 'tiburon', name: 'Tiburón Azul', emoji: '🦈', cost: 140, soundFreq: 145, powerType: 'chest_bonus', powerName: 'Aleta Tesoro', fact: '¡A los tiburones les crecen dientes nuevos durante toda su vida!' },
-      { id: 'trex', name: 'T-Rex Explorador', emoji: '🦖', cost: 0, starExclusive: 12, soundFreq: 115, powerType: 'legend_trex', powerName: 'Rey Prehistórico', fact: '¡Exclusivo del Camino de Estrellas! El T-Rex tenía dientes del tamaño de plátanos.' },
-      { id: 'dragon', name: 'Dragón Salvaje', emoji: '🐉', cost: 0, starExclusive: 20, soundFreq: 135, powerType: 'legend_dragon', powerName: 'Fuego Dorado', fact: '¡Compañero mítico de Leyenda Salvaje! Protege la selva con su fuego matemático.' }
+      { id: 'cocodrilo', name: 'Coco el Cocodrilo', emoji: '🐊', cost: 0, soundFreq: 180, fact: '¡Los cocodrilos pueden aguantar la respiración bajo el agua hasta 1 hora!' },
+      { id: 'leon', name: 'León Dorado', emoji: '🦁', cost: 35, soundFreq: 140, fact: 'El rugido de un león puede escucharse hasta a 8 kilómetros de distancia.' },
+      { id: 'mono', name: 'Mono Saltarín', emoji: '🐒', cost: 40, soundFreq: 520, fact: 'Algunos monos usan su cola larga como si fuera una quinta mano para trepar.' },
+      { id: 'elefante', name: 'Elefante Sabio', emoji: '🐘', cost: 45, soundFreq: 210, fact: '¡Los elefantes tienen una memoria increíble y saludan tocando sus trompas!' },
+      { id: 'jaguar', name: 'Jaguar Veloz', emoji: '🐆', cost: 55, soundFreq: 260, fact: 'A diferencia de otros gatos, ¡al jaguar le encanta nadar en los ríos!' },
+      { id: 'aguila', name: 'Águila Real', emoji: '🦅', cost: 60, soundFreq: 680, fact: 'Un águila puede ver un conejo pequeño desde más de 2 kilómetros de altura.' },
+      { id: 'hipo', name: 'Hipopótamo Feliz', emoji: '🦛', cost: 65, soundFreq: 130, fact: 'Los hipopótamos corren por el fondo del río y producen su propio protector solar.' },
+      { id: 'tigre', name: 'Tigre de Bengala', emoji: '🐯', cost: 75, soundFreq: 195, fact: 'Ningún tigre tiene las mismas rayas: ¡son únicas como nuestras huellas!' },
+      { id: 'gorila', name: 'Gorila Fuerte', emoji: '🦍', cost: 80, soundFreq: 160, fact: 'Los gorilas construyen cada noche una cama nueva con hojas suaves.' },
+      { id: 'rino', name: 'Rinoceronte Guardián', emoji: '🦏', cost: 85, soundFreq: 150, fact: 'Su cuerno no es de hueso, está hecho del mismo material que nuestras uñas.' },
+      { id: 'tucan', name: 'Tucán Tropical', emoji: '🦜', cost: 90, soundFreq: 610, fact: 'El pico gigante del tucán es muy liviano y le sirve para mantenerse fresco.' },
+      { id: 'panda', name: 'Oso Panda', emoji: '🐼', cost: 95, soundFreq: 340, fact: '¡Un panda puede pasar hasta 12 horas al día comiendo brotes de bambú!' },
+      { id: 'lobo', name: 'Lobo Ártico', emoji: '🐺', cost: 100, soundFreq: 230, fact: 'Los lobos viven en manadas muy unidas y se comunican aullando a kilómetros.' },
+      { id: 'zorro', name: 'Zorro Astuto', emoji: '🦊', cost: 110, soundFreq: 480, fact: 'Los zorros usan su cola esponjosa como manta para abrigarse en la noche.' },
+      { id: 'oso', name: 'Oso Grizzly', emoji: '🐻', cost: 115, soundFreq: 125, fact: 'Los osos grizzly pueden correr tan rápido como un caballo en distancias cortas.' },
+      { id: 'jirafa', name: 'Jirafa Alta', emoji: '🦒', cost: 120, soundFreq: 310, fact: '¡La lengua de la jirafa mide casi medio metro y es de color morado oscuro!' },
+      { id: 'cebra', name: 'Cebra Rayada', emoji: '🦓', cost: 125, soundFreq: 390, fact: 'Las rayas de las cebras ayudan a confundir a los insectos y a refrescarse.' },
+      { id: 'tiburon', name: 'Tiburón Azul', emoji: '🦈', cost: 140, soundFreq: 145, fact: '¡A los tiburones les crecen dientes nuevos durante toda su vida!' },
+      { id: 'trex', name: 'T-Rex Explorador', emoji: '🦖', cost: 150, soundFreq: 115, fact: 'El T-Rex tenía dientes enormes del tamaño de plátanos.' },
+      { id: 'dragon', name: 'Dragón Salvaje', emoji: '🐉', cost: 180, soundFreq: 135, fact: '¡Compañero mítico de la selva! Protege los números con su fuego dorado.' }
     ];
 
     const OUTFIT_SLOTS = [
@@ -2310,29 +2475,20 @@
       { id: 'cap', slot: 'head', name: 'Gorra Explorador', icon: '🧢', cost: 35, desc: '¡Estilo aventurero genial!' },
       { id: 'viking', slot: 'head', name: 'Casco Vikingo', icon: '🛡️', cost: 55, desc: '¡Fuerza de guerrero valiente!' },
       { id: 'crown', slot: 'head', name: 'Corona de Rey', icon: '👑', cost: 70, desc: 'El rey de las matemáticas' },
-      { id: 'magic_hat', slot: 'head', name: 'Sombrero Mágico', icon: '🎩', cost: 0, starExclusive: 16, desc: 'Exclusivo al llegar a 16 ⭐' },
+      { id: 'magic_hat', slot: 'head', name: 'Sombrero Mágico', icon: '🎩', cost: 75, desc: '¡Sombrero mágico de explorador!' },
       // Ojos (eyes)
       { id: 'glasses', slot: 'eyes', name: 'Gafas Geniales', icon: '🕶️', cost: 40, desc: '¡Modo súper explorador!' },
       { id: 'mask', slot: 'eyes', name: 'Antifaz Héroe', icon: '🎭', cost: 50, desc: 'Identidad secreta de héroe' },
       { id: 'monocle', slot: 'eyes', name: 'Monóculo Sabio', icon: '🧐', cost: 45, desc: 'Para pensar como científico' },
-      { id: 'star_glasses', slot: 'eyes', name: 'Gafas Estelares', icon: '🌟', cost: 0, starExclusive: 6, desc: 'Exclusivo al llegar a 6 ⭐' },
+      { id: 'star_glasses', slot: 'eyes', name: 'Gafas Estelares', icon: '🌟', cost: 45, desc: 'Gafas brillantes de campeón' },
       // Cuello (neck)
       { id: 'scarf', slot: 'neck', name: 'Pañuelo Valiente', icon: '🧣', cost: 30, desc: 'Pañuelo rojo de expedición' },
       { id: 'bowtie', slot: 'neck', name: 'Corbatín Elegante', icon: '🎀', cost: 35, desc: 'Muy elegante en la selva' },
       { id: 'necklace', slot: 'neck', name: 'Collar de Gemas', icon: '📿', cost: 50, desc: 'Brilla con piedras mágicas' },
       // Espalda (back)
       { id: 'backpack', slot: 'back', name: 'Mochila Safari', icon: '🎒', cost: 45, desc: 'Guarda mapas y brújulas' },
-      { id: 'cape', slot: 'back', name: 'Capa de Héroe', icon: '🦸', cost: 65, desc: 'Capa roja de súper poderes' },
-      { id: 'gold_wings', slot: 'back', name: 'Alas Doradas', icon: '🪽', cost: 0, starExclusive: 9, desc: 'Exclusivo al llegar a 9 ⭐' }
-    ];
-
-    const STAR_MILESTONES = [
-      { id: 'star_3', stars: 3, rank: 'Rastreador del Río', icon: '🥉', title: '+20 💎 de Regalo', desc: 'Tesoro especial por tus primeras 3 estrellas', rewardType: 'gems', amount: 20 },
-      { id: 'star_6', stars: 6, rank: 'Amigo de la Sabana', icon: '🌟', title: 'Gafas Estelares Gratis', desc: 'Prenda exclusiva de ojos para cualquier animal', rewardType: 'accessory', accessoryId: 'star_glasses' },
-      { id: 'star_9', stars: 9, rank: 'Guardián de la Selva', icon: '🪽', title: 'Alas Doradas + Bono Cofre', desc: 'Alas exclusivas + bono de +3 💎 en cada Cofre', rewardType: 'acc_boost', accessoryId: 'gold_wings', amount: 3 },
-      { id: 'star_12', stars: 12, rank: 'Maestro Explorador', icon: '🦖', title: 'T-Rex Explorador', desc: '¡Desbloquea al compañero legendario T-Rex!', rewardType: 'animal', animalId: 'trex' },
-      { id: 'star_16', stars: 16, rank: 'Héroe Matemático', icon: '🎩', title: 'Sombrero Mágico + 25 💎', desc: 'Sombrero exclusivo + gemas de regalo', rewardType: 'acc_gems', accessoryId: 'magic_hat', amount: 25 },
-      { id: 'star_20', stars: 20, rank: 'Leyenda Salvaje', icon: '🐉', title: 'Dragón Salvaje + Bono Cofre', desc: '¡Desbloquea al Dragón Salvaje y +5 💎 en Cofres!', rewardType: 'animal_boost', animalId: 'dragon', amount: 5 }
+      { id: 'cape', slot: 'back', name: 'Capa de Héroe', icon: '🦸', cost: 65, desc: 'Capa roja de súper aventurero' },
+      { id: 'gold_wings', slot: 'back', name: 'Alas Doradas', icon: '🪽', cost: 65, desc: 'Alas doradas para volar alto' }
     ];
 
     const PRAISE_PHRASES = [
@@ -2363,17 +2519,14 @@
     function defaultState() {
       return {
         gems: 10,
-        stars: 0,
+        explorerXp: 0,
         chestsOpened: 0,
         bestStreak: 0,
         soundOn: true,
         unlockedAnimals: ['cocodrilo'],
-        animalLevels: { cocodrilo: 1 },
         activeAnimal: 'cocodrilo',
         unlockedAccessories: [],
         animalOutfits: { cocodrilo: emptyOutfit() },
-        claimedStarRewards: [],
-        worldStars: {},
         activeMission: null,
         settings: {
           autoHint: true,
@@ -2434,16 +2587,22 @@
           ? parsed.activeAnimal
           : 'cocodrilo';
 
+        // Preserve progress: if upgrading from pre-XP version, convert solved count into starting XP
+        const prevSolved = (parsed.stats && typeof parsed.stats.totalSolved === 'number') ? parsed.stats.totalSolved : 0;
+        const migratedXp = typeof parsed.explorerXp === 'number'
+          ? Math.max(0, parsed.explorerXp)
+          : prevSolved * 15;
+
         return {
           ...def,
           ...parsed,
+          explorerXp: migratedXp,
           activeAnimal: activeId,
           animalOutfits: outfits,
           activeMission,
           unlockedAccessories: Array.isArray(parsed.unlockedAccessories)
             ? parsed.unlockedAccessories.filter(x => x !== 'none')
             : [],
-          claimedStarRewards: Array.isArray(parsed.claimedStarRewards) ? parsed.claimedStarRewards : [],
           settings: { ...def.settings, ...(parsed.settings || {}) },
           stats: {
             ...def.stats,
@@ -2467,67 +2626,66 @@
       return ANIMALS.find(a => a.id === id) || ANIMALS[0];
     }
 
-    function getAnimalLevel(id) {
-      return Math.min(MAX_ANIMAL_LEVEL, Math.max(1, state.animalLevels[id] || 1));
-    }
-
     function getAnimalOutfit(id) {
       if (!state.animalOutfits) state.animalOutfits = {};
       if (!state.animalOutfits[id]) state.animalOutfits[id] = emptyOutfit();
       return state.animalOutfits[id];
     }
 
-    function getFeedCost(curLvl) {
-      const table = [15, 25, 40, 60];
-      return table[Math.min(table.length - 1, Math.max(0, curLvl - 1))];
+    /* =========================================================
+       EXPLORER CHARACTER XP, LEVEL & AUTO-SCALING DIFFICULTY
+       ========================================================= */
+    function getXpForNextLevel(level) {
+      return 100 + (level - 1) * 50;
     }
 
-    function getAnimalPowerSummary(animal, lvl) {
-      const l = Math.min(MAX_ANIMAL_LEVEL, Math.max(1, lvl || 1));
-      const smallGem = Math.ceil(l / 2); // 1,1,2,2,3
-      switch (animal.powerType) {
-        case 'add_bonus': return `+${smallGem} 💎 extra en sumas`;
-        case 'sub_bonus': return `+${smallGem} 💎 extra en restas`;
-        case 'streak_shield': return `Protege tu racha 🔥 ${l} ${l === 1 ? 'vez' : 'veces'} por misión`;
-        case 'eliminate': return `Revela el 1er dígito (${l} ${l === 1 ? 'uso' : 'usos'} por misión)`;
-        case 'hint_bonus': return `+${smallGem + 1} 💎 extra al acertar usando pista 💡`;
-        case 'streak_gems': return `+${smallGem} 💎 extra en cada acierto con racha 🔥`;
-        case 'eliminate_sub': return `Revela 1er dígito (${l} ${l === 1 ? 'uso' : 'usos'}) y +${smallGem} 💎 en restas`;
-        case 'chest_bonus': return `+${2 + l} 💎 extra al abrir cada Cofre 🎁`;
-        case 'first_try_bonus': return `+${smallGem} 💎 extra al acertar al 1er intento`;
-        case 'three_qty_bonus': return `+${smallGem + 1} 💎 extra en retos de 3 cantidades`;
-        case 'streak_shield_plus': return `Protege tu racha 🔥 ${l + 1} veces por misión`;
-        case 'lucky_gems': return `Premio sorpresa de +1 a +${smallGem + 1} 💎 por reto`;
-        case 'star_bonus': return `+1 ⭐ estrella extra y +${smallGem} 💎 en Cofres`;
-        case 'legend_trex': return `Revela 1er dígito (${l} ${l === 1 ? 'uso' : 'usos'}) y +${smallGem + 1} 💎 siempre`;
-        case 'legend_dragon': return `Revela 1er dígito (${l} ${l === 1 ? 'uso' : 'usos'}) y +${smallGem + 2} 💎 siempre`;
-        default: return `+1 💎 extra`;
+    function getExplorerProgress(totalXp = state.explorerXp || 0) {
+      let level = 1;
+      let remaining = Math.max(0, totalXp);
+      let needed = getXpForNextLevel(level);
+      while (remaining >= needed) {
+        remaining -= needed;
+        level++;
+        needed = getXpForNextLevel(level);
       }
+      const titles = [
+        'Explorador Curioso 🌿',
+        'Rastreador del Río 🐊',
+        'Aventurero de la Sabana 🦁',
+        'Guardián de la Selva 🐆',
+        'Maestro Matemático 🦅',
+        'Leyenda de la Selva 🐉'
+      ];
+      const title = titles[Math.min(titles.length - 1, level - 1)];
+      const pct = Math.min(100, Math.round((remaining / needed) * 100));
+      return { level, currentXp: remaining, neededXp: needed, pct, title };
     }
 
-    function getExplorerRank(starsCount) {
-      let current = { rank: 'Explorador Novato', icon: '🌿', next: STAR_MILESTONES[0] };
-      for (let i = 0; i < STAR_MILESTONES.length; i++) {
-        if (starsCount >= STAR_MILESTONES[i].stars) {
-          current = {
-            rank: STAR_MILESTONES[i].rank,
-            icon: STAR_MILESTONES[i].icon,
-            next: STAR_MILESTONES[i + 1] || null
-          };
-        }
+    function getExplorerStageDescription(level) {
+      if (level <= 1) return 'Etapa 1: Sumas fáciles + Reto Especial de Restas (×2 XP)';
+      if (level === 2) return 'Etapa 2: Sumas llevando + Restas (×2 XP) + inicio de 3 cantidades';
+      if (level === 3) return 'Etapa 3: Sumas llevando + Restas prestando (×2 XP) + 3 cantidades';
+      return 'Etapa Máxima: Operaciones de 3 cantidades + Restas Especiales (×2 XP)';
+    }
+
+    function getAutoMissionSkill(level, stepIndex) {
+      if (level <= 1) {
+        return ['add2_easy', 'add2_easy', 'sub2_easy', 'add2_easy', 'add2_carry'][stepIndex] || 'add2_easy';
       }
-      return current;
+      if (level === 2) {
+        return ['add2_easy', 'add2_carry', 'sub2_easy', 'add2_carry', 'add3'][stepIndex] || 'add2_carry';
+      }
+      if (level === 3) {
+        return ['add2_carry', 'sub2_borrow', 'add3', 'sub2_borrow', 'add3'][stepIndex] || 'add3';
+      }
+      return ['add2_carry', 'add3', 'sub2_borrow', 'add3', 'sub3'][stepIndex] || 'sub3';
     }
 
-    function getUnclaimedStarRewardsCount() {
-      return STAR_MILESTONES.filter(m => state.stars >= m.stars && !state.claimedStarRewards.includes(m.id)).length;
-    }
-
-    function getPermanentChestBonus() {
-      let bonus = 0;
-      if (state.claimedStarRewards.includes('star_9')) bonus += 3;
-      if (state.claimedStarRewards.includes('star_20')) bonus += 5;
-      return bonus;
+    function addExplorerXp(amount) {
+      const before = getExplorerProgress(state.explorerXp).level;
+      state.explorerXp = (state.explorerXp || 0) + amount;
+      const after = getExplorerProgress(state.explorerXp).level;
+      return { leveledUp: after > before, newLevel: after };
     }
 
     /* =========================================================
@@ -2600,370 +2758,622 @@
       mono:      { body: '#92400E', head: '#A16207', belly: '#FDE68A', stroke: '#451A03', snout: '#FDE68A', extra: 'monkey' },
       elefante:  { body: '#94A3B8', head: '#CBD5E1', belly: '#E2E8F0', stroke: '#334155', snout: '#CBD5E1', extra: 'elephant' },
       jaguar:    { body: '#F59E0B', head: '#FBBF24', belly: '#FEF3C7', stroke: '#78350F', snout: '#FEF3C7', extra: 'spots' },
-      aguila:    { body: '#78350F', head: '#FFFFFF', belly: '#92400E', stroke: '#451A03', snout: '#F59E0B', extra: 'eagle' },
+      aguila:    { body: '#78350F', head: '#F8FAFC', belly: '#92400E', stroke: '#451A03', snout: '#F59E0B', extra: 'eagle' },
       hipo:      { body: '#8B5CF6', head: '#A78BFA', belly: '#DDD6FE', stroke: '#4C1D95', snout: '#C4B5FD', extra: 'hippo' },
       tigre:     { body: '#F97316', head: '#FB923C', belly: '#FFEDD5', stroke: '#7C2D12', snout: '#FFFFFF', extra: 'tiger' },
       gorila:    { body: '#374151', head: '#4B5563', belly: '#9CA3AF', stroke: '#111827', snout: '#D1D5DB', extra: 'gorilla' },
       rino:      { body: '#64748B', head: '#94A3B8', belly: '#CBD5E1', stroke: '#1E293B', snout: '#CBD5E1', extra: 'rhino' },
-      tucan:     { body: '#1E293B', head: '#1E293B', belly: '#FACC15', stroke: '#0F172A', snout: '#F97316', extra: 'toucan' },
-      panda:     { body: '#F8FAFC', head: '#FFFFFF', belly: '#E2E8F0', stroke: '#0F172A', snout: '#FFFFFF', extra: 'panda' },
-      lobo:      { body: '#CBD5E1', head: '#E2E8F0', belly: '#FFFFFF', stroke: '#334155', snout: '#FFFFFF', extra: 'wolf' },
+      tucan:     { body: '#1E293B', head: '#334155', belly: '#FACC15', stroke: '#0F172A', snout: '#F97316', extra: 'toucan' },
+      panda:     { body: '#F1F5F9', head: '#FFFFFF', belly: '#E2E8F0', stroke: '#0F172A', snout: '#FFFFFF', extra: 'panda' },
+      lobo:      { body: '#94A3B8', head: '#CBD5E1', belly: '#F8FAFC', stroke: '#334155', snout: '#FFFFFF', extra: 'wolf' },
       zorro:     { body: '#EA580C', head: '#F97316', belly: '#FFF7ED', stroke: '#7C2D12', snout: '#FFFFFF', extra: 'fox' },
       oso:       { body: '#854D0E', head: '#A16207', belly: '#D97706', stroke: '#451A03', snout: '#FDE68A', extra: 'bear' },
       jirafa:    { body: '#F59E0B', head: '#FBBF24', belly: '#FEF3C7', stroke: '#78350F', snout: '#FDE68A', extra: 'giraffe' },
-      cebra:     { body: '#F8FAFC', head: '#FFFFFF', belly: '#F1F5F9', stroke: '#0F172A', snout: '#CBD5E1', extra: 'zebra' },
+      cebra:     { body: '#F8FAFC', head: '#FFFFFF', belly: '#E2E8F0', stroke: '#0F172A', snout: '#CBD5E1', extra: 'zebra' },
       tiburon:   { body: '#0284C7', head: '#38BDF8', belly: '#E0F2FE', stroke: '#0C4A6E', snout: '#E0F2FE', extra: 'shark' },
       trex:      { body: '#16A34A', head: '#22C55E', belly: '#BBF7D0', stroke: '#14532D', snout: '#4ADE80', extra: 'trex' },
       dragon:    { body: '#DC2626', head: '#EF4444', belly: '#FDE047', stroke: '#7F1D1D', snout: '#FCA5A5', extra: 'dragon' }
     };
 
-    function renderOutfitBack(backId) {
+    let _svgUid = 0;
+
+    function shadeHex(hex, amt) {
+      const clean = (hex || '#888888').replace('#', '');
+      if (clean.length !== 6) return hex;
+      const num = parseInt(clean, 16);
+      const r = Math.min(255, Math.max(0, (num >> 16) + amt));
+      const g = Math.min(255, Math.max(0, ((num >> 8) & 0xff) + amt));
+      const b = Math.min(255, Math.max(0, (num & 0xff) + amt));
+      return '#' + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+    }
+
+    function renderOutfitBack(backId, g) {
       if (backId === 'cape') {
         return `
-          <path d="M 58 118 Q 22 140 24 182 Q 74 170 110 172 Q 146 170 196 182 Q 198 140 162 118 Z" fill="#EF4444" stroke="#991B1B" stroke-width="3.5" stroke-linejoin="round"/>
-          <path d="M 64 128 Q 42 148 40 172" stroke="#FCA5A5" stroke-width="3" fill="none" stroke-linecap="round"/>
-          <path d="M 156 128 Q 178 148 180 172" stroke="#FCA5A5" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <g>
+            <path d="M 78 122 Q 26 146 22 208 Q 74 196 120 200 Q 166 196 218 208 Q 214 146 162 122 Z" fill="url(#${g}_cape)" stroke="#7F1D1D" stroke-width="3" stroke-linejoin="round"/>
+            <path d="M 80 132 Q 52 162 46 198" stroke="#FCA5A5" stroke-width="3.5" opacity="0.55" fill="none" stroke-linecap="round"/>
+            <path d="M 160 132 Q 188 162 194 198" stroke="#991B1B" stroke-width="4" opacity="0.45" fill="none" stroke-linecap="round"/>
+          </g>
         `;
       }
       if (backId === 'backpack') {
         return `
           <g>
-            <rect x="40" y="114" width="32" height="52" rx="12" fill="#D97706" stroke="#78350F" stroke-width="3"/>
-            <rect x="148" y="114" width="32" height="52" rx="12" fill="#D97706" stroke="#78350F" stroke-width="3"/>
-            <rect x="46" y="124" width="20" height="16" rx="5" fill="#F59E0B" stroke="#78350F" stroke-width="2"/>
-            <rect x="154" y="124" width="20" height="16" rx="5" fill="#F59E0B" stroke="#78350F" stroke-width="2"/>
+            <!-- 3D Backpack Pack behind torso -->
+            <rect x="64" y="114" width="112" height="72" rx="22" fill="#92400E" stroke="#451A03" stroke-width="3"/>
+            <rect x="70" y="118" width="100" height="62" rx="18" fill="url(#${g}_pack)"/>
+            <rect x="46" y="132" width="24" height="44" rx="10" fill="#B45309" stroke="#451A03" stroke-width="2.5"/>
+            <rect x="170" y="132" width="24" height="44" rx="10" fill="#B45309" stroke="#451A03" stroke-width="2.5"/>
           </g>
         `;
       }
       if (backId === 'gold_wings') {
         return `
           <g>
-            <path d="M 64 134 C 14 106, 8 152, 34 166 C 24 172, 46 178, 68 158 Z" fill="#FDE047" stroke="#B45309" stroke-width="3" stroke-linejoin="round"/>
-            <path d="M 156 134 C 206 106, 212 152, 186 166 C 196 172, 174 178, 152 158 Z" fill="#FDE047" stroke="#B45309" stroke-width="3" stroke-linejoin="round"/>
-            <path d="M 54 140 L 24 132 M 52 150 L 30 154" stroke="#D97706" stroke-width="2.5" stroke-linecap="round"/>
-            <path d="M 166 140 L 196 132 M 168 150 L 190 154" stroke="#D97706" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M 78 134 C 14 96, 6 158, 38 176 C 24 186, 52 194, 82 166 Z" fill="url(#${g}_gold)" stroke="#92400E" stroke-width="3" stroke-linejoin="round"/>
+            <path d="M 162 134 C 226 96, 234 158, 202 176 C 216 186, 188 194, 158 166 Z" fill="url(#${g}_gold)" stroke="#92400E" stroke-width="3" stroke-linejoin="round"/>
+            <path d="M 68 142 L 26 130 M 64 154 L 32 158 M 66 164 L 44 174" stroke="#B45309" stroke-width="2.5" stroke-linecap="round" opacity="0.75"/>
+            <path d="M 172 142 L 214 130 M 176 154 L 208 158 M 174 164 L 196 174" stroke="#B45309" stroke-width="2.5" stroke-linecap="round" opacity="0.75"/>
           </g>
         `;
       }
       return '';
     }
 
-    function renderOutfitNeck(neckId) {
+    function renderOutfitTorsoOverlay(backId, g) {
+      if (backId === 'backpack') {
+        return `
+          <g>
+            <!-- 3D Shoulder Straps wrapping over chest -->
+            <path d="M 88 122 Q 82 148 88 176" fill="none" stroke="#78350F" stroke-width="11" stroke-linecap="round"/>
+            <path d="M 88 122 Q 82 148 88 176" fill="none" stroke="#D97706" stroke-width="7" stroke-linecap="round"/>
+            <path d="M 152 122 Q 158 148 152 176" fill="none" stroke="#78350F" stroke-width="11" stroke-linecap="round"/>
+            <path d="M 152 122 Q 158 148 152 176" fill="none" stroke="#D97706" stroke-width="7" stroke-linecap="round"/>
+            <!-- Chest Buckle -->
+            <path d="M 86 150 L 154 150" stroke="#451A03" stroke-width="5" stroke-linecap="round"/>
+            <rect x="112" y="144" width="16" height="12" rx="3" fill="#FACC15" stroke="#78350F" stroke-width="2"/>
+          </g>
+        `;
+      }
+      if (backId === 'cape') {
+        return `
+          <g>
+            <!-- Golden Clasp & Cape Collar -->
+            <path d="M 84 126 Q 120 138 156 126" fill="none" stroke="#991B1B" stroke-width="6" stroke-linecap="round"/>
+            <circle cx="88" cy="127" r="6" fill="url(#${g}_gold)" stroke="#78350F" stroke-width="2"/>
+            <circle cx="152" cy="127" r="6" fill="url(#${g}_gold)" stroke="#78350F" stroke-width="2"/>
+          </g>
+        `;
+      }
+      return '';
+    }
+
+    function renderOutfitNeck(neckId, g) {
       if (neckId === 'scarf') {
         return `
-          <g transform="translate(66, 122)">
-            <path d="M 6 6 Q 44 18 82 6 L 80 20 Q 44 30 8 20 Z" fill="#EF4444" stroke="#991B1B" stroke-width="2.5"/>
-            <path d="M 56 16 L 68 42 L 82 37 L 72 13 Z" fill="#DC2626" stroke="#991B1B" stroke-width="2.5" stroke-linejoin="round"/>
+          <g>
+            <path d="M 80 118 Q 120 136 160 118 L 156 134 Q 120 148 84 134 Z" fill="url(#${g}_cape)" stroke="#7F1D1D" stroke-width="2.8" stroke-linejoin="round"/>
+            <path d="M 134 128 L 150 164 L 166 156 L 150 124 Z" fill="#DC2626" stroke="#7F1D1D" stroke-width="2.5" stroke-linejoin="round"/>
+            <ellipse cx="142" cy="130" rx="9" ry="7" fill="#EF4444" stroke="#7F1D1D" stroke-width="2.2"/>
           </g>
         `;
       }
       if (neckId === 'bowtie') {
         return `
-          <g transform="translate(84, 124)">
-            <polygon points="0,2 24,12 0,22" fill="#2563EB" stroke="#1E3A8A" stroke-width="2.5" stroke-linejoin="round"/>
-            <polygon points="52,2 28,12 52,22" fill="#2563EB" stroke="#1E3A8A" stroke-width="2.5" stroke-linejoin="round"/>
-            <circle cx="26" cy="12" r="7" fill="#FACC15" stroke="#1E3A8A" stroke-width="2.5"/>
+          <g transform="translate(92, 118)">
+            <polygon points="0,2 26,13 0,24" fill="#1D4ED8" stroke="#1E3A8A" stroke-width="2.5" stroke-linejoin="round"/>
+            <polygon points="56,2 30,13 56,24" fill="#2563EB" stroke="#1E3A8A" stroke-width="2.5" stroke-linejoin="round"/>
+            <ellipse cx="28" cy="13" rx="8" ry="7" fill="url(#${g}_gold)" stroke="#78350F" stroke-width="2.2"/>
           </g>
         `;
       }
       if (neckId === 'necklace') {
         return `
           <g>
-            <path d="M 74 128 Q 110 148 146 128" fill="none" stroke="#92400E" stroke-width="3.5" stroke-linecap="round"/>
-            <circle cx="88" cy="136" r="5" fill="#38BDF8" stroke="#0369A1" stroke-width="1.8"/>
-            <circle cx="110" cy="142" r="6.5" fill="#FACC15" stroke="#B45309" stroke-width="2"/>
-            <circle cx="132" cy="136" r="5" fill="#4ADE80" stroke="#15803D" stroke-width="1.8"/>
+            <path d="M 84 122 Q 120 148 156 122" fill="none" stroke="#78350F" stroke-width="4.5" stroke-linecap="round"/>
+            <circle cx="98" cy="133" r="5.5" fill="#38BDF8" stroke="#0369A1" stroke-width="2"/>
+            <circle cx="120" cy="140" r="7.5" fill="url(#${g}_gold)" stroke="#92400E" stroke-width="2.2"/>
+            <circle cx="142" cy="133" r="5.5" fill="#4ADE80" stroke="#15803D" stroke-width="2"/>
+            <circle cx="118" cy="137" r="2" fill="#FFFFFF" opacity="0.85"/>
           </g>
         `;
       }
       return '';
     }
 
-    function renderOutfitEyes(eyesId) {
+    function renderOutfitEyes(eyesId, g) {
       if (eyesId === 'glasses') {
         return `
-          <g transform="translate(66, 70)">
-            <rect x="4" y="4" width="36" height="22" rx="7" fill="#111827" stroke="#FBBF24" stroke-width="3"/>
-            <rect x="48" y="4" width="36" height="22" rx="7" fill="#111827" stroke="#FBBF24" stroke-width="3"/>
-            <line x1="40" y1="14" x2="48" y2="14" stroke="#FBBF24" stroke-width="3.5"/>
-            <line x1="11" y1="10" x2="21" y2="20" stroke="#FFFFFF" stroke-width="2.5" opacity="0.7" stroke-linecap="round"/>
-            <line x1="55" y1="10" x2="65" y2="20" stroke="#FFFFFF" stroke-width="2.5" opacity="0.7" stroke-linecap="round"/>
+          <g transform="translate(74, 58)">
+            <line x1="-2" y1="14" x2="6" y2="12" stroke="#1E293B" stroke-width="3.5" stroke-linecap="round"/>
+            <line x1="86" y1="12" x2="94" y2="14" stroke="#1E293B" stroke-width="3.5" stroke-linecap="round"/>
+            <rect x="4" y="4" width="37" height="24" rx="8" fill="#0F172A" stroke="url(#${g}_gold)" stroke-width="3.2"/>
+            <rect x="51" y="4" width="37" height="24" rx="8" fill="#0F172A" stroke="url(#${g}_gold)" stroke-width="3.2"/>
+            <path d="M 41 14 Q 46 10 51 14" fill="none" stroke="url(#${g}_gold)" stroke-width="3.5"/>
+            <line x1="11" y1="9" x2="22" y2="21" stroke="#FFFFFF" stroke-width="3" opacity="0.75" stroke-linecap="round"/>
+            <line x1="58" y1="9" x2="69" y2="21" stroke="#FFFFFF" stroke-width="3" opacity="0.75" stroke-linecap="round"/>
           </g>
         `;
       }
       if (eyesId === 'star_glasses') {
         return `
-          <g transform="translate(64, 66)">
-            <polygon points="24,2 29,14 42,14 32,21 36,34 24,26 12,34 16,21 6,14 19,14" fill="#FACC15" stroke="#B45309" stroke-width="2.5"/>
-            <polygon points="68,2 73,14 86,14 76,21 80,34 68,26 56,34 60,21 50,14 63,14" fill="#FACC15" stroke="#B45309" stroke-width="2.5"/>
-            <line x1="40" y1="18" x2="52" y2="18" stroke="#B45309" stroke-width="3.5"/>
+          <g transform="translate(72, 54)">
+            <polygon points="24,2 29,14 42,14 32,22 36,35 24,27 12,35 16,22 6,14 19,14" fill="url(#${g}_gold)" stroke="#92400E" stroke-width="2.5"/>
+            <polygon points="72,2 77,14 90,14 80,22 84,35 72,27 60,35 64,22 54,14 67,14" fill="url(#${g}_gold)" stroke="#92400E" stroke-width="2.5"/>
+            <line x1="40" y1="18" x2="56" y2="18" stroke="#92400E" stroke-width="3.5"/>
+            <circle cx="22" cy="16" r="3" fill="#FFFFFF" opacity="0.75"/>
+            <circle cx="70" cy="16" r="3" fill="#FFFFFF" opacity="0.75"/>
           </g>
         `;
       }
       if (eyesId === 'mask') {
         return `
-          <g transform="translate(62, 68)">
-            <path d="M 4 14 Q 24 0 48 12 Q 72 0 92 14 Q 88 30 68 28 Q 56 26 48 20 Q 40 26 28 28 Q 8 30 4 14 Z" fill="#2563EB" stroke="#1E3A8A" stroke-width="2.5"/>
-            <ellipse cx="26" cy="16" rx="10" ry="7" fill="#FFFFFF" stroke="#1E3A8A" stroke-width="2"/>
-            <ellipse cx="70" cy="16" rx="10" ry="7" fill="#FFFFFF" stroke="#1E3A8A" stroke-width="2"/>
-            <circle cx="27" cy="16" r="4" fill="#111827"/>
-            <circle cx="71" cy="16" r="4" fill="#111827"/>
+          <g transform="translate(72, 57)">
+            <path d="M 2 15 Q 24 -2 48 12 Q 72 -2 94 15 Q 90 32 69 29 Q 56 27 48 20 Q 40 27 27 29 Q 6 32 2 15 Z" fill="#1D4ED8" stroke="#1E3A8A" stroke-width="2.8"/>
+            <ellipse cx="26" cy="16" rx="11" ry="7.5" fill="#FFFFFF" stroke="#1E3A8A" stroke-width="2"/>
+            <ellipse cx="70" cy="16" rx="11" ry="7.5" fill="#FFFFFF" stroke="#1E3A8A" stroke-width="2"/>
+            <circle cx="27" cy="16" r="4.5" fill="#0F172A"/>
+            <circle cx="71" cy="16" r="4.5" fill="#0F172A"/>
+            <circle cx="29" cy="14" r="1.8" fill="#FFFFFF"/>
+            <circle cx="73" cy="14" r="1.8" fill="#FFFFFF"/>
           </g>
         `;
       }
       if (eyesId === 'monocle') {
         return `
           <g>
-            <circle cx="132" cy="84" r="15" fill="rgba(186,230,253,0.45)" stroke="#D97706" stroke-width="3.5"/>
-            <path d="M 147 88 Q 156 108 148 128" fill="none" stroke="#F59E0B" stroke-width="2.5" stroke-dasharray="3 2"/>
+            <circle cx="142" cy="74" r="16" fill="rgba(186,230,253,0.42)" stroke="url(#${g}_gold)" stroke-width="3.5"/>
+            <path d="M 134 65 Q 140 62 146 66" fill="none" stroke="#FFFFFF" stroke-width="2.5" opacity="0.8" stroke-linecap="round"/>
+            <path d="M 157 79 Q 168 104 158 130" fill="none" stroke="#F59E0B" stroke-width="2.5" stroke-dasharray="3 2"/>
           </g>
         `;
       }
       return '';
     }
 
-    function renderOutfitHead(headId) {
+    function renderOutfitHead(headId, g) {
       if (headId === 'hat') {
         return `
-          <g transform="translate(72, 10)">
-            <ellipse cx="38" cy="36" rx="46" ry="11" fill="#D97706" stroke="#78350F" stroke-width="3"/>
-            <path d="M 12 34 C 14 8, 62 8, 64 34 Z" fill="#F59E0B" stroke="#78350F" stroke-width="3"/>
-            <rect x="13" y="26" width="50" height="7" rx="3" fill="#166534"/>
+          <g transform="translate(80, 4)">
+            <ellipse cx="40" cy="36" rx="48" ry="11" fill="#B45309" stroke="#78350F" stroke-width="3"/>
+            <path d="M 12 34 C 14 6, 66 6, 68 34 Z" fill="url(#${g}_pack)" stroke="#78350F" stroke-width="3"/>
+            <rect x="13" y="25" width="54" height="7" rx="3" fill="#166534"/>
+            <path d="M 24 14 Q 36 10 46 14" fill="none" stroke="#FEF3C7" stroke-width="3" opacity="0.55" stroke-linecap="round"/>
           </g>
         `;
       }
       if (headId === 'cap') {
         return `
-          <g transform="translate(72, 12)">
-            <path d="M 10 34 C 12 6, 64 6, 66 34 Z" fill="#0284C7" stroke="#0C4A6E" stroke-width="3"/>
-            <path d="M 10 32 Q 44 26 84 36 Q 66 44 10 36 Z" fill="#38BDF8" stroke="#0C4A6E" stroke-width="3"/>
-            <circle cx="38" cy="10" r="4.5" fill="#FACC15" stroke="#0C4A6E" stroke-width="2"/>
+          <g transform="translate(80, 6)">
+            <path d="M 10 34 C 12 4, 68 4, 70 34 Z" fill="#0284C7" stroke="#0C4A6E" stroke-width="3"/>
+            <path d="M 10 32 Q 46 25 88 37 Q 68 45 10 36 Z" fill="#38BDF8" stroke="#0C4A6E" stroke-width="3"/>
+            <circle cx="40" cy="9" r="5" fill="#FACC15" stroke="#0C4A6E" stroke-width="2"/>
+            <path d="M 24 14 Q 38 9 50 14" fill="none" stroke="#BAE6FD" stroke-width="3" opacity="0.65" stroke-linecap="round"/>
           </g>
         `;
       }
       if (headId === 'viking') {
         return `
-          <g transform="translate(70, 8)">
-            <path d="M 16 28 Q -4 18 4 4 Q 14 14 22 20 Z" fill="#FEF3C7" stroke="#78350F" stroke-width="2.5"/>
-            <path d="M 64 28 Q 84 18 76 4 Q 66 14 58 20 Z" fill="#FEF3C7" stroke="#78350F" stroke-width="2.5"/>
-            <path d="M 12 38 C 14 10, 66 10, 68 38 Z" fill="#64748B" stroke="#1E293B" stroke-width="3"/>
-            <rect x="10" y="32" width="60" height="9" rx="4" fill="#F59E0B" stroke="#78350F" stroke-width="2.5"/>
+          <g transform="translate(78, 2)">
+            <path d="M 16 28 Q -6 16 4 2 Q 15 12 23 20 Z" fill="#FEF3C7" stroke="#78350F" stroke-width="2.5"/>
+            <path d="M 68 28 Q 90 16 80 2 Q 69 12 61 20 Z" fill="#FEF3C7" stroke="#78350F" stroke-width="2.5"/>
+            <path d="M 12 38 C 14 8, 70 8, 72 38 Z" fill="#64748B" stroke="#1E293B" stroke-width="3"/>
+            <path d="M 24 16 Q 42 10 56 16" fill="none" stroke="#E2E8F0" stroke-width="3" opacity="0.6" stroke-linecap="round"/>
+            <rect x="10" y="32" width="64" height="9" rx="4" fill="url(#${g}_gold)" stroke="#78350F" stroke-width="2.5"/>
           </g>
         `;
       }
       if (headId === 'crown') {
         return `
-          <g transform="translate(74, 8)">
-            <polygon points="6,38 12,10 26,24 36,4 46,24 60,10 66,38" fill="#FBBF24" stroke="#B45309" stroke-width="3" stroke-linejoin="round"/>
-            <circle cx="36" cy="24" r="4.5" fill="#EF4444"/>
-            <circle cx="20" cy="29" r="3.5" fill="#3B82F6"/>
-            <circle cx="52" cy="29" r="3.5" fill="#10B981"/>
+          <g transform="translate(82, 2)">
+            <polygon points="6,38 12,10 26,24 38,4 50,24 64,10 70,38" fill="url(#${g}_gold)" stroke="#92400E" stroke-width="3" stroke-linejoin="round"/>
+            <circle cx="38" cy="24" r="4.8" fill="#EF4444" stroke="#7F1D1D" stroke-width="1.5"/>
+            <circle cx="21" cy="29" r="3.8" fill="#3B82F6" stroke="#1E3A8A" stroke-width="1.5"/>
+            <circle cx="55" cy="29" r="3.8" fill="#10B981" stroke="#065F46" stroke-width="1.5"/>
           </g>
         `;
       }
       if (headId === 'magic_hat') {
         return `
-          <g transform="translate(72, 2)">
-            <ellipse cx="38" cy="44" rx="46" ry="10" fill="#1E293B" stroke="#0F172A" stroke-width="3"/>
-            <rect x="16" y="8" width="44" height="36" rx="6" fill="#312E81" stroke="#0F172A" stroke-width="3"/>
-            <rect x="16" y="32" width="44" height="8" fill="#F59E0B"/>
-            <polygon points="38,14 40,20 46,20 41,24 43,30 38,26 33,30 35,24 30,20 36,20" fill="#FACC15"/>
+          <g transform="translate(80, -2)">
+            <ellipse cx="40" cy="44" rx="48" ry="10" fill="#1E293B" stroke="#0F172A" stroke-width="3"/>
+            <rect x="17" y="6" width="46" height="38" rx="7" fill="#312E81" stroke="#0F172A" stroke-width="3"/>
+            <rect x="17" y="32" width="46" height="8" fill="url(#${g}_gold)"/>
+            <polygon points="40,12 42,19 49,19 43,23 45,30 40,26 35,30 37,23 31,19 38,19" fill="#FACC15"/>
           </g>
         `;
       }
       return '';
+    }
+
+    function renderAnimalTail(st, g) {
+      if (['croc', 'trex', 'dragon'].includes(st.extra)) {
+        return `
+          <path d="M 152 172 Q 204 186 218 154 Q 196 164 156 152 Z" fill="url(#${g}_body)" stroke="${st.stroke}" stroke-width="3" stroke-linejoin="round"/>
+          <polygon points="184,162 192,152 198,162" fill="${shadeHex(st.body, -25)}" stroke="${st.stroke}" stroke-width="2"/>
+        `;
+      }
+      if (['monkey', 'spots', 'tiger', 'mane'].includes(st.extra)) {
+        return `
+          <path d="M 156 172 Q 202 172 204 134 Q 206 116 190 120" fill="none" stroke="${st.stroke}" stroke-width="11" stroke-linecap="round"/>
+          <path d="M 156 172 Q 202 172 204 134 Q 206 116 190 120" fill="none" stroke="${st.body}" stroke-width="6.5" stroke-linecap="round"/>
+          ${st.extra === 'mane' ? `<circle cx="188" cy="120" r="8" fill="#92400E" stroke="#713F12" stroke-width="2.5"/>` : ''}
+        `;
+      }
+      if (['wolf', 'fox'].includes(st.extra)) {
+        return `
+          <path d="M 154 174 Q 206 176 208 138 Q 184 146 156 160 Z" fill="url(#${g}_body)" stroke="${st.stroke}" stroke-width="3" stroke-linejoin="round"/>
+          ${st.extra === 'fox' ? `<path d="M 194 144 Q 208 138 206 154 Q 194 156 194 144 Z" fill="#FFFFFF"/>` : ''}
+        `;
+      }
+      if (st.extra === 'shark') {
+        return `<path d="M 156 166 L 204 142 L 194 168 L 208 186 L 154 176 Z" fill="url(#${g}_body)" stroke="${st.stroke}" stroke-width="3" stroke-linejoin="round"/>`;
+      }
+      if (['eagle', 'toucan'].includes(st.extra)) {
+        return `<path d="M 152 168 L 196 156 L 198 174 L 188 184 L 150 178 Z" fill="${shadeHex(st.body, -25)}" stroke="${st.stroke}" stroke-width="3" stroke-linejoin="round"/>`;
+      }
+      return `<ellipse cx="164" cy="172" rx="12" ry="9" fill="${st.body}" stroke="${st.stroke}" stroke-width="3"/>`;
     }
 
     function renderCompanionSVG(animalId = state.activeAnimal, outfitOverride = null, mood = 'normal', isLocked = false) {
       const animal = getAnimalById(animalId);
       const st = ANIMAL_STYLES[animalId] || ANIMAL_STYLES.cocodrilo;
       const outfit = outfitOverride || getAnimalOutfit(animalId);
-      const lvl = getAnimalLevel(animalId);
-      const isLegend = !isLocked && lvl >= MAX_ANIMAL_LEVEL;
+      const isLegend = !isLocked && getExplorerProgress().level >= 5;
+      const g = 'm' + (++_svgUid);
 
-      // Distinct character ears / manes / horns / fins behind head
+      const headHi = shadeHex(st.head, 36);
+      const headSh = shadeHex(st.head, -34);
+      const bodyHi = shadeHex(st.body, 32);
+      const bodySh = shadeHex(st.body, -36);
+      const bellyHi = shadeHex(st.belly, 24);
+      const bellySh = shadeHex(st.belly, -22);
+      const snoutHi = shadeHex(st.snout, 24);
+      const snoutSh = shadeHex(st.snout, -24);
+
       let headBack = '';
       let faceDetail = '';
       let snoutMarkup = '';
 
       if (st.extra === 'mane') {
         headBack = `
-          <circle cx="110" cy="86" r="56" fill="#B45309" stroke="#713F12" stroke-width="3.5" stroke-dasharray="14 6"/>
-          <circle cx="110" cy="86" r="50" fill="#D97706" stroke="#713F12" stroke-width="3"/>
-          <circle cx="72" cy="52" r="13" fill="${st.head}" stroke="${st.stroke}" stroke-width="3"/>
-          <circle cx="148" cy="52" r="13" fill="${st.head}" stroke="${st.stroke}" stroke-width="3"/>
+          <circle cx="120" cy="76" r="56" fill="#92400E" stroke="#713F12" stroke-width="3.5" stroke-dasharray="14 6"/>
+          <circle cx="120" cy="76" r="49" fill="#D97706" stroke="#713F12" stroke-width="3"/>
+          <circle cx="80" cy="44" r="12" fill="${st.head}" stroke="${st.stroke}" stroke-width="3"/>
+          <circle cx="160" cy="44" r="12" fill="${st.head}" stroke="${st.stroke}" stroke-width="3"/>
         `;
       } else if (st.extra === 'elephant') {
         headBack = `
-          <ellipse cx="52" cy="86" rx="28" ry="36" fill="${st.head}" stroke="${st.stroke}" stroke-width="3.5"/>
-          <ellipse cx="54" cy="88" rx="17" ry="24" fill="#FBCFE8" opacity="0.65"/>
-          <ellipse cx="168" cy="86" rx="28" ry="36" fill="${st.head}" stroke="${st.stroke}" stroke-width="3.5"/>
-          <ellipse cx="166" cy="88" rx="17" ry="24" fill="#FBCFE8" opacity="0.65"/>
+          <ellipse cx="60" cy="76" rx="28" ry="36" fill="url(#${g}_head)" stroke="${st.stroke}" stroke-width="3.5"/>
+          <ellipse cx="62" cy="78" rx="17" ry="24" fill="#FBCFE8" opacity="0.65"/>
+          <ellipse cx="180" cy="76" rx="28" ry="36" fill="url(#${g}_head)" stroke="${st.stroke}" stroke-width="3.5"/>
+          <ellipse cx="178" cy="78" rx="17" ry="24" fill="#FBCFE8" opacity="0.65"/>
         `;
         snoutMarkup = `
-          <path d="M 86 106 Q 74 116 78 126" fill="none" stroke="#FFFFFF" stroke-width="6" stroke-linecap="round"/>
-          <path d="M 134 106 Q 146 116 142 126" fill="none" stroke="#FFFFFF" stroke-width="6" stroke-linecap="round"/>
-          <path d="M 102 96 Q 100 124 116 128 Q 124 128 122 118" fill="none" stroke="${st.head}" stroke-width="14" stroke-linecap="round"/>
-          <path d="M 102 96 Q 100 124 116 128 Q 124 128 122 118" fill="none" stroke="${st.stroke}" stroke-width="3" stroke-linecap="round"/>
+          <path d="M 96 96 Q 84 106 88 116" fill="none" stroke="#FFFFFF" stroke-width="6" stroke-linecap="round"/>
+          <path d="M 144 96 Q 156 106 152 116" fill="none" stroke="#FFFFFF" stroke-width="6" stroke-linecap="round"/>
+          <path d="M 112 86 Q 110 116 126 120 Q 134 120 132 110" fill="none" stroke="${st.head}" stroke-width="14" stroke-linecap="round"/>
+          <path d="M 112 86 Q 110 116 126 120 Q 134 120 132 110" fill="none" stroke="${st.stroke}" stroke-width="3" stroke-linecap="round"/>
         `;
       } else if (st.extra === 'monkey' || st.extra === 'gorilla') {
         headBack = `
-          <circle cx="62" cy="86" r="15" fill="${st.head}" stroke="${st.stroke}" stroke-width="3"/>
-          <circle cx="62" cy="86" r="8" fill="${st.snout}"/>
-          <circle cx="158" cy="86" r="15" fill="${st.head}" stroke="${st.stroke}" stroke-width="3"/>
-          <circle cx="158" cy="86" r="8" fill="${st.snout}"/>
+          <circle cx="70" cy="76" r="15" fill="url(#${g}_head)" stroke="${st.stroke}" stroke-width="3"/>
+          <circle cx="70" cy="76" r="8" fill="${st.snout}"/>
+          <circle cx="170" cy="76" r="15" fill="url(#${g}_head)" stroke="${st.stroke}" stroke-width="3"/>
+          <circle cx="170" cy="76" r="8" fill="${st.snout}"/>
         `;
-        faceDetail = `<ellipse cx="110" cy="96" rx="34" ry="26" fill="${st.snout}"/>`;
-      } else if (st.extra === 'wolf' || st.extra === 'fox' || st.extra === 'tiger' || st.extra === 'spots') {
+        faceDetail = `<ellipse cx="120" cy="86" rx="34" ry="26" fill="url(#${g}_snout)"/>`;
+      } else if (['wolf', 'fox', 'tiger', 'spots'].includes(st.extra)) {
         headBack = `
-          <polygon points="66,72 62,32 94,52" fill="${st.head}" stroke="${st.stroke}" stroke-width="3.5" stroke-linejoin="round"/>
-          <polygon points="71,64 69,42 87,54" fill="${st.snout}"/>
-          <polygon points="154,72 158,32 126,52" fill="${st.head}" stroke="${st.stroke}" stroke-width="3.5" stroke-linejoin="round"/>
-          <polygon points="149,64 151,42 133,54" fill="${st.snout}"/>
+          <polygon points="76,62 72,22 104,42" fill="url(#${g}_head)" stroke="${st.stroke}" stroke-width="3.5" stroke-linejoin="round"/>
+          <polygon points="81,54 79,32 97,44" fill="${st.snout}"/>
+          <polygon points="164,62 168,22 136,42" fill="url(#${g}_head)" stroke="${st.stroke}" stroke-width="3.5" stroke-linejoin="round"/>
+          <polygon points="159,54 161,32 143,44" fill="${st.snout}"/>
         `;
         if (st.extra === 'tiger') {
           faceDetail = `
-            <path d="M 66 78 L 80 82 M 66 90 L 78 92 M 154 78 L 140 82 M 154 90 L 142 92" stroke="#111827" stroke-width="4" stroke-linecap="round"/>
-            <path d="M 102 48 L 106 60 M 110 46 L 110 60 M 118 48 L 114 60" stroke="#111827" stroke-width="3.5" stroke-linecap="round"/>
+            <path d="M 76 68 L 90 72 M 76 80 L 88 82 M 164 68 L 150 72 M 164 80 L 152 82" stroke="#111827" stroke-width="4" stroke-linecap="round"/>
+            <path d="M 112 38 L 116 50 M 120 36 L 120 50 M 128 38 L 124 50" stroke="#111827" stroke-width="3.5" stroke-linecap="round"/>
           `;
         } else if (st.extra === 'spots') {
           faceDetail = `
-            <circle cx="76" cy="66" r="4.5" fill="#78350F"/><circle cx="144" cy="66" r="4.5" fill="#78350F"/>
-            <circle cx="70" cy="98" r="4" fill="#78350F"/><circle cx="150" cy="98" r="4" fill="#78350F"/>
+            <circle cx="86" cy="56" r="4.5" fill="#78350F"/><circle cx="154" cy="56" r="4.5" fill="#78350F"/>
+            <circle cx="80" cy="88" r="4" fill="#78350F"/><circle cx="160" cy="88" r="4" fill="#78350F"/>
           `;
         } else if (st.extra === 'fox') {
-          faceDetail = `<path d="M 66 94 Q 88 122 110 118 Q 132 122 154 94 Q 142 126 110 126 Q 78 126 66 94 Z" fill="#FFFFFF"/>`;
+          faceDetail = `<path d="M 76 84 Q 98 112 120 108 Q 142 112 164 84 Q 152 116 120 116 Q 88 116 76 84 Z" fill="#FFFFFF"/>`;
         }
       } else if (st.extra === 'panda' || st.extra === 'bear') {
         const earCol = st.extra === 'panda' ? '#0F172A' : st.head;
         headBack = `
-          <circle cx="72" cy="52" r="15" fill="${earCol}" stroke="${st.stroke}" stroke-width="3"/>
-          <circle cx="148" cy="52" r="15" fill="${earCol}" stroke="${st.stroke}" stroke-width="3"/>
+          <circle cx="82" cy="42" r="15" fill="${earCol}" stroke="${st.stroke}" stroke-width="3"/>
+          <circle cx="158" cy="42" r="15" fill="${earCol}" stroke="${st.stroke}" stroke-width="3"/>
         `;
         if (st.extra === 'panda') {
           faceDetail = `
-            <ellipse cx="88" cy="84" rx="15" ry="13" fill="#0F172A" transform="rotate(-14 88 84)"/>
-            <ellipse cx="132" cy="84" rx="15" ry="13" fill="#0F172A" transform="rotate(14 132 84)"/>
+            <ellipse cx="98" cy="74" rx="15" ry="13" fill="#0F172A" transform="rotate(-14 98 74)"/>
+            <ellipse cx="142" cy="74" rx="15" ry="13" fill="#0F172A" transform="rotate(14 142 74)"/>
           `;
         }
       } else if (st.extra === 'giraffe') {
         headBack = `
-          <line x1="88" y1="52" x2="82" y2="30" stroke="${st.stroke}" stroke-width="5" stroke-linecap="round"/>
-          <circle cx="82" cy="28" r="6" fill="#78350F"/>
-          <line x1="132" y1="52" x2="138" y2="30" stroke="${st.stroke}" stroke-width="5" stroke-linecap="round"/>
-          <circle cx="138" cy="28" r="6" fill="#78350F"/>
-          <ellipse cx="64" cy="64" rx="14" ry="8" fill="${st.head}" stroke="${st.stroke}" stroke-width="3"/>
-          <ellipse cx="156" cy="64" rx="14" ry="8" fill="${st.head}" stroke="${st.stroke}" stroke-width="3"/>
+          <line x1="98" y1="42" x2="92" y2="20" stroke="${st.stroke}" stroke-width="5" stroke-linecap="round"/>
+          <circle cx="92" cy="18" r="6" fill="#78350F"/>
+          <line x1="142" y1="42" x2="148" y2="20" stroke="${st.stroke}" stroke-width="5" stroke-linecap="round"/>
+          <circle cx="148" cy="18" r="6" fill="#78350F"/>
+          <ellipse cx="74" cy="54" rx="14" ry="8" fill="${st.head}" stroke="${st.stroke}" stroke-width="3"/>
+          <ellipse cx="166" cy="54" rx="14" ry="8" fill="${st.head}" stroke="${st.stroke}" stroke-width="3"/>
         `;
-        faceDetail = `<circle cx="76" cy="76" r="5" fill="#B45309" opacity="0.7"/><circle cx="144" cy="74" r="5" fill="#B45309" opacity="0.7"/>`;
+        faceDetail = `<circle cx="86" cy="66" r="5" fill="#B45309" opacity="0.7"/><circle cx="154" cy="64" r="5" fill="#B45309" opacity="0.7"/>`;
       } else if (st.extra === 'zebra') {
         headBack = `
-          <polygon points="70,66 68,34 92,50" fill="#FFFFFF" stroke="#0F172A" stroke-width="3"/>
-          <polygon points="150,66 152,34 128,50" fill="#FFFFFF" stroke="#0F172A" stroke-width="3"/>
-          <path d="M 98 44 L 104 30 L 110 42 L 116 30 L 122 44" fill="#0F172A"/>
+          <polygon points="80,56 78,24 102,40" fill="#FFFFFF" stroke="#0F172A" stroke-width="3"/>
+          <polygon points="160,56 162,24 138,40" fill="#FFFFFF" stroke="#0F172A" stroke-width="3"/>
+          <path d="M 108 34 L 114 20 L 120 32 L 126 20 L 132 34" fill="#0F172A"/>
         `;
-        faceDetail = `
-          <path d="M 66 76 L 82 80 M 66 90 L 80 92 M 154 76 L 138 80 M 154 90 L 140 92" stroke="#0F172A" stroke-width="5" stroke-linecap="round"/>
-        `;
+        faceDetail = `<path d="M 76 66 L 92 70 M 76 80 L 90 82 M 164 66 L 148 70 M 164 80 L 150 82" stroke="#0F172A" stroke-width="5" stroke-linecap="round"/>`;
       } else if (st.extra === 'shark') {
-        headBack = `
-          <path d="M 102 48 Q 112 16 128 46 Z" fill="#0284C7" stroke="#0C4A6E" stroke-width="3.5" stroke-linejoin="round"/>
-          <path d="M 62 138 Q 34 146 42 164 L 68 156 Z" fill="#0284C7" stroke="#0C4A6E" stroke-width="3"/>
-          <path d="M 158 138 Q 186 146 178 164 L 152 156 Z" fill="#0284C7" stroke="#0C4A6E" stroke-width="3"/>
-        `;
+        headBack = `<path d="M 112 38 Q 122 8 138 36 Z" fill="#0284C7" stroke="#0C4A6E" stroke-width="3.5" stroke-linejoin="round"/>`;
       } else if (st.extra === 'dragon') {
         headBack = `
-          <path d="M 80 54 Q 64 26 76 20 Q 86 30 92 48 Z" fill="#FACC15" stroke="#7F1D1D" stroke-width="3"/>
-          <path d="M 140 54 Q 156 26 144 20 Q 134 30 128 48 Z" fill="#FACC15" stroke="#7F1D1D" stroke-width="3"/>
+          <path d="M 90 44 Q 74 16 86 10 Q 96 20 102 38 Z" fill="url(#${g}_gold)" stroke="#7F1D1D" stroke-width="3"/>
+          <path d="M 150 44 Q 166 16 154 10 Q 144 20 138 38 Z" fill="url(#${g}_gold)" stroke="#7F1D1D" stroke-width="3"/>
         `;
       } else if (st.extra === 'rhino') {
         headBack = `
-          <circle cx="72" cy="54" r="12" fill="${st.head}" stroke="${st.stroke}" stroke-width="3"/>
-          <circle cx="148" cy="54" r="12" fill="${st.head}" stroke="${st.stroke}" stroke-width="3"/>
+          <circle cx="82" cy="44" r="12" fill="${st.head}" stroke="${st.stroke}" stroke-width="3"/>
+          <circle cx="158" cy="44" r="12" fill="${st.head}" stroke="${st.stroke}" stroke-width="3"/>
         `;
-        snoutMarkup = `<polygon points="100,104 110,76 120,104" fill="#F8FAFC" stroke="${st.stroke}" stroke-width="3" stroke-linejoin="round"/>`;
+        snoutMarkup = `<polygon points="110,94 120,66 130,94" fill="#F8FAFC" stroke="${st.stroke}" stroke-width="3" stroke-linejoin="round"/>`;
       } else if (st.extra === 'croc' || st.extra === 'trex') {
         headBack = `
-          <polygon points="88,48 96,34 104,48" fill="#15803D" stroke="${st.stroke}" stroke-width="2.5"/>
-          <polygon points="104,46 112,32 120,46" fill="#15803D" stroke="${st.stroke}" stroke-width="2.5"/>
-          <polygon points="120,48 128,36 134,50" fill="#15803D" stroke="${st.stroke}" stroke-width="2.5"/>
+          <polygon points="98,38 106,24 114,38" fill="#15803D" stroke="${st.stroke}" stroke-width="2.5"/>
+          <polygon points="114,36 122,22 130,36" fill="#15803D" stroke="${st.stroke}" stroke-width="2.5"/>
+          <polygon points="130,38 138,26 144,40" fill="#15803D" stroke="${st.stroke}" stroke-width="2.5"/>
         `;
       } else if (st.extra === 'hippo') {
         headBack = `
-          <circle cx="74" cy="52" r="11" fill="${st.head}" stroke="${st.stroke}" stroke-width="3"/>
-          <circle cx="146" cy="52" r="11" fill="${st.head}" stroke="${st.stroke}" stroke-width="3"/>
+          <circle cx="84" cy="42" r="11" fill="${st.head}" stroke="${st.stroke}" stroke-width="3"/>
+          <circle cx="156" cy="42" r="11" fill="${st.head}" stroke="${st.stroke}" stroke-width="3"/>
         `;
       }
 
-      // Snout / Beak / Mouth
       const smilePath = mood === 'happy'
-        ? 'M 92 108 Q 110 126 128 108'
+        ? 'M 102 98 Q 120 116 138 98'
         : mood === 'encourage'
-          ? 'M 98 112 Q 110 116 122 112'
-          : 'M 94 109 Q 110 120 126 109';
+          ? 'M 108 102 Q 120 106 132 102'
+          : 'M 104 99 Q 120 110 136 99';
 
       if (st.extra === 'eagle') {
-        snoutMarkup = `<path d="M 98 96 Q 110 88 122 96 L 110 116 Z" fill="#F59E0B" stroke="#78350F" stroke-width="3" stroke-linejoin="round"/>`;
+        snoutMarkup = `<path d="M 108 86 Q 120 78 132 86 L 120 108 Z" fill="url(#${g}_gold)" stroke="#78350F" stroke-width="3" stroke-linejoin="round"/>`;
       } else if (st.extra === 'toucan') {
-        snoutMarkup = `<path d="M 98 94 Q 134 86 156 106 Q 132 118 98 110 Z" fill="#F97316" stroke="#7C2D12" stroke-width="3"/><path d="M 138 97 Q 152 102 155 106 Q 144 112 136 111 Z" fill="#EF4444"/>`;
+        snoutMarkup = `<path d="M 108 84 Q 144 76 168 96 Q 142 108 108 100 Z" fill="#F97316" stroke="#7C2D12" stroke-width="3"/><path d="M 148 87 Q 164 92 167 96 Q 154 102 146 101 Z" fill="#EF4444"/>`;
       } else if (!snoutMarkup) {
         const showTeeth = ['croc', 'trex', 'shark', 'hippo', 'dragon'].includes(st.extra);
         snoutMarkup = `
-          <ellipse cx="110" cy="108" rx="${st.extra === 'hippo' || st.extra === 'croc' ? 32 : 24}" ry="16" fill="${st.snout}" stroke="${st.stroke}" stroke-width="2.5"/>
-          <circle cx="102" cy="101" r="2.8" fill="${st.stroke}"/>
-          <circle cx="118" cy="101" r="2.8" fill="${st.stroke}"/>
-          ${showTeeth ? `<polygon points="98,111 102,119 106,112" fill="#FFFFFF"/><polygon points="114,112 118,119 122,111" fill="#FFFFFF"/>` : ''}
+          <ellipse cx="120" cy="98" rx="${st.extra === 'hippo' || st.extra === 'croc' ? 32 : 24}" ry="16" fill="url(#${g}_snout)" stroke="${st.stroke}" stroke-width="2.5"/>
+          <circle cx="112" cy="91" r="2.8" fill="${st.stroke}"/>
+          <circle cx="128" cy="91" r="2.8" fill="${st.stroke}"/>
+          ${showTeeth ? `<polygon points="108,101 112,109 116,102" fill="#FFFFFF"/><polygon points="124,102 128,109 132,101" fill="#FFFFFF"/>` : ''}
           <path d="${smilePath}" fill="none" stroke="${st.stroke}" stroke-width="3" stroke-linecap="round"/>
         `;
       }
 
       const legendAura = isLegend
-        ? `<circle cx="110" cy="105" r="82" fill="rgba(251,191,36,0.2)" stroke="#FBBF24" stroke-width="3.5" stroke-dasharray="9 6"/>`
+        ? `<circle cx="120" cy="122" r="96" fill="rgba(251,191,36,0.16)" stroke="#FBBF24" stroke-width="3" stroke-dasharray="10 6"/>`
         : '';
 
       return `
-        <svg class="coco-svg ${mood === 'happy' ? 'happy' : mood === 'encourage' ? 'wiggle' : ''}" viewBox="0 0 220 200" xmlns="http://www.w3.org/2000/svg" aria-label="${animal.name}" style="${isLocked ? 'filter:brightness(0.22) contrast(1.1);opacity:0.75;' : ''}">
+        <svg class="coco-svg ${mood === 'happy' ? 'happy' : mood === 'encourage' ? 'wiggle' : ''}" viewBox="0 0 240 245" xmlns="http://www.w3.org/2000/svg" aria-label="${animal.name}" style="${isLocked ? 'filter:brightness(0.22) contrast(1.1);opacity:0.75;' : ''}">
+          <defs>
+            <radialGradient id="${g}_head" cx="35%" cy="28%" r="72%">
+              <stop offset="0%" stop-color="${headHi}"/>
+              <stop offset="55%" stop-color="${st.head}"/>
+              <stop offset="100%" stop-color="${headSh}"/>
+            </radialGradient>
+            <radialGradient id="${g}_body" cx="35%" cy="26%" r="74%">
+              <stop offset="0%" stop-color="${bodyHi}"/>
+              <stop offset="58%" stop-color="${st.body}"/>
+              <stop offset="100%" stop-color="${bodySh}"/>
+            </radialGradient>
+            <linearGradient id="${g}_belly" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="${bellyHi}"/>
+              <stop offset="100%" stop-color="${bellySh}"/>
+            </linearGradient>
+            <radialGradient id="${g}_snout" cx="40%" cy="30%" r="70%">
+              <stop offset="0%" stop-color="${snoutHi}"/>
+              <stop offset="65%" stop-color="${st.snout}"/>
+              <stop offset="100%" stop-color="${snoutSh}"/>
+            </radialGradient>
+            <linearGradient id="${g}_gold" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#FEF08A"/>
+              <stop offset="50%" stop-color="#FACC15"/>
+              <stop offset="100%" stop-color="#D97706"/>
+            </linearGradient>
+            <linearGradient id="${g}_cape" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#F87171"/>
+              <stop offset="55%" stop-color="#EF4444"/>
+              <stop offset="100%" stop-color="#991B1B"/>
+            </linearGradient>
+            <linearGradient id="${g}_pack" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#FBBF24"/>
+              <stop offset="100%" stop-color="#B45309"/>
+            </linearGradient>
+          </defs>
+
           ${legendAura}
-          <ellipse cx="110" cy="184" rx="76" ry="11" fill="rgba(0,0,0,0.12)"/>
 
-          <!-- BACK CLOTHING SLOT -->
-          ${isLocked ? '' : renderOutfitBack(outfit.back)}
+          <!-- 3D Ground Contact Shadow -->
+          <ellipse cx="120" cy="228" rx="68" ry="12" fill="rgba(15, 23, 42, 0.22)"/>
+          <ellipse cx="120" cy="228" rx="44" ry="7" fill="rgba(15, 23, 42, 0.18)"/>
 
-          <!-- CHARACTER BODY -->
-          <ellipse cx="110" cy="150" rx="44" ry="34" fill="${st.body}" stroke="${st.stroke}" stroke-width="3.5"/>
-          <ellipse cx="110" cy="154" rx="26" ry="22" fill="${st.belly}"/>
-          <!-- Cute Paws -->
-          <ellipse cx="74" cy="172" rx="15" ry="10" fill="${st.head}" stroke="${st.stroke}" stroke-width="3"/>
-          <ellipse cx="146" cy="172" rx="15" ry="10" fill="${st.head}" stroke="${st.stroke}" stroke-width="3"/>
+          <!-- TAIL & BACK CLOTHING SLOT -->
+          ${renderAnimalTail(st, g)}
+          ${isLocked ? '' : renderOutfitBack(outfit.back, g)}
 
-          <!-- CHARACTER EARS / MANE / HORNS -->
+          <!-- STURDY 3D LEGS & FEET -->
+          <g>
+            <path d="M 86 184 L 80 214 Q 80 226 98 224 Q 108 222 106 212 L 106 184 Z" fill="url(#${g}_body)" stroke="${st.stroke}" stroke-width="3.2" stroke-linejoin="round"/>
+            <ellipse cx="92" cy="222" rx="16" ry="8" fill="url(#${g}_head)" stroke="${st.stroke}" stroke-width="3"/>
+            <path d="M 154 184 L 160 214 Q 160 226 142 224 Q 132 222 134 212 L 134 184 Z" fill="url(#${g}_body)" stroke="${st.stroke}" stroke-width="3.2" stroke-linejoin="round"/>
+            <ellipse cx="148" cy="222" rx="16" ry="8" fill="url(#${g}_head)" stroke="${st.stroke}" stroke-width="3"/>
+          </g>
+
+          <!-- SCULPTED 3D HEROIC TORSO & CHEST -->
+          <path d="M 82 118 C 68 134, 68 176, 86 192 C 102 200, 138 200, 154 192 C 172 176, 172 134, 158 118 Z" fill="url(#${g}_body)" stroke="${st.stroke}" stroke-width="3.5" stroke-linejoin="round"/>
+          <path d="M 94 126 C 86 144, 88 176, 102 188 C 114 192, 126 192, 138 188 C 152 176, 154 144, 146 126 Z" fill="url(#${g}_belly)"/>
+          <!-- Subtle Chest Rim Highlight -->
+          <path d="M 90 128 Q 120 120 150 128" fill="none" stroke="#FFFFFF" stroke-width="2.5" opacity="0.35" stroke-linecap="round"/>
+
+          <!-- FRONT TORSO OUTFIT OVERLAYS (BACKPACK STRAPS / CAPE CLASP) -->
+          ${isLocked ? '' : renderOutfitTorsoOverlay(outfit.back, g)}
+
+          <!-- ARTICULATED 3D ARMS & PAWS -->
+          <g>
+            <path d="M 80 128 C 56 136, 48 162, 62 176 C 72 182, 82 172, 80 158 Z" fill="url(#${g}_body)" stroke="${st.stroke}" stroke-width="3.2" stroke-linejoin="round"/>
+            <ellipse cx="66" cy="174" rx="12" ry="10" fill="url(#${g}_head)" stroke="${st.stroke}" stroke-width="2.8"/>
+            <path d="M 160 128 C 184 136, 192 162, 178 176 C 168 182, 158 172, 160 158 Z" fill="url(#${g}_body)" stroke="${st.stroke}" stroke-width="3.2" stroke-linejoin="round"/>
+            <ellipse cx="174" cy="174" rx="12" ry="10" fill="url(#${g}_head)" stroke="${st.stroke}" stroke-width="2.8"/>
+          </g>
+
+          <!-- HEAD-CAST AMBIENT OCCLUSION SHADOW ON NECK -->
+          <ellipse cx="120" cy="122" rx="34" ry="9" fill="rgba(15, 23, 42, 0.22)"/>
+
+          <!-- EARS / MANE / HORNS -->
           ${headBack}
 
-          <!-- CHARACTER HEAD -->
-          <ellipse cx="110" cy="88" rx="46" ry="42" fill="${st.head}" stroke="${st.stroke}" stroke-width="3.5"/>
+          <!-- SCULPTED 3D HEAD -->
+          <path d="M 74 74 C 74 44, 94 34, 120 34 C 146 34, 166 44, 166 74 C 166 104, 146 118, 120 118 C 94 118, 74 104, 74 74 Z" fill="url(#${g}_head)" stroke="${st.stroke}" stroke-width="3.5"/>
+          <!-- Forehead Specular Sheen -->
+          <ellipse cx="104" cy="48" rx="18" ry="7" fill="#FFFFFF" opacity="0.28" transform="rotate(-10 104 48)"/>
           ${faceDetail}
 
-          <!-- Rosy Cheeks -->
-          <ellipse cx="78" cy="100" rx="7.5" ry="4.5" fill="#FB7185" opacity="0.45"/>
-          <ellipse cx="142" cy="100" rx="7.5" ry="4.5" fill="#FB7185" opacity="0.45"/>
+          <!-- Soft Blush -->
+          <ellipse cx="86" cy="90" rx="7.5" ry="4.5" fill="#FB7185" opacity="0.38"/>
+          <ellipse cx="154" cy="90" rx="7.5" ry="4.5" fill="#FB7185" opacity="0.38"/>
 
-          <!-- Expressive Cartoon Eyes -->
-          <circle cx="88" cy="82" r="11" fill="#FFFFFF" stroke="${st.stroke}" stroke-width="2.8"/>
-          <circle cx="132" cy="82" r="11" fill="#FFFFFF" stroke="${st.stroke}" stroke-width="2.8"/>
-          <circle cx="90" cy="82" r="5.5" fill="#111827"/>
-          <circle cx="130" cy="82" r="5.5" fill="#111827"/>
-          <circle cx="92" cy="79" r="2.2" fill="#FFFFFF"/>
-          <circle cx="132" cy="79" r="2.2" fill="#FFFFFF"/>
+          <!-- Expressive 3D Eyes -->
+          <ellipse cx="98" cy="72" rx="11" ry="11.5" fill="#FFFFFF" stroke="${st.stroke}" stroke-width="2.8"/>
+          <ellipse cx="142" cy="72" rx="11" ry="11.5" fill="#FFFFFF" stroke="${st.stroke}" stroke-width="2.8"/>
+          <circle cx="100" cy="73" r="6" fill="#1E293B"/>
+          <circle cx="140" cy="73" r="6" fill="#1E293B"/>
+          <circle cx="100" cy="73" r="3.5" fill="#090D16"/>
+          <circle cx="140" cy="73" r="3.5" fill="#090D16"/>
+          <circle cx="102" cy="69.5" r="2.4" fill="#FFFFFF"/>
+          <circle cx="142" cy="69.5" r="2.4" fill="#FFFFFF"/>
+          <circle cx="97" cy="76" r="1.2" fill="#FFFFFF" opacity="0.7"/>
+          <circle cx="137" cy="76" r="1.2" fill="#FFFFFF" opacity="0.7"/>
 
           <!-- Snout / Beak / Smile -->
           ${snoutMarkup}
 
-          <!-- NECK, EYES & HEAD CLOTHING SLOTS (ALL SIMULTANEOUS!) -->
-          ${isLocked ? '' : renderOutfitNeck(outfit.neck)}
-          ${isLocked ? '' : renderOutfitEyes(outfit.eyes)}
-          ${isLocked ? '' : renderOutfitHead(outfit.head)}
+          <!-- NECK, EYES & HEAD CLOTHING SLOTS -->
+          ${isLocked ? '' : renderOutfitNeck(outfit.neck, g)}
+          ${isLocked ? '' : renderOutfitEyes(outfit.eyes, g)}
+          ${isLocked ? '' : renderOutfitHead(outfit.head, g)}
 
-          ${isLegend ? `<text x="170" y="42" font-size="22">✨</text><text x="32" y="54" font-size="18">⭐</text>` : ''}
+          ${isLegend ? `<text x="184" y="38" font-size="22">✨</text><text x="34" y="48" font-size="18">⭐</text>` : ''}
+        </svg>
+      `;
+    }
+
+    function renderExplorerBoySVG(mood = 'normal', level = 1) {
+      const g = 'boy' + (++_svgUid);
+      const smilePath = mood === 'happy'
+        ? 'M 106 94 Q 120 108 134 94'
+        : mood === 'encourage'
+          ? 'M 110 97 Q 120 101 130 97'
+          : 'M 108 95 Q 120 104 132 95';
+
+      return `
+        <svg class="coco-svg ${mood === 'happy' ? 'happy' : mood === 'encourage' ? 'wiggle' : ''}" viewBox="0 0 240 245" xmlns="http://www.w3.org/2000/svg" aria-label="Niño Explorador">
+          <defs>
+            <radialGradient id="${g}_skin" cx="35%" cy="28%" r="72%">
+              <stop offset="0%" stop-color="#FFE4C4"/>
+              <stop offset="60%" stop-color="#F6C391"/>
+              <stop offset="100%" stop-color="#D99B66"/>
+            </radialGradient>
+            <linearGradient id="${g}_shirt" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#4ADE80"/>
+              <stop offset="55%" stop-color="#16A34A"/>
+              <stop offset="100%" stop-color="#14532D"/>
+            </linearGradient>
+            <linearGradient id="${g}_shorts" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#D97706"/>
+              <stop offset="100%" stop-color="#78350F"/>
+            </linearGradient>
+            <linearGradient id="${g}_hat" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#FDE047"/>
+              <stop offset="55%" stop-color="#F59E0B"/>
+              <stop offset="100%" stop-color="#B45309"/>
+            </linearGradient>
+          </defs>
+
+          <!-- 3D Ground Contact Shadow -->
+          <ellipse cx="120" cy="228" rx="60" ry="11" fill="rgba(15, 23, 42, 0.22)"/>
+
+          <!-- Explorer Backpack behind shoulders -->
+          <rect x="68" y="116" width="104" height="66" rx="20" fill="#92400E" stroke="#451A03" stroke-width="3"/>
+          <rect x="74" y="120" width="92" height="56" rx="16" fill="#D97706"/>
+
+          <!-- Sturdy Legs & Explorer Boots -->
+          <path d="M 88 182 L 84 214 L 106 214 L 108 182 Z" fill="url(#${g}_shorts)" stroke="#451A03" stroke-width="3" stroke-linejoin="round"/>
+          <ellipse cx="94" cy="220" rx="15" ry="8" fill="#78350F" stroke="#451A03" stroke-width="3"/>
+          <path d="M 152 182 L 156 214 L 134 214 L 132 182 Z" fill="url(#${g}_shorts)" stroke="#451A03" stroke-width="3" stroke-linejoin="round"/>
+          <ellipse cx="146" cy="220" rx="15" ry="8" fill="#78350F" stroke="#451A03" stroke-width="3"/>
+
+          <!-- Heroic Explorer Vest / Shirt -->
+          <path d="M 82 118 C 70 134, 72 174, 86 188 C 102 194, 138 194, 154 188 C 168 174, 170 134, 158 118 Z" fill="url(#${g}_shirt)" stroke="#14532D" stroke-width="3.5" stroke-linejoin="round"/>
+          <!-- Khaki Vest Panels -->
+          <path d="M 84 122 L 106 122 L 106 186 L 86 184 Z" fill="#FDE68A" opacity="0.88" stroke="#92400E" stroke-width="2"/>
+          <path d="M 156 122 L 134 122 L 134 186 L 154 184 Z" fill="#FDE68A" opacity="0.88" stroke="#92400E" stroke-width="2"/>
+          <!-- Backpack Straps -->
+          <path d="M 90 122 Q 86 148 90 176" fill="none" stroke="#78350F" stroke-width="7" stroke-linecap="round"/>
+          <path d="M 150 122 Q 154 148 150 176" fill="none" stroke="#78350F" stroke-width="7" stroke-linecap="round"/>
+          <!-- Compass / Level Badge on Chest -->
+          <circle cx="120" cy="148" r="11" fill="#FACC15" stroke="#78350F" stroke-width="2.5"/>
+          <text x="120" y="152" text-anchor="middle" font-size="11" font-weight="900" fill="#78350F">${level}</text>
+
+          <!-- Articulated Arms & Hands -->
+          <path d="M 80 128 C 58 136, 52 162, 64 174 C 74 180, 82 170, 80 156 Z" fill="url(#${g}_shirt)" stroke="#14532D" stroke-width="3"/>
+          <circle cx="67" cy="173" r="10" fill="url(#${g}_skin)" stroke="#78350F" stroke-width="2.5"/>
+          <path d="M 160 128 C 182 136, 188 162, 176 174 C 166 180, 158 170, 160 156 Z" fill="url(#${g}_shirt)" stroke="#14532D" stroke-width="3"/>
+          <circle cx="173" cy="173" r="10" fill="url(#${g}_skin)" stroke="#78350F" stroke-width="2.5"/>
+
+          <!-- Red Explorer Scarf -->
+          <path d="M 84 118 Q 120 134 156 118 L 152 130 Q 120 142 88 130 Z" fill="#EF4444" stroke="#7F1D1D" stroke-width="2.5"/>
+
+          <!-- Ears -->
+          <circle cx="76" cy="78" r="10" fill="url(#${g}_skin)" stroke="#78350F" stroke-width="2.8"/>
+          <circle cx="164" cy="78" r="10" fill="url(#${g}_skin)" stroke="#78350F" stroke-width="2.8"/>
+
+          <!-- Sculpted 3D Head -->
+          <path d="M 78 74 C 78 44, 96 34, 120 34 C 144 34, 162 44, 162 74 C 162 102, 144 116, 120 116 C 96 116, 78 102, 78 74 Z" fill="url(#${g}_skin)" stroke="#78350F" stroke-width="3.2"/>
+          <!-- Hair -->
+          <path d="M 78 66 Q 82 36 120 34 Q 158 36 162 66 Q 144 50 120 52 Q 96 50 78 66 Z" fill="#451A03"/>
+
+          <!-- Expressive 3D Eyes -->
+          <ellipse cx="100" cy="74" rx="9.5" ry="10.5" fill="#FFFFFF" stroke="#451A03" stroke-width="2.5"/>
+          <ellipse cx="140" cy="74" rx="9.5" ry="10.5" fill="#FFFFFF" stroke="#451A03" stroke-width="2.5"/>
+          <circle cx="102" cy="75" r="5.2" fill="#1E293B"/>
+          <circle cx="138" cy="75" r="5.2" fill="#1E293B"/>
+          <circle cx="104" cy="72" r="2.1" fill="#FFFFFF"/>
+          <circle cx="140" cy="72" r="2.1" fill="#FFFFFF"/>
+
+          <!-- Nose, Blush & Smile -->
+          <ellipse cx="88" cy="87" rx="6.5" ry="4" fill="#FB7185" opacity="0.4"/>
+          <ellipse cx="152" cy="87" rx="6.5" ry="4" fill="#FB7185" opacity="0.4"/>
+          <path d="M 118 82 Q 123 86 118 89" fill="none" stroke="#92400E" stroke-width="2.5" stroke-linecap="round"/>
+          <path d="${smilePath}" fill="none" stroke="#78350F" stroke-width="3" stroke-linecap="round"/>
+
+          <!-- 3D Safari Explorer Hat -->
+          <g transform="translate(76, 4)">
+            <ellipse cx="44" cy="38" rx="50" ry="11" fill="#B45309" stroke="#78350F" stroke-width="3"/>
+            <path d="M 14 36 C 16 8, 72 8, 74 36 Z" fill="url(#${g}_hat)" stroke="#78350F" stroke-width="3"/>
+            <rect x="15" y="27" width="58" height="7" rx="3" fill="#166534"/>
+            <path d="M 26 16 Q 42 11 56 16" fill="none" stroke="#FEF3C7" stroke-width="3" opacity="0.6" stroke-linecap="round"/>
+          </g>
         </svg>
       `;
     }
@@ -2973,14 +3383,23 @@
 
     function updateAllCocoAvatars(mood = 'normal') {
       const activeId = state.activeAnimal || 'cocodrilo';
-      const activeAnimal = getAnimalById(activeId);
-      const heroEl = document.getElementById('heroCocoContainer');
-      if (heroEl) heroEl.innerHTML = renderCompanionSVG(activeId, getAnimalOutfit(activeId), 'normal');
-      const heroBubble = document.getElementById('heroBubble');
-      if (heroBubble) heroBubble.textContent = `¡Hola! Soy ${activeAnimal.name} (Nv.${getAnimalLevel(activeId)})`;
+      const exp = getExplorerProgress();
 
+      // Niño Explorador is the avatar who accumulates XP!
+      const heroEl = document.getElementById('heroCocoContainer');
+      if (heroEl) heroEl.innerHTML = renderExplorerBoySVG('normal', exp.level);
+      const heroBubble = document.getElementById('heroBubble');
+      if (heroBubble) heroBubble.textContent = `¡Hola! Soy el Niño Explorador · Nv.${exp.level}`;
+
+      const gameExpEl = document.getElementById('gameExplorerAvatar');
+      if (gameExpEl) gameExpEl.innerHTML = renderExplorerBoySVG(mood, exp.level);
+
+      // Game stage shows the animal whose story we are currently playing!
+      const storyId = (session && session.storyAnimalId && ANIMAL_STORIES[session.storyAnimalId])
+        ? session.storyAnimalId
+        : activeId;
       const gameEl = document.getElementById('gameCocoContainer');
-      if (gameEl) gameEl.innerHTML = renderCompanionSVG(activeId, getAnimalOutfit(activeId), mood);
+      if (gameEl) gameEl.innerHTML = renderCompanionSVG(storyId, getAnimalOutfit(storyId), mood);
 
       const wardId = wardrobeSelectedAnimal || activeId;
       const wardEl = document.getElementById('wardrobeCocoContainer');
@@ -3012,7 +3431,9 @@
           ops: ['+'],
           answer: a + b,
           hasCarry: false,
-          baseGems: 2
+          baseGems: 2,
+          baseXp: 15,
+          isSpecialChallenge: false
         };
       } else if (skillKey === 'sub2_easy') {
         const d1 = randInt(3, 8);
@@ -3029,7 +3450,9 @@
           ops: ['-'],
           answer: a - b,
           hasBorrow: false,
-          baseGems: 2
+          baseGems: 2,
+          baseXp: 15,
+          isSpecialChallenge: true
         };
       } else if (skillKey === 'add2_carry') {
         const d1 = randInt(1, 5);
@@ -3046,7 +3469,9 @@
           ops: ['+'],
           answer: a + b,
           hasCarry: true,
-          baseGems: 3
+          baseGems: 3,
+          baseXp: 20,
+          isSpecialChallenge: false
         };
       } else if (skillKey === 'sub2_borrow') {
         const d1 = randInt(3, 8);
@@ -3063,7 +3488,9 @@
           ops: ['-'],
           answer: a - b,
           hasBorrow: true,
-          baseGems: 3
+          baseGems: 3,
+          baseXp: 20,
+          isSpecialChallenge: true
         };
       } else if (skillKey === 'add3') {
         const a = randInt(11, 34);
@@ -3078,38 +3505,27 @@
           ops: ['+', '+'],
           answer: a + b + c,
           hasCarry: ((a % 10) + (b % 10) + (c % 10)) >= 10,
-          baseGems: 5
+          baseGems: 5,
+          baseXp: 30,
+          isSpecialChallenge: false
         };
       } else {
-        // sub3: alternating 3-quantity chained subtraction and mixed add+sub
-        if (stepIndex % 2 === 0) {
-          const b = randInt(10, 24);
-          const c = randInt(10, 22);
-          const a = b + c + randInt(8, 32);
-          problem = {
-            skillKey: 'sub3',
-            kind: 'sub3',
-            label: '➖ Resta de 3 cantidades · 💎 6',
-            nums: [a, b, c],
-            ops: ['-', '-'],
-            answer: a - b - c,
-            hasBorrow: true,
-            baseGems: 6
-          };
-        } else {
-          const a = randInt(15, 38);
-          const b = randInt(12, 28);
-          const c = randInt(10, Math.min(30, a + b - 10));
-          problem = {
-            skillKey: 'sub3',
-            kind: 'mix3',
-            label: '➕➖ Reto de 3 cantidades · 💎 6',
-            nums: [a, b, c],
-            ops: ['+', '-'],
-            answer: a + b - c,
-            baseGems: 6
-          };
-        }
+        // sub3: maximum difficulty = subtraction of 3 two-digit numbers (a - b - c)
+        const b = randInt(10, 32);
+        const c = randInt(10, 30);
+        const a = b + c + randInt(10, Math.min(35, 99 - b - c));
+        problem = {
+          skillKey: 'sub3',
+          kind: 'sub3',
+          label: '➖ Resta de 3 números (2 cifras) · 💎 6',
+          nums: [a, b, c],
+          ops: ['-', '-'],
+          answer: a - b - c,
+          hasBorrow: true,
+          baseGems: 6,
+          baseXp: 30,
+          isSpecialChallenge: true
+        };
       }
 
       problem.choices = generateChoices(problem.answer, skillKey);
@@ -3140,29 +3556,22 @@
        ========================================================= */
     const MISSION_LENGTH = 5;
     let session = {
-      worldId: 'rio_coco',
-      worldName: '🐊 Río de Coco',
-      skillKey: 'add2_easy',
+      worldId: 'cocodrilo',
+      storyAnimalId: 'cocodrilo',
+      isFreeMode: false,
+      worldName: '🐊 El Tesoro del Río Esmeralda',
+      skillKey: 'auto',
       step: 0,
       streak: 0,
       problem: null,
       attemptsOnCurrent: 0,
       hintUsed: false,
       format: 'vertical',
-      inputMode: 'choices', // 'choices' or 'keypad'
+      inputMode: 'keypad',
       keypadValue: '',
       locked: false,
-      missionPerfects: 0,
-      powerUsesLeft: 1
+      missionPerfects: 0
     };
-
-    function getMissionPowerUses(animalId) {
-      const animal = getAnimalById(animalId);
-      const lvl = getAnimalLevel(animalId);
-      if (animal.powerType === 'streak_shield_plus') return lvl + 1;
-      if (['streak_shield', 'eliminate', 'eliminate_sub', 'legend_trex', 'legend_dragon'].includes(animal.powerType)) return lvl;
-      return 0;
-    }
 
     function persistActiveMission() {
       if (!session.problem || session.step >= MISSION_LENGTH) {
@@ -3170,6 +3579,8 @@
       } else {
         state.activeMission = {
           worldId: session.worldId,
+          storyAnimalId: session.storyAnimalId,
+          isFreeMode: !!session.isFreeMode,
           worldName: session.worldName,
           skillKey: session.skillKey,
           step: session.step,
@@ -3180,8 +3591,7 @@
           format: session.format,
           inputMode: session.inputMode,
           keypadValue: session.keypadValue,
-          missionPerfects: session.missionPerfects,
-          powerUsesLeft: session.powerUsesLeft
+          missionPerfects: session.missionPerfects
         };
       }
       saveState();
@@ -3194,8 +3604,9 @@
         return;
       }
       Object.assign(session, state.activeMission, { locked: false });
-      if (typeof session.powerUsesLeft !== 'number') {
-        session.powerUsesLeft = getMissionPowerUses(state.activeAnimal);
+      if (!session.storyAnimalId || !ANIMAL_STORIES[session.storyAnimalId]) {
+        session.storyAnimalId = state.activeAnimal || 'cocodrilo';
+        if (!session.isFreeMode) session.worldId = session.storyAnimalId;
       }
       switchView('game');
       renderCurrentProblemUI();
@@ -3205,38 +3616,87 @@
       const grid = document.getElementById('worldsGrid');
       const activeId = state.activeMission ? state.activeMission.worldId : null;
       const activeStep = state.activeMission ? (state.activeMission.step + 1) : 1;
+      const exp = getExplorerProgress();
+      const completed = Array.isArray(state.completedStories) ? state.completedStories : [];
 
-      grid.innerHTML = WORLDS.map(w => {
-        const earned = Math.min(3, state.worldStars[w.id] || 0);
-        const starsHtml = '⭐'.repeat(earned) + '☆'.repeat(3 - earned);
-        const isInProgress = activeId === w.id;
+      const freeInProgress = activeId === 'free_farm';
+      const freeCardHtml = `
+        <button class="world-card" style="border-color:#38BDF8;border-bottom-color:#0284C7;background:linear-gradient(180deg,#F0F9FF 0%,#E0F2FE 100%);" onclick="startFreePractice()">
+          <div class="world-top">
+            <span class="world-badge-num" style="background:#BAE6FD;color:#0369A1;">${freeInProgress ? `⏳ Racha (${activeStep}/${MISSION_LENGTH})` : `♾️ Modo Libre · Farmeo`}</span>
+            <span class="world-special-tag">🧭 Nv.${exp.level}</span>
+          </div>
+          <div class="world-body">
+            <div class="world-avatar" style="background:#BAE6FD;">💎</div>
+            <div class="world-info">
+              <h3>Farmear Gemas y XP</h3>
+              <p>Ejercicios libres sin fin que escalan con tu nivel (máx: restas de 3 números de 2 cifras).</p>
+            </div>
+          </div>
+          <div class="world-example">
+            <span>Cada 5 aciertos: <strong>🎁 Cofre Bonus</strong></span>
+            <span class="world-play-tag" style="color:#0369A1;">${freeInProgress ? 'Continuar ▶' : 'Farmear ▶'}</span>
+          </div>
+        </button>
+      `;
+
+      const unlockedHtml = state.unlockedAnimals.map(aid => {
+        const animal = getAnimalById(aid);
+        const story = ANIMAL_STORIES[aid] || ANIMAL_STORIES.cocodrilo;
+        const isInProgress = activeId === aid;
+        const isDone = completed.includes(aid);
+        const miniSvg = renderCompanionSVG(aid, getAnimalOutfit(aid), 'normal');
         return `
-          <button class="world-card" onclick="startWorldMission('${w.id}')">
+          <button class="world-card" onclick="startWorldMission('${aid}')">
             <div class="world-top">
-              <span class="world-badge-num">${isInProgress ? `⏳ En curso (${activeStep}/${MISSION_LENGTH})` : `Mundo ${w.num} · 💎 ${w.baseGems}/reto`}</span>
-              <span class="world-stars" aria-label="${earned} de 3 estrellas">${starsHtml}</span>
+              <span class="world-badge-num">${isInProgress ? `⏳ Escena ${activeStep}/${MISSION_LENGTH}` : isDone ? `✅ Completada` : `📖 Historia · 5 Escenas`}</span>
+              <span class="world-special-tag">🧭 Nv.${exp.level}</span>
             </div>
             <div class="world-body">
-              <div class="world-avatar" style="background:${w.bg};">${w.icon}</div>
+              <div class="world-avatar" style="background:${story.bg};padding:4px;">${miniSvg}</div>
               <div class="world-info">
-                <h3>${w.name}</h3>
-                <p>${w.desc}</p>
+                <h3>${animal.emoji} ${story.title}</h3>
+                <p>${story.teaser}</p>
               </div>
             </div>
             <div class="world-example">
-              <span>Ej: ${w.example}</span>
-              <span class="world-play-tag">${isInProgress ? 'Continuar ▶' : 'Jugar ▶'}</span>
+              <span>Protagonista: <strong>${animal.name}</strong></span>
+              <span class="world-play-tag">${isInProgress ? 'Continuar ▶' : isDone ? 'Rejugar ▶' : 'Jugar ▶'}</span>
             </div>
           </button>
         `;
       }).join('');
 
+      const remaining = ANIMALS.length - state.unlockedAnimals.length;
+      const lockedHintHtml = remaining > 0
+        ? `
+          <button class="world-card" style="opacity:0.85;border-style:dashed;" onclick="switchView('sanctuary')">
+            <div class="world-top">
+              <span class="world-badge-num">🔒 ${remaining} historias más</span>
+            </div>
+            <div class="world-body">
+              <div class="world-avatar" style="background:#F1F5F9;">🐾</div>
+              <div class="world-info">
+                <h3>¡Más Mundos de Historia!</h3>
+                <p>Rescata nuevos animales en Mi Santuario para desbloquear la historia de cada uno.</p>
+              </div>
+            </div>
+            <div class="world-example">
+              <span>${state.unlockedAnimals.length}/${ANIMALS.length} animales rescatados</span>
+              <span class="world-play-tag">Ir al Santuario ▶</span>
+            </div>
+          </button>
+        `
+        : '';
+
+      grid.innerHTML = freeCardHtml + unlockedHtml + lockedHintHtml;
+
       const quickBtn = document.getElementById('quickPlayBtn');
       const comp = getAnimalById(state.activeAnimal);
       if (quickBtn) {
         quickBtn.innerHTML = state.activeMission
-          ? `▶️ ¡Continuar Aventura! (${activeStep}/${MISSION_LENGTH})`
-          : `▶️ ¡Jugar con ${comp.emoji} ${comp.name.split(' ')[0]}!`;
+          ? (state.activeMission.isFreeMode ? `▶️ ¡Continuar Farmeo! (${activeStep}/${MISSION_LENGTH})` : `▶️ ¡Continuar Historia! (${activeStep}/${MISSION_LENGTH})`)
+          : `▶️ ¡Historia de ${comp.emoji} ${comp.name.split(' ')[0]}!`;
       }
     }
 
@@ -3246,88 +3706,172 @@
         resumeActiveMission();
         return;
       }
-      const nextWorld = WORLDS.find(w => (state.worldStars[w.id] || 0) < 3) || WORLDS[0];
-      startWorldMission(nextWorld.id, true);
+      const targetId = state.activeAnimal || state.unlockedAnimals[0] || 'cocodrilo';
+      startWorldMission(targetId, true);
     }
 
-    function startWorldMission(worldId, forceNew = false) {
+    function startFreePractice(forceNew = false) {
       playTapSound();
-      if (!forceNew && state.activeMission && state.activeMission.worldId === worldId && state.activeMission.problem) {
+      if (!forceNew && state.activeMission && state.activeMission.worldId === 'free_farm' && state.activeMission.problem) {
         resumeActiveMission();
         return;
       }
-      const world = WORLDS.find(w => w.id === worldId) || WORLDS[0];
-      session.worldId = world.id;
-      session.worldName = `${world.icon} ${world.name}`;
-      session.skillKey = world.skillKey;
+      const exp = getExplorerProgress();
+      session.worldId = 'free_farm';
+      session.storyAnimalId = state.activeAnimal || 'cocodrilo';
+      session.isFreeMode = true;
+      session.worldName = `💎 Modo Libre · Nv.${exp.level}`;
+      session.skillKey = 'auto';
       session.step = 0;
       session.missionPerfects = 0;
-      session.powerUsesLeft = getMissionPowerUses(state.activeAnimal);
       session.inputMode = 'keypad';
       session.format = 'vertical';
       switchView('game');
       loadNextProblem();
     }
 
-    function startCustomMission(skillKey) {
+    function startWorldMission(animalId, forceNew = false) {
       playTapSound();
-      const world = WORLDS.find(w => w.skillKey === skillKey) || WORLDS[0];
-      startWorldMission(world.id);
+      if (animalId === 'free_farm') {
+        startFreePractice(forceNew);
+        return;
+      }
+      const targetId = ANIMAL_STORIES[animalId] ? animalId : (state.activeAnimal || 'cocodrilo');
+      if (!forceNew && state.activeMission && state.activeMission.worldId === targetId && state.activeMission.problem) {
+        resumeActiveMission();
+        return;
+      }
+      const animal = getAnimalById(targetId);
+      const story = ANIMAL_STORIES[targetId] || ANIMAL_STORIES.cocodrilo;
+      session.worldId = targetId;
+      session.storyAnimalId = targetId;
+      session.isFreeMode = false;
+      session.worldName = `${animal.emoji} ${story.title}`;
+      session.skillKey = 'auto';
+      session.step = 0;
+      session.missionPerfects = 0;
+      session.inputMode = 'keypad';
+      session.format = 'vertical';
+      switchView('game');
+      loadNextProblem();
     }
 
-    function updateCompanionPowerUI() {
-      const animal = getAnimalById(state.activeAnimal);
-      const lvl = getAnimalLevel(state.activeAnimal);
-      const pill = document.getElementById('companionPowerPill');
-      const btn = document.getElementById('usePowerBtn');
-      const isRevealDigit = ['eliminate', 'eliminate_sub', 'legend_trex', 'legend_dragon'].includes(animal.powerType);
-      const isShield = ['streak_shield', 'streak_shield_plus'].includes(animal.powerType);
+    function renderStorySceneSVG(animalId, step = 0) {
+      const animal = getAnimalById(animalId);
+      const isWater = ['cocodrilo', 'hipo', 'tiburon'].includes(animalId);
+      const isSavanna = ['leon', 'jirafa', 'cebra', 'rino', 'elefante'].includes(animalId);
+      const isSnow = ['lobo'].includes(animalId);
+      const isVolcano = ['trex', 'dragon'].includes(animalId);
 
-      if (pill) {
-        if (isShield) {
-          pill.textContent = `🛡️ ${animal.powerName} (Nv.${lvl}): ${session.powerUsesLeft} escudos`;
-        } else if (isRevealDigit) {
-          pill.textContent = `⚡ ${animal.powerName} (Nv.${lvl}): ${session.powerUsesLeft} usos`;
-        } else {
-          pill.textContent = `⚡ ${animal.powerName} (Nv.${lvl}): ${getAnimalPowerSummary(animal, lvl)}`;
-        }
-      }
+      const skyTop = isWater ? '#7DD3FC' : isSavanna ? '#FDE68A' : isSnow ? '#0F172A' : isVolcano ? '#FDBA74' : '#86EFAC';
+      const skyBot = isWater ? '#E0F2FE' : isSavanna ? '#FEF3C7' : isSnow ? '#1E3A8A' : isVolcano ? '#FEE2E2' : '#ECFDF5';
+      const groundCol = isWater ? '#22C55E' : isSavanna ? '#EAB308' : isSnow ? '#E2E8F0' : isVolcano ? '#78716C' : '#16A34A';
+      const hillCol = isWater ? '#16A34A' : isSavanna ? '#D97706' : isSnow ? '#94A3B8' : isVolcano ? '#57534E' : '#15803D';
 
-      if (btn) {
-        if (isRevealDigit) {
-          btn.style.display = 'inline-flex';
-          btn.disabled = session.powerUsesLeft <= 0 || session.locked;
-          btn.style.opacity = session.powerUsesLeft > 0 ? '1' : '0.55';
-          btn.textContent = session.powerUsesLeft > 0
-            ? `⚡ ${animal.powerName}: Ver 1er dígito (${session.powerUsesLeft})`
-            : '⚡ Poder usado en esta misión';
-        } else {
-          btn.style.display = 'none';
-        }
-      }
-    }
+      const xs = [68, 168, 268, 368, 468];
+      const ys = [86, 74, 84, 72, 82];
+      const curX = xs[Math.min(4, Math.max(0, step))];
+      const curY = ys[Math.min(4, Math.max(0, step))];
+      const props = ['🗺️', '🌉', '🧭', '🗝️', '🎁'];
+      const g = 'sc' + (++_svgUid);
 
-    function useActiveCompanionPower() {
-      if (session.locked || session.powerUsesLeft <= 0 || !session.problem) return;
-      const ansStr = String(session.problem.answer);
-      const firstDigit = ansStr[0];
-      const blanks = '_'.repeat(Math.max(0, ansStr.length - 1));
-      session.keypadValue = firstDigit;
-      session.powerUsesLeft--;
-      playSuccessSound();
-      renderProblemDisplay();
-      const animal = getAnimalById(state.activeAnimal);
-      setCocoSpeech(`⚡ ¡${animal.name} usó ${animal.powerName}! El resultado empieza con ${firstDigit}${blanks}`, 'happy');
-      updateCompanionPowerUI();
-      persistActiveMission();
+      const nodesHtml = xs.map((x, i) => {
+        const y = ys[i];
+        const done = i < step;
+        const active = i === step;
+        return `
+          <g>
+            <circle cx="${x}" cy="${y + 12}" r="${active ? 14 : 11}" fill="${done ? '#22C55E' : active ? '#F59E0B' : '#FFFFFF'}" stroke="${done ? '#14532D' : active ? '#92400E' : '#94A3B8'}" stroke-width="2.5"/>
+            <text x="${x}" y="${y + 16}" text-anchor="middle" font-size="${i === 4 ? 13 : 11}" font-weight="900" fill="${done || active ? '#FFFFFF' : '#64748B'}">${done ? '✓' : (i === 4 ? '🎁' : (i + 1))}</text>
+          </g>
+        `;
+      }).join('');
+
+      const bgDecor = isWater
+        ? `<path d="M 0 100 Q 140 88 280 102 T 560 98 L 560 120 L 0 120 Z" fill="#0EA5E9" opacity="0.65"/>
+           <ellipse cx="480" cy="108" rx="18" ry="5" fill="#4ADE80"/>
+           <circle cx="510" cy="24" r="14" fill="#FDE047"/>`
+        : isSnow
+          ? `<path d="M 60 22 Q 180 6 320 26 T 520 14" fill="none" stroke="#34D399" stroke-width="6" opacity="0.5" stroke-linecap="round"/>
+             <circle cx="490" cy="24" r="13" fill="#FEF08A"/>
+             <circle cx="110" cy="20" r="2" fill="#FFFFFF"/><circle cx="240" cy="14" r="2.5" fill="#FFFFFF"/><circle cx="380" cy="22" r="2" fill="#FFFFFF"/>`
+          : isVolcano
+            ? `<polygon points="410,92 465,24 520,92" fill="#57534E"/>
+               <polygon points="450,42 465,24 480,42" fill="#EF4444"/>
+               <circle cx="465" cy="18" r="7" fill="#FDBA74" opacity="0.8"/>`
+            : isSavanna
+              ? `<circle cx="495" cy="26" r="16" fill="#F59E0B" opacity="0.85"/>
+                 <rect x="66" y="42" width="10" height="44" rx="3" fill="#78350F"/>
+                 <ellipse cx="71" cy="40" rx="34" ry="11" fill="#65A30D"/>`
+              : `<circle cx="495" cy="24" r="15" fill="#FACC15" opacity="0.9"/>
+                 <circle cx="54" cy="44" r="22" fill="#15803D"/><circle cx="80" cy="52" r="18" fill="#16A34A"/>
+                 <circle cx="515" cy="50" r="24" fill="#15803D"/>`;
+
+      return `
+        <svg viewBox="0 0 560 120" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+          <defs>
+            <linearGradient id="${g}_sky" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="${skyTop}"/>
+              <stop offset="100%" stop-color="${skyBot}"/>
+            </linearGradient>
+          </defs>
+          <rect width="560" height="120" fill="url(#${g}_sky)"/>
+          <path d="M 0 88 Q 130 56 260 84 T 560 76 L 560 120 L 0 120 Z" fill="${hillCol}" opacity="0.45"/>
+          <path d="M 0 96 Q 180 78 360 94 T 560 90 L 560 120 L 0 120 Z" fill="${groundCol}"/>
+          ${bgDecor}
+
+          <!-- Winding Story Path -->
+          <path d="M 68 98 Q 118 82 168 86 T 268 96 T 368 84 T 468 94" fill="none" stroke="#FEF3C7" stroke-width="6" stroke-dasharray="10 7" stroke-linecap="round"/>
+
+          <!-- 5 Scene Waypoints -->
+          ${nodesHtml}
+
+          <!-- Active Scene Characters: Niño Explorador + Story Animal + Scene Prop -->
+          <g transform="translate(${curX}, ${curY - 12})">
+            <rect x="-32" y="-44" width="64" height="24" rx="12" fill="#FFFFFF" stroke="#F59E0B" stroke-width="2"/>
+            <text x="0" y="-27" text-anchor="middle" font-size="14">${props[step] || '✨'} ${animal.emoji}</text>
+            <!-- Mini Niño Explorador -->
+            <g transform="translate(-24, -14)">
+              <circle cx="0" cy="-2" r="8" fill="#F6C391" stroke="#78350F" stroke-width="2"/>
+              <ellipse cx="0" cy="-9" rx="11" ry="3.5" fill="#F59E0B" stroke="#78350F" stroke-width="1.8"/>
+              <path d="M -6 -10 C -5 -17, 5 -17, 6 -10 Z" fill="#FBBF24" stroke="#78350F" stroke-width="1.8"/>
+              <rect x="-6" y="6" width="12" height="11" rx="4" fill="#16A34A" stroke="#14532D" stroke-width="1.8"/>
+            </g>
+            <!-- Mini Animal Companion -->
+            <text x="16" y="6" text-anchor="middle" font-size="24">${animal.emoji}</text>
+          </g>
+        </svg>
+      `;
     }
 
     function renderCurrentProblemUI() {
+      const storyId = (session.storyAnimalId && ANIMAL_STORIES[session.storyAnimalId])
+        ? session.storyAnimalId
+        : (state.activeAnimal || 'cocodrilo');
+      const animal = getAnimalById(storyId);
+      const story = ANIMAL_STORIES[storyId] || ANIMAL_STORIES.cocodrilo;
+      const chapterText = story.chapters[Math.min(story.chapters.length - 1, session.step)] || story.teaser;
+
       document.getElementById('hudWorldName').textContent = session.worldName;
       document.getElementById('problemTypeLabel').textContent = session.problem.label;
+      const specBadge = document.getElementById('specialChallengeBadge');
+      if (specBadge) {
+        specBadge.style.display = session.problem.isSpecialChallenge ? 'inline-flex' : 'none';
+      }
 
-      // Vertical column format is clearest for 2-number + / - and 3-number addition;
-      // 3-number chained subtraction/mixed, multiplication, and division use horizontal format
+      const storyBox = document.getElementById('storyChapterBox');
+      if (storyBox) {
+        storyBox.style.display = session.isFreeMode ? 'none' : 'flex';
+      }
+      if (!session.isFreeMode) {
+        const sceneEl = document.getElementById('storySceneVisual');
+        if (sceneEl) sceneEl.innerHTML = renderStorySceneSVG(storyId, session.step);
+        const chapTag = document.getElementById('storyChapterTag');
+        const chapTextEl = document.getElementById('storyChapterText');
+        if (chapTag) chapTag.textContent = `Escena ${session.step + 1}/${MISSION_LENGTH}`;
+        if (chapTextEl) chapTextEl.textContent = chapterText;
+      }
+
       const canBeVertical = ['add2', 'sub2', 'add3'].includes(session.problem.kind);
       document.getElementById('formatSwitch').style.display = canBeVertical ? 'inline-flex' : 'none';
       if (!canBeVertical) session.format = 'horizontal';
@@ -3337,22 +3881,25 @@
       renderSteppingStones();
       renderProblemDisplay();
       renderAnswerControls();
-      updateCompanionPowerUI();
+      updateTopBar();
       if (session.hintUsed) {
         showVisualHint();
       } else {
         hideVisualHint();
       }
 
-      const comp = getAnimalById(state.activeAnimal);
-      const greeting = session.step === 0
-        ? `¡Vamos juntos con ${comp.name}! Tómate tu tiempo 🌿`
-        : `¡Reto ${session.step + 1} de ${MISSION_LENGTH}! ${comp.emoji} ¡Tú puedes!`;
+      const greeting = session.problem.isSpecialChallenge
+        ? `🌟 ¡Reto Especial de Resta! ¡Vale ×2 XP para el Niño Explorador! ⚡`
+        : session.isFreeMode
+          ? `💎 ¡Modo Libre! Resuelve ejercicios sin límite para farmear gemas y XP.`
+          : `${animal.emoji} ¡Resuelve la operación para continuar la historia de ${animal.name}!`;
       setCocoSpeech(greeting, 'normal');
     }
 
     function loadNextProblem() {
-      session.problem = generateProblem(session.skillKey, session.step);
+      const exp = getExplorerProgress();
+      const targetSkill = getAutoMissionSkill(exp.level, session.step);
+      session.problem = generateProblem(targetSkill, session.step);
       session.attemptsOnCurrent = 0;
       session.hintUsed = false;
       session.keypadValue = '';
@@ -3473,8 +4020,6 @@
 
     function evaluateAnswer(val, btnEl) {
       const p = session.problem;
-      const comp = getAnimalById(state.activeAnimal);
-      const compLvl = getAnimalLevel(state.activeAnimal);
 
       if (val === p.answer) {
         session.locked = true;
@@ -3494,38 +4039,16 @@
           session.streak = 0;
         }
 
-        // Complexity-scaled gem economy: harder math = bigger reward!
+        // Gems scaled by problem complexity
         const baseForProblem = p.baseGems || 2;
         let gemsEarned = isFirstTry ? baseForProblem : Math.max(1, Math.floor(baseForProblem / 2));
         if (session.streak >= 3) gemsEarned += 1;
-
-        // Balanced Companion Power Gem Bonuses
-        const smallGem = Math.ceil(compLvl / 2); // 1,1,2,2,3
-        let powerBonus = 0;
-        if (comp.powerType === 'add_bonus' && (p.kind === 'add2' || p.kind === 'add3')) {
-          powerBonus = smallGem;
-        } else if (comp.powerType === 'sub_bonus' && (p.kind === 'sub2' || p.kind === 'sub3' || p.kind === 'mix3')) {
-          powerBonus = smallGem;
-        } else if (comp.powerType === 'hint_bonus' && session.hintUsed) {
-          powerBonus = smallGem + 1;
-        } else if (comp.powerType === 'streak_gems' && session.streak >= 2) {
-          powerBonus = smallGem;
-        } else if (comp.powerType === 'eliminate_sub' && (p.kind === 'sub2' || p.kind === 'sub3' || p.kind === 'mix3')) {
-          powerBonus = smallGem;
-        } else if (comp.powerType === 'first_try_bonus' && isFirstTry) {
-          powerBonus = smallGem;
-        } else if (comp.powerType === 'three_qty_bonus' && ['add3', 'sub3', 'mix3'].includes(p.kind)) {
-          powerBonus = smallGem + 1;
-        } else if (comp.powerType === 'lucky_gems') {
-          powerBonus = randInt(1, smallGem + 1);
-        } else if (comp.powerType === 'legend_trex') {
-          powerBonus = smallGem + 1;
-        } else if (comp.powerType === 'legend_dragon') {
-          powerBonus = smallGem + 2;
-        }
-
-        gemsEarned += powerBonus;
         state.gems += gemsEarned;
+
+        // Explorer XP (Restas = Reto Especial ×2 XP!)
+        const rawXp = (p.baseXp || 15) + (isFirstTry ? 5 : 0);
+        const xpEarned = p.isSpecialChallenge ? rawXp * 2 : rawXp;
+        const lvlResult = addExplorerXp(xpEarned);
 
         // Stats tracking
         state.stats.totalSolved++;
@@ -3537,11 +4060,16 @@
         }
         saveState();
 
-        const bonusTag = powerBonus > 0 ? ` (${comp.emoji} +${powerBonus} poder!)` : '';
-        const msg = PRAISE_PHRASES[randInt(0, PRAISE_PHRASES.length - 1)] + ` +${gemsEarned} 💎${bonusTag}`;
+        if (lvlResult.leveledUp) {
+          playChestFanfare();
+          launchConfetti(90);
+          showToast(`🎉 ¡Subiste a Nivel ${lvlResult.newLevel}! Nuevos retos desbloqueados ⚡`);
+        }
+
+        const xpTag = p.isSpecialChallenge ? ` +${xpEarned} XP (🌟 ×2!)` : ` +${xpEarned} XP`;
+        const msg = PRAISE_PHRASES[randInt(0, PRAISE_PHRASES.length - 1)] + ` +${gemsEarned} 💎 ·${xpTag}`;
         setCocoSpeech(msg, 'happy');
         renderSteppingStones();
-        updateCompanionPowerUI();
 
         setTimeout(() => {
           session.step++;
@@ -3554,15 +4082,9 @@
           }
         }, 1250);
       } else {
-        // Gentle, zero-punishment feedback + Shield Companion Power!
+        // Gentle, zero-punishment feedback
         session.attemptsOnCurrent++;
-        let shieldSaved = false;
-        if (['streak_shield', 'streak_shield_plus'].includes(comp.powerType) && session.powerUsesLeft > 0 && session.streak > 0) {
-          session.powerUsesLeft--;
-          shieldSaved = true;
-        } else {
-          session.streak = 0;
-        }
+        session.streak = 0;
 
         playGentleRetrySound();
         if (btnEl) {
@@ -3573,12 +4095,8 @@
         }
         renderProblemDisplay('wrong');
         renderSteppingStones();
-        updateCompanionPowerUI();
 
-        const msg = shieldSaved
-          ? `🛡️ ¡${comp.name} protegió tu racha 🔥! Intenta de nuevo, ¡tú puedes!`
-          : ENCOURAGE_PHRASES[randInt(0, ENCOURAGE_PHRASES.length - 1)];
-        setCocoSpeech(msg, 'encourage');
+        setCocoSpeech(ENCOURAGE_PHRASES[randInt(0, ENCOURAGE_PHRASES.length - 1)], 'encourage');
 
         if (state.settings.autoHint && !session.hintUsed) {
           showVisualHint();
@@ -3594,12 +4112,12 @@
 
     function petCoco() {
       const comp = getAnimalById(state.activeAnimal);
-      const lvl = getAnimalLevel(state.activeAnimal);
+      const exp = getExplorerProgress();
       playAnimalVoice(comp.soundFreq);
       const cute = [
-        `${comp.emoji} ¡Jiji! ¡Soy ${comp.name} (Nv.${lvl}) y creo en ti!`,
-        `⚡ Mi poder ${comp.powerName}: ${getAnimalPowerSummary(comp, lvl)}`,
-        `${comp.emoji} ¡Juntos somos invencibles! ¡Vamos a ganar gemas! 💎`
+        `${comp.emoji} ¡Jiji! ¡Soy ${comp.name}! Somos Explorador Nivel ${exp.level} 🧭`,
+        `⚡ ¡Cada respuesta suma XP y las restas valen ×2 XP! 🌟`,
+        `${comp.emoji} ¡Juntos somos invencibles! ¡Vamos a ganar gemas y XP! 💎`
       ];
       setCocoSpeech(cute[randInt(0, cute.length - 1)], 'happy');
     }
@@ -3887,42 +4405,29 @@
       playChestFanfare();
       launchConfetti(120);
 
-      const comp = getAnimalById(state.activeAnimal);
-      const compLvl = getAnimalLevel(state.activeAnimal);
-      const worldObj = WORLDS.find(w => w.id === session.worldId) || WORLDS[0];
+      const expBefore = getExplorerProgress();
+      const baseChest = 6 + Math.min(8, expBefore.level * 2);
 
-      // Stars awarded for mission (1 to 3) + Panda bonus!
-      const starsEarned = session.missionPerfects >= 5 ? 3 : session.missionPerfects >= 3 ? 2 : 1;
-      const prevBest = state.worldStars[session.worldId] || 0;
-      let addedStars = 0;
-      if (starsEarned > prevBest) {
-        addedStars = starsEarned - prevBest;
-        state.worldStars[session.worldId] = starsEarned;
-      } else {
-        addedStars = 1;
-      }
-      const pandaStarBonus = comp.powerType === 'star_bonus' ? 1 : 0;
-      state.stars += (addedStars + pandaStarBonus);
-
-      // Gems: scaled by world complexity (6..14) + perfects (+1 each) + Star Road + Companion
-      let bonusGems = (worldObj.chestBase || 6) + session.missionPerfects;
-      const starBoost = getPermanentChestBonus();
-      let compChestGems = 0;
-      if (comp.powerType === 'chest_bonus') compChestGems = 2 + compLvl;
-      if (comp.powerType === 'star_bonus') compChestGems = Math.ceil(compLvl / 2);
-      bonusGems += starBoost + compChestGems;
-
+      // Gems & Explorer XP bonus from chest
+      const bonusGems = baseChest + session.missionPerfects;
+      const bonusXp = 25;
       state.gems += bonusGems;
       state.chestsOpened++;
+      if (!session.isFreeMode && session.storyAnimalId) {
+        if (!Array.isArray(state.completedStories)) state.completedStories = [];
+        if (!state.completedStories.includes(session.storyAnimalId)) {
+          state.completedStories.push(session.storyAnimalId);
+        }
+      }
+      const lvlResult = addExplorerXp(bonusXp);
 
-      // Rescue a free animal every 3rd chest so pacing stays exciting and gems stay valuable!
-      const lockedAnimals = ANIMALS.filter(a => !a.starExclusive && !state.unlockedAnimals.includes(a.id));
+      // Rescue a free animal every 3rd chest
+      const lockedAnimals = ANIMALS.filter(a => !state.unlockedAnimals.includes(a.id));
       let newlyUnlockedAnimal = null;
       const chestsUntilFreeRescue = 3 - (state.chestsOpened % 3);
       if (lockedAnimals.length > 0 && state.chestsOpened % 3 === 0) {
         newlyUnlockedAnimal = lockedAnimals[0];
         state.unlockedAnimals.push(newlyUnlockedAnimal.id);
-        state.animalLevels[newlyUnlockedAnimal.id] = 1;
       }
 
       saveState();
@@ -3931,17 +4436,10 @@
       document.getElementById('chestRewardArea').style.display = 'block';
       document.getElementById('chestSubtitle').textContent = '¡Mira todo lo que ganaste por tu esfuerzo!';
 
-      const readyStarRewards = getUnclaimedStarRewardsCount();
-      let extraNotes = [];
-      if (compChestGems > 0) extraNotes.push(`${comp.emoji} +${compChestGems} 💎 poder`);
-      if (pandaStarBonus > 0) extraNotes.push(`🐼 +1 ⭐ extra`);
-      if (starBoost > 0) extraNotes.push(`⭐ +${starBoost} 💎 rango`);
-
       let rewardHtml = `
-        <div style="font-size:1.7rem;letter-spacing:4px;">${'⭐'.repeat(starsEarned)}</div>
-        <div style="font-size:1.35rem;font-weight:900;color:#92400E;">+${bonusGems} 💎 Gemas de la Selva</div>
-        ${extraNotes.length ? `<div style="font-size:0.84rem;font-weight:800;color:#0F766E;">${extraNotes.join(' · ')}</div>` : ''}
-        ${readyStarRewards > 0 ? `<button class="btn-3d btn-blue" style="padding:8px 14px;font-size:0.9rem;" onclick="closeChestAndGo('stars')">🌟 ¡Tienes ${readyStarRewards} premio(s) de Estrellas por reclamar!</button>` : ''}
+        <div style="font-size:1.4rem;font-weight:900;color:#92400E;">+${bonusGems} 💎 Gemas de la Selva</div>
+        <div style="font-size:1.15rem;font-weight:900;color:#0369A1;">+${bonusXp} ⚡ XP de Explorador</div>
+        ${lvlResult.leveledUp ? `<div style="padding:8px 14px;background:#DBEAFE;border:2px solid #38BDF8;border-radius:14px;font-weight:900;color:#0369A1;">🎉 ¡Subiste a Nivel ${lvlResult.newLevel}!</div>` : ''}
       `;
 
       if (newlyUnlockedAnimal) {
@@ -3950,13 +4448,12 @@
             <div style="font-size:0.85rem;font-weight:900;color:#065F46;text-transform:uppercase;">🎉 ¡Cofre Salvaje — Nuevo Compañero!</div>
             <div style="width:120px;height:105px;margin:4px auto;">${renderCompanionSVG(newlyUnlockedAnimal.id, emptyOutfit(), 'happy')}</div>
             <div style="font-size:1.15rem;font-weight:900;color:var(--jungle-deep);">${newlyUnlockedAnimal.name}</div>
-            <div style="font-size:0.82rem;font-weight:900;color:#92400E;margin-top:4px;">⚡ ${newlyUnlockedAnimal.powerName}: ${getAnimalPowerSummary(newlyUnlockedAnimal, 1)}</div>
           </div>
         `;
       } else if (lockedAnimals.length > 0) {
         rewardHtml += `<div style="font-weight:800;font-size:0.9rem;color:var(--jungle-main);">🐾 Faltan <strong>${chestsUntilFreeRescue}</strong> ${chestsUntilFreeRescue === 1 ? 'cofre' : 'cofres'} para rescatar un amigo gratis, ¡o rescata uno con tus 💎 en Mi Santuario!</div>`;
       } else {
-        rewardHtml += `<div style="font-weight:800;color:var(--jungle-main);">¡Usa tus gemas para subir de nivel a tus animales y combinar prendas en Mi Santuario! 🍌🎩</div>`;
+        rewardHtml += `<div style="font-weight:800;color:var(--jungle-main);">¡Usa tus gemas para combinar prendas en Mi Santuario! 🎩</div>`;
       }
 
       document.getElementById('chestRewardContent').innerHTML = rewardHtml;
@@ -3971,45 +4468,32 @@
     function closeChestAndGo(viewName) {
       playTapSound();
       document.getElementById('chestModal').classList.remove('open');
-      if (viewName === 'stars') {
-        openStarRoad();
-      } else {
-        switchView(viewName);
-      }
+      switchView(viewName);
     }
 
     /* =========================================================
-       SANCTUARY, UNIVERSAL WARDROBE & STAR ROAD
+       SANCTUARY & UNIVERSAL 4-SLOT WARDROBE
        ========================================================= */
-    function openStarRoad() {
-      playTapSound();
-      switchView('sanctuary');
-      switchSanctuaryTab('stars');
-    }
-
     function switchSanctuaryTab(tab) {
       playTapSound();
-      document.getElementById('sanctuaryAnimalsPane').style.display = tab === 'animals' ? 'grid' : 'none';
-      document.getElementById('sanctuaryWardrobePane').style.display = tab === 'wardrobe' ? 'grid' : 'none';
-      document.getElementById('sanctuaryStarsPane').style.display = tab === 'stars' ? 'flex' : 'none';
+      const activeTab = tab === 'wardrobe' ? 'wardrobe' : 'animals';
+      document.getElementById('sanctuaryAnimalsPane').style.display = activeTab === 'animals' ? 'grid' : 'none';
+      document.getElementById('sanctuaryWardrobePane').style.display = activeTab === 'wardrobe' ? 'grid' : 'none';
 
-      document.getElementById('tabAnimalsBtn').className = tab === 'animals' ? 'btn-3d btn-green' : 'btn-3d btn-cream';
-      document.getElementById('tabWardrobeBtn').className = tab === 'wardrobe' ? 'btn-3d btn-green' : 'btn-3d btn-cream';
-      document.getElementById('tabStarsBtn').className = tab === 'stars' ? 'btn-3d btn-green' : 'btn-3d btn-cream';
-      ['tabAnimalsBtn', 'tabWardrobeBtn', 'tabStarsBtn'].forEach(id => {
+      document.getElementById('tabAnimalsBtn').className = activeTab === 'animals' ? 'btn-3d btn-green' : 'btn-3d btn-cream';
+      document.getElementById('tabWardrobeBtn').className = activeTab === 'wardrobe' ? 'btn-3d btn-green' : 'btn-3d btn-cream';
+      ['tabAnimalsBtn', 'tabWardrobeBtn'].forEach(id => {
         document.getElementById(id).style.padding = '11px 18px';
       });
 
       const sub = document.getElementById('sanctuarySubtitle');
       if (sub) {
-        if (tab === 'animals') sub.textContent = '¡Elige tu compañero para jugar, aliméntalo para subir su poder y vístelo!';
-        if (tab === 'wardrobe') sub.textContent = '¡Elige cualquier animal desbloqueado y ponle accesorios!';
-        if (tab === 'stars') sub.textContent = '¡Junta ⭐ estrellas completando misiones y reclama premios exclusivos!';
+        if (activeTab === 'animals') sub.textContent = '¡Elige tu avatar favorito entre los 20 animales y vístelo!';
+        if (activeTab === 'wardrobe') sub.textContent = '¡Elige cualquier animal desbloqueado y combínale hasta 4 prendas!';
       }
 
-      if (tab === 'animals') renderSanctuary();
-      if (tab === 'wardrobe') renderWardrobe();
-      if (tab === 'stars') renderStarRoad();
+      if (activeTab === 'animals') renderSanctuary();
+      if (activeTab === 'wardrobe') renderWardrobe();
     }
 
     function renderSanctuary() {
@@ -4019,23 +4503,17 @@
       const grid = document.getElementById('sanctuaryAnimalsPane');
       grid.innerHTML = ANIMALS.map(a => {
         const unlocked = state.unlockedAnimals.includes(a.id);
-        const lvl = getAnimalLevel(a.id);
-        const isMax = lvl >= MAX_ANIMAL_LEVEL;
         const isActive = state.activeAnimal === a.id;
         const outfit = getAnimalOutfit(a.id);
-        const hearts = '❤️'.repeat(lvl) + '🤍'.repeat(MAX_ANIMAL_LEVEL - lvl);
-        const feedCost = getFeedCost(lvl);
         const avatarSvg = renderCompanionSVG(a.id, unlocked ? outfit : emptyOutfit(), 'normal', !unlocked);
 
         if (unlocked) {
-          const cardCls = `animal-card unlocked ${isActive ? 'active-companion' : ''} ${isMax ? 'legendary' : ''}`;
+          const cardCls = `animal-card unlocked ${isActive ? 'active-companion' : ''}`;
           return `
             <div class="${cardCls}" id="acard_${a.id}" onclick="interactAnimal('${a.id}')">
               <div style="width:116px;height:106px;margin:0 auto;">${avatarSvg}</div>
               <h3 class="animal-name">${a.name}</h3>
-              <div class="hearts-row" title="Nivel de poder">${hearts} <small style="font-weight:900;color:${isMax ? '#B45309' : 'var(--text-muted)'};">${isMax ? '✨ MAX' : `Nv.${lvl}`}</small></div>
-              <div class="power-tag">⚡ <strong>${a.powerName}:</strong> ${getAnimalPowerSummary(a, lvl)}</div>
-              <div class="animal-fact" style="min-height:34px;">${a.fact}</div>
+              <div class="animal-fact" style="min-height:42px;">${a.fact}</div>
               <div style="display:flex;gap:6px;width:100%;">
                 ${isActive
                   ? `<button class="btn-3d btn-cream" style="flex:1;padding:8px 6px;font-size:0.82rem;" disabled>✅ Activo</button>`
@@ -4043,22 +4521,6 @@
                 }
                 <button class="btn-3d btn-blue" style="padding:8px 10px;font-size:0.82rem;" onclick="event.stopPropagation(); dressAnimal('${a.id}')" title="Vestir a ${a.name}">🎩 Vestir</button>
               </div>
-              ${isMax
-                ? `<button class="btn-3d btn-cream" style="width:100%;padding:8px 10px;font-size:0.84rem;color:#B45309;" disabled>🌟 Poder al Máximo</button>`
-                : `<button class="btn-3d btn-amber" style="width:100%;padding:8px 10px;font-size:0.84rem;" onclick="event.stopPropagation(); feedAnimal('${a.id}')">🍌 Subir a Nv.${lvl + 1} (${feedCost} 💎)</button>`
-              }
-            </div>
-          `;
-        } else if (a.starExclusive) {
-          return `
-            <div class="animal-card locked">
-              <div style="width:116px;height:106px;margin:0 auto;">${avatarSvg}</div>
-              <h3 class="animal-name">${a.name}</h3>
-              <div class="power-tag">⚡ <strong>${a.powerName}:</strong> ${getAnimalPowerSummary(a, 1)}</div>
-              <div class="animal-fact">Exclusivo al juntar <strong>${a.starExclusive} ⭐</strong> en Premios Estrellas.</div>
-              <button class="btn-3d btn-blue" style="width:100%;padding:8px 10px;font-size:0.84rem;" onclick="switchSanctuaryTab('stars')">
-                ⭐ Ver en Premios (${state.stars}/${a.starExclusive})
-              </button>
             </div>
           `;
         } else {
@@ -4066,7 +4528,6 @@
             <div class="animal-card locked">
               <div style="width:116px;height:106px;margin:0 auto;">${avatarSvg}</div>
               <h3 class="animal-name">${a.name}</h3>
-              <div class="power-tag">⚡ <strong>${a.powerName}:</strong> ${getAnimalPowerSummary(a, 1)}</div>
               <div class="animal-fact">Rescátalo con gemas o abriendo cada 3 Cofres del Tesoro.</div>
               <button class="btn-3d btn-blue" style="width:100%;padding:8px 10px;font-size:0.86rem;" onclick="buyAnimal('${a.id}')">
                 🔓 Rescatar (${a.cost} 💎)
@@ -4081,15 +4542,11 @@
       if (!state.unlockedAnimals.includes(id)) return;
       playSuccessSound();
       state.activeAnimal = id;
-      if (state.activeMission) {
-        session.powerUsesLeft = getMissionPowerUses(id);
-        state.activeMission.powerUsesLeft = session.powerUsesLeft;
-      }
       saveState();
       updateAllCocoAvatars('happy');
       renderSanctuary();
       const a = getAnimalById(id);
-      showToast(`${a.emoji} ¡${a.name} ahora te acompaña en la aventura!`);
+      showToast(`${a.emoji} ¡${a.name} ahora es tu Explorador!`);
     }
 
     function dressAnimal(id) {
@@ -4108,41 +4565,17 @@
         card.classList.add('bounce');
         setTimeout(() => card.classList.remove('bounce'), 350);
       }
-      showToast(`${a.emoji} ${a.name}: "¡Mi poder es ${a.powerName}!"`);
-    }
-
-    function feedAnimal(id) {
-      const a = getAnimalById(id);
-      const curLvl = getAnimalLevel(id);
-      if (curLvl >= MAX_ANIMAL_LEVEL) {
-        showToast(`🌟 ¡${a.name} ya tiene su poder al máximo!`);
-        return;
-      }
-      const feedCost = getFeedCost(curLvl);
-      if (state.gems < feedCost) {
-        showToast(`Necesitas ${feedCost} 💎 para subir a ${a.name} a Nv.${curLvl + 1}.`);
-        return;
-      }
-      state.gems -= feedCost;
-      state.animalLevels[id] = curLvl + 1;
-      saveState();
-      playSuccessSound();
-      launchConfetti(45);
-      renderSanctuary();
-      updateAllCocoAvatars('happy');
-      showToast(`🍌 ¡${a.name} subió a Nv.${curLvl + 1}! Poder: ${getAnimalPowerSummary(a, curLvl + 1)}`);
+      showToast(`${a.emoji} ¡Hola! Soy ${a.name}`);
     }
 
     function buyAnimal(id) {
       const a = getAnimalById(id);
-      if (a.starExclusive) return;
       if (state.gems < a.cost) {
         showToast(`Te faltan ${a.cost - state.gems} 💎 para rescatar a ${a.name}.`);
         return;
       }
       state.gems -= a.cost;
       state.unlockedAnimals.push(id);
-      state.animalLevels[id] = 1;
       state.activeAnimal = id;
       saveState();
       playChestFanfare();
@@ -4222,8 +4655,6 @@
           btnHtml = `<button class="btn-3d btn-coral" style="width:100%;padding:8px;" onclick="toggleOutfitItem('${item.id}')">✖️ Quitar</button>`;
         } else if (owned) {
           btnHtml = `<button class="btn-3d btn-green" style="width:100%;padding:8px;" onclick="toggleOutfitItem('${item.id}')">👕 Poner</button>`;
-        } else if (item.starExclusive) {
-          btnHtml = `<button class="btn-3d btn-blue" style="width:100%;padding:8px;font-size:0.84rem;" onclick="switchSanctuaryTab('stars')">⭐ Premio de ${item.starExclusive} ⭐</button>`;
         } else {
           btnHtml = `<button class="btn-3d btn-amber" style="width:100%;padding:8px;" onclick="buyAccessory('${item.id}')">💎 Comprar (${item.cost})</button>`;
         }
@@ -4241,7 +4672,7 @@
 
     function buyAccessory(id) {
       const item = ACCESSORIES.find(x => x.id === id);
-      if (!item || item.starExclusive) return;
+      if (!item) return;
       if (state.gems < item.cost) {
         showToast(`Necesitas ${item.cost - state.gems} 💎 más para ${item.name}.`);
         return;
@@ -4276,175 +4707,6 @@
       renderSanctuary();
     }
 
-    function renderStarRoad() {
-      const rankInfo = getExplorerRank(state.stars);
-      const nextText = rankInfo.next
-        ? `Te faltan <strong>${Math.max(0, rankInfo.next.stars - state.stars)} ⭐</strong> para llegar a <strong>${rankInfo.next.rank}</strong>`
-        : '¡Alcanzaste el rango máximo de toda la selva! 🏆';
-
-      document.getElementById('starRankBanner').innerHTML = `
-        <div>
-          <div style="font-size:0.84rem;font-weight:800;opacity:0.9;">TU RANGO ACTUAL DE EXPLORADOR</div>
-          <div style="font-size:1.55rem;font-weight:900;margin:2px 0;">${rankInfo.icon} ${rankInfo.rank}</div>
-          <div style="font-size:0.9rem;font-weight:700;opacity:0.95;">${nextText}</div>
-        </div>
-        <div style="text-align:center;background:rgba(255,255,255,0.18);padding:10px 18px;border-radius:18px;">
-          <div style="font-size:1.8rem;font-weight:900;">⭐ ${state.stars}</div>
-          <div style="font-size:0.78rem;font-weight:800;">Estrellas ganadas</div>
-        </div>
-      `;
-
-      const grid = document.getElementById('starMilestonesGrid');
-      grid.innerHTML = STAR_MILESTONES.map(m => {
-        const reached = state.stars >= m.stars;
-        const claimed = state.claimedStarRewards.includes(m.id);
-        const cls = claimed ? 'milestone-card claimed' : reached ? 'milestone-card ready' : 'milestone-card';
-
-        let actionHtml = '';
-        if (claimed) {
-          actionHtml = `<button class="btn-3d btn-cream" style="width:100%;padding:9px;" disabled>✅ Reclamado</button>`;
-        } else if (reached) {
-          actionHtml = `<button class="btn-3d btn-amber" style="width:100%;padding:10px;font-size:0.96rem;" onclick="claimStarReward('${m.id}')">🎁 ¡Reclamar Premio!</button>`;
-        } else {
-          actionHtml = `<button class="btn-3d btn-cream" style="width:100%;padding:8px;opacity:0.75;" disabled>🔒 Faltan ${m.stars - state.stars} ⭐</button>`;
-        }
-
-        return `
-          <div class="${cls}">
-            <span class="world-badge-num" style="background:#E0F2FE;color:#0369A1;">Meta: ${m.stars} ⭐</span>
-            <div style="font-size:2.9rem;line-height:1.1;">${m.icon}</div>
-            <h3 class="animal-name">${m.title}</h3>
-            <div style="font-size:0.8rem;font-weight:900;color:#0369A1;">Rango: ${m.rank}</div>
-            <div class="animal-fact" style="min-height:36px;">${m.desc}</div>
-            ${actionHtml}
-          </div>
-        `;
-      }).join('');
-    }
-
-    function claimStarReward(id) {
-      const m = STAR_MILESTONES.find(x => x.id === id);
-      if (!m || state.stars < m.stars || state.claimedStarRewards.includes(id)) return;
-
-      state.claimedStarRewards.push(id);
-      if (m.rewardType === 'gems') {
-        state.gems += m.amount;
-      } else if (m.rewardType === 'accessory' || m.rewardType === 'acc_boost') {
-        if (!state.unlockedAccessories.includes(m.accessoryId)) {
-          state.unlockedAccessories.push(m.accessoryId);
-        }
-      } else if (m.rewardType === 'acc_gems') {
-        if (!state.unlockedAccessories.includes(m.accessoryId)) {
-          state.unlockedAccessories.push(m.accessoryId);
-        }
-        state.gems += m.amount;
-      } else if (m.rewardType === 'animal' || m.rewardType === 'animal_boost') {
-        if (!state.unlockedAnimals.includes(m.animalId)) {
-          state.unlockedAnimals.push(m.animalId);
-          state.animalLevels[m.animalId] = 1;
-        }
-        state.activeAnimal = m.animalId;
-      }
-
-      saveState();
-      playChestFanfare();
-      launchConfetti(100);
-      renderStarRoad();
-      renderSanctuary();
-      updateAllCocoAvatars('happy');
-      showToast(`🎉 ¡Reclamaste: ${m.title}!`);
-    }
-
-    /* =========================================================
-       PARENTS GATE & PROGRESS DASHBOARD
-       ========================================================= */
-    let gateExpected = 56;
-
-    function openParentsGate() {
-      playTapSound();
-      const a = randInt(6, 9);
-      const b = randInt(6, 9);
-      gateExpected = a * b;
-      document.getElementById('gateMathExpr').textContent = `${a} × ${b} = ?`;
-      const opts = [gateExpected, gateExpected + randInt(2, 6), gateExpected - randInt(2, 5)].sort(() => Math.random() - 0.5);
-      document.getElementById('gateChoices').innerHTML = opts.map(v => `
-        <button class="btn-3d btn-blue" style="padding:12px;font-size:1.25rem;" onclick="checkParentsGate(${v})">${v}</button>
-      `).join('');
-      document.getElementById('parentsGateModal').classList.add('open');
-    }
-
-    function closeParentsGate() {
-      document.getElementById('parentsGateModal').classList.remove('open');
-    }
-
-    function checkParentsGate(val) {
-      if (val === gateExpected) {
-        closeParentsGate();
-        switchView('parents');
-      } else {
-        playGentleRetrySound();
-        showToast('Respuesta incorrecta. Intenta de nuevo.');
-      }
-    }
-
-    function renderParentsPanel() {
-      const s = state.stats;
-      const acc = s.totalSolved > 0 ? Math.round((s.firstTryCorrect / s.totalSolved) * 100) : 0;
-      document.getElementById('statSolved').textContent = s.totalSolved;
-      document.getElementById('statAccuracy').textContent = acc + '%';
-      document.getElementById('statBestStreak').textContent = state.bestStreak;
-      document.getElementById('statChests').textContent = state.chestsOpened;
-
-      const labels = {
-        add2_easy: '➕ Sumas 2 dígitos (sin llevar)',
-        sub2_easy: '➖ Restas 2 dígitos (sin prestar)',
-        add2_carry: '➕ Sumas 2 dígitos (llevando)',
-        sub2_borrow: '➖ Restas 2 dígitos (prestando)',
-        add3: '➕ Sumas de 3 cantidades',
-        sub3: '➖ Restas y retos de 3 cantidades'
-      };
-
-      const barsEl = document.getElementById('skillBarsContainer');
-      barsEl.innerHTML = Object.keys(labels).map(k => {
-        const d = s.bySkill[k] || { solved: 0, firstTry: 0 };
-        const pct = d.solved > 0 ? Math.round((d.firstTry / d.solved) * 100) : 0;
-        const barColor = d.solved === 0 ? '#CBD5E1' : pct >= 75 ? '#22C55E' : pct >= 50 ? '#F59E0B' : '#F97316';
-        return `
-          <div class="skill-row">
-            <div class="skill-row-head">
-              <span>${labels[k]}</span>
-              <span>${d.solved} retos · ${pct}%</span>
-            </div>
-            <div class="bar-track">
-              <div class="bar-fill" style="width:${d.solved === 0 ? 4 : pct}%;background:${barColor};"></div>
-            </div>
-          </div>
-        `;
-      }).join('');
-
-      document.getElementById('setAutoHint').classList.toggle('on', !!state.settings.autoHint);
-    }
-
-    function toggleSetting(key) {
-      playTapSound();
-      state.settings[key] = !state.settings[key];
-      saveState();
-      renderParentsPanel();
-      renderWorldsMap();
-    }
-
-    function confirmResetProgress() {
-      if (window.confirm('¿Seguro que deseas reiniciar todas las gemas, animales y estadísticas del niño?')) {
-        state = defaultState();
-        saveState();
-        renderParentsPanel();
-        renderWorldsMap();
-        renderSanctuary();
-        updateAllCocoAvatars();
-        showToast('Progreso reiniciado correctamente.');
-      }
-    }
-
     /* =========================================================
        NAVIGATION, SOUND, TOAST & CONFETTI ENGINE
        ========================================================= */
@@ -4468,39 +4730,39 @@
         document.getElementById('navSanctuary').classList.add('active');
         renderSanctuary();
         renderWardrobe();
-        renderStarRoad();
-      } else if (viewName === 'parents') {
-        document.getElementById('viewParents').classList.add('active');
-        document.getElementById('navParents').classList.add('active');
-        renderParentsPanel();
       }
       updateTopBar();
     }
 
     function updateTopBar() {
       document.getElementById('topGems').textContent = state.gems;
-      document.getElementById('topStars').textContent = state.stars;
       document.getElementById('soundToggleBtn').textContent = state.soundOn ? '🔊' : '🔇';
       const hc = document.getElementById('heroAnimalCount');
       if (hc) hc.textContent = state.unlockedAnimals.length;
 
-      const rankBadge = document.getElementById('heroRankBadge');
-      if (rankBadge) rankBadge.textContent = getExplorerRank(state.stars).rank.split(' ')[0];
+      const exp = getExplorerProgress();
+      const topLvl = document.getElementById('topLevel');
+      const topXpText = document.getElementById('topXpText');
+      const topXpFill = document.getElementById('topXpFill');
+      if (topLvl) topLvl.textContent = exp.level;
+      if (topXpText) topXpText.textContent = `${exp.currentXp}/${exp.neededXp}`;
+      if (topXpFill) topXpFill.style.width = `${exp.pct}%`;
 
-      const unclaimed = getUnclaimedStarRewardsCount();
-      const starsPill = document.getElementById('starsPillBtn');
-      if (starsPill) {
-        starsPill.classList.toggle('has-reward', unclaimed > 0);
-        starsPill.title = unclaimed > 0
-          ? `¡Tienes ${unclaimed} premio(s) por reclamar!`
-          : 'Ver Camino de Estrellas y premios';
-      }
-      const tabStarsBtn = document.getElementById('tabStarsBtn');
-      if (tabStarsBtn) {
-        tabStarsBtn.textContent = unclaimed > 0
-          ? `⭐ Premios Estrellas (${unclaimed}!)`
-          : '⭐ Premios Estrellas';
-      }
+      const heroTitle = document.getElementById('heroExplorerTitle');
+      const heroXpText = document.getElementById('heroXpText');
+      const heroXpFill = document.getElementById('heroXpFill');
+      const heroStage = document.getElementById('heroStageDesc');
+      if (heroTitle) heroTitle.textContent = `🧭 Nivel ${exp.level} · ${exp.title}`;
+      if (heroXpText) heroXpText.textContent = `${exp.currentXp} / ${exp.neededXp} XP`;
+      if (heroXpFill) heroXpFill.style.width = `${exp.pct}%`;
+      if (heroStage) heroStage.textContent = getExplorerStageDescription(exp.level);
+
+      const gameTitle = document.getElementById('gameExplorerTitle');
+      const gameXpText = document.getElementById('gameXpText');
+      const gameXpFill = document.getElementById('gameXpFill');
+      if (gameTitle) gameTitle.textContent = `🧭 Explorador Nv.${exp.level}`;
+      if (gameXpText) gameXpText.textContent = `${exp.currentXp}/${exp.neededXp} XP`;
+      if (gameXpFill) gameXpFill.style.width = `${exp.pct}%`;
 
       const resumeBtn = document.getElementById('navResumeGame');
       const gameActive = document.getElementById('viewGame').classList.contains('active');

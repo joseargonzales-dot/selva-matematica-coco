@@ -1,4 +1,4 @@
-const CACHE_NAME = 'selva-coco-v5';
+const CACHE_NAME = 'selva-coco-v6';
 const ASSETS = [
   './',
   './index.html',
